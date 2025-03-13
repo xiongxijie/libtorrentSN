@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "C/C++: g++ build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/pal/Downloads/libtorrent-SN/build/Play/Demo",
+            "args": ["magnet:?xt=urn:btih:56d3f1706efd6397ec21aa4709cf444b270d1023&dn=test64"],
+            "stopAtEntry": false,
+            "cwd": "/home/pal/Downloads/libtorrent-SN/build/Play/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+         
+            // "preLaunchTask": "C/C++: g++ build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ],
+    "version": "2.0.0"
+}
