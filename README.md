@@ -1,4 +1,4 @@
-# libtorrent-SN (Clone&Copy&Paste programming) 
+# libtorrent-SN (Clone&Copy&Paste oriented programming) 
 a torrent client powered by libtorrent
 
 
@@ -9,5 +9,7 @@ a torrent client powered by libtorrent
 libtorrent (https://github.com/arvidn/libtorrent)
 transmission (https://github.com/transmission/transmission)
 
+#Platform
+Ubuntu 24.04 LTS
 
 #actually functionality as Transmission, disabled DHT,SSH .etc, i dont understand them
