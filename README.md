@@ -1,9 +1,7 @@
-# libtorrent-SN (Clone&Copy&Paste oriented programming) 
-a torrent client powered by libtorrent
+# libtorrent-SN
+a torrent client powered by libtorrent  (Clone&Copy&Paste oriented programming) 
 
-
-# copied GUI from transmission and use libtorrent for torrenting)
-
+- copied GUI from transmission and use libtorrent for torrenting)
 
 # code copied from 
 libtorrent (https://github.com/arvidn/libtorrent)
