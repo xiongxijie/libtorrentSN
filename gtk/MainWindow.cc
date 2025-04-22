@@ -185,6 +185,7 @@ void MainWindow::Impl::on_popup_menu([[maybe_unused]] double event_x, [[maybe_un
 {
     if (popup_menu_ == nullptr)
     {
+        //main-window-popup written in transmission-ui.xml
         auto const menu = gtr_action_get_object<Gio::Menu>("main-window-popup");
 
 #if GTKMM_CHECK_VERSION(4, 0, 0)
@@ -378,7 +379,7 @@ void MainWindow::Impl::prefsChanged(int const key)
 
 MainWindow::Impl::~Impl()
 {
-    std::printf("in MainWindow::Impl::~Impl\n");
+    // std::printf("in MainWindow::Impl::~Impl\n");
     pref_handler_id_.disconnect();
 }
 

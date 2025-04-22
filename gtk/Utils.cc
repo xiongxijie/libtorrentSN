@@ -5,17 +5,13 @@
 
 #include "Utils.h"
 
-#include "Prefs.h"
-#include "PrefsDialog.h"
-#include "Session.h"
 
 #include "tr-transmission.h" /* TR_RATIO_NA, TR_RATIO_INF */
-#include "tr-error.h"
 
 #include "tr-utils.h"
 #include "tr-values.h"
 #include "tr-version.h" /* SHORT_VERSION_STRING */
-// #include "tr-web-utils.h"
+#include "tr-web-utils.h"
 
 #include <gdkmm/display.h>
 #include <giomm/appinfo.h>
@@ -42,7 +38,7 @@
 #endif
 
 #include <fmt/core.h>
-
+#include <iostream>
 #include <functional>
 #include <memory>
 #include <stack>

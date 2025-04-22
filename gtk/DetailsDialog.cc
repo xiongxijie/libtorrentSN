@@ -136,7 +136,7 @@ private:
 
     // lt::torrent_handle tracker_list_get_current_torrent() const;
 
-    lt::torrent_status getTorrentsStatus();
+    lt::torrent_status const& getTorrentsStatus();
 
     std::vector<lt::peer_info> getPeersInfo();
 
@@ -247,9 +247,9 @@ guint DetailsDialog::Impl::last_page_ = 0;
 
 
 /*get torrent status for Information Tab  return a copy */
-lt::torrent_status DetailsDialog::Impl::getTorrentsStatus()
+lt::torrent_status const& DetailsDialog::Impl::getTorrentsStatus()
 {
-    if (lt::torrent_status st = core_->find_torrent_status(uniq_id_); st.handle.is_valid())
+    if (lt::torrent_status const& st = core_->find_torrent_status(uniq_id_); st.handle.is_valid())
     {
         return st;
     }
@@ -363,7 +363,7 @@ void set_int_spin_if_different(Gtk::SpinButton* spin, sigc::connection& tag, int
 ***/
 void DetailsDialog::Impl::refreshOptions()
 {
-    lt::torrent_status st = core_->find_torrent_status(uniq_id_); 
+    lt::torrent_status const& st = core_->find_torrent_status(uniq_id_); 
 
 
     if (!st.handle.is_valid())
@@ -492,7 +492,7 @@ void DetailsDialog::Impl::options_page_init(Glib::RefPtr<Gtk::Builder> const& /*
     // auto const speed_units_kbyps_str = Speed::units().display_name(Speed::Units::KByps);
   
     //REDUNDANT
-    // lt::torrent_status& st = core_->find_torrent_status(uniq_id_); 
+    // lt::torrent_status const& st = core_->find_torrent_status(uniq_id_); 
 
 
 
@@ -2704,7 +2704,7 @@ void DetailsDialog::Impl::tracker_page_init(Glib::RefPtr<Gtk::Builder> const& /*
 
 void DetailsDialog::Impl::refresh()
 {
-    auto const tor_status_copy = getTorrentsStatus();
+    auto const& tor_status_copy = getTorrentsStatus();
 
     /*Torrent has been removed from Session::Impl::m_all_torrents_, 
     its internal torrent_handle or torrent_status will also become invalid after a few moments (not instantly)

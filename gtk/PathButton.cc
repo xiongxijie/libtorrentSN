@@ -84,7 +84,7 @@ PathButton::Impl::Impl([[maybe_unused]] PathButton& widget)
 #endif
 {
 #if GTKMM_CHECK_VERSION(4, 0, 0)
-                            std::cout << "PathButton gtkmm 4.0 \n" << std::endl;
+                           
     action_.get_proxy().signal_changed().connect([this]() { update_mode(); });
 
     label_->set_ellipsize(Pango::EllipsizeMode::END);

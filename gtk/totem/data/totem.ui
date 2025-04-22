@@ -1,0 +1,372 @@
+<?xml version="1.0" ?>
+<!--*- mode: xml -*--><!DOCTYPE glade-interface
+  SYSTEM 'http://glade.gnome.org/glade-2.0.dtd'>
+<interface domain="transmission-gtk">
+<requires lib="gtk+" version="3.11"/>
+
+<object class="GtkImage" id="icon_play">
+  <property name="visible">True</property>
+  <property name="margin-start">16</property>
+  <property name="margin-end">16</property>
+  <property name="icon-name">media-playback-start-symbolic</property>
+  <property name="icon-size">1</property>
+</object>
+
+<menu id="appmenu">
+	<!-- <section id="python-console-placeholder"/> -->
+	<section>
+		<item>
+			<attribute name="label" translatable="yes">Prefere_nces</attribute>
+			<attribute name="action">app.preferences</attribute>
+		</item>
+		<!-- <item>
+			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+			<attribute name="action">app.shortcuts</attribute>
+		</item> -->
+		<!-- <item>
+			<attribute name="label" translatable="yes">_Help</attribute>
+			<attribute name="action">app.help</attribute>
+			<attribute name="accel">F1</attribute>
+		</item> -->
+	</section>
+</menu>
+
+<menu id="playermenu">
+	<section>
+		<section id="opendirectory-placeholder"/>
+	</section>
+	<section>
+		<submenu>
+			<attribute name="label" translatable="yes">_Aspect Ratio</attribute>
+			<section>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Auto</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">0</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">Square</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">1</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">4∶3 (TV)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">2</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">16∶9 (Widescreen)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">3</attribute>
+				</item>
+				<item>
+					<attribute name="label" translatable="yes" comments="Translators: an entry in the 'Aspect Ratio' menu, used to choose the displayed aspect ratio of a video" context="Aspect ratio">2.11∶1 (DVB)</attribute>
+					<attribute name="action">app.aspect-ratio</attribute>
+					<attribute name="target" type="i">4</attribute>
+				</item>
+			</section>
+		</submenu>
+		<section id="rotation-placeholder"/>
+	</section>
+
+	<section>
+		<item>
+			<attribute name="label" translatable="yes">Prefere_nces</attribute>
+			<attribute name="action">app.preferences</attribute>
+		</item>
+		<!-- <item>
+			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+			<attribute name="action">app.shortcuts</attribute>
+		</item> -->
+	</section>
+	<section>
+		<section id="properties-placeholder"/>
+	</section>
+	
+</menu>
+
+
+<menu id="gomenu">
+	<section>
+		<item>
+			<attribute name="label" translatable="yes">_Repeat</attribute>
+			<attribute name="action">app.repeat</attribute>
+		</item>
+	</section>
+
+
+	<section id="variable-rate-placeholder">
+		<attribute name="label" translatable="yes">Speed</attribute>
+	</section>
+</menu>
+
+
+
+  <object class="HdyApplicationWindow" id="totem_main_window">
+    <property name="can_focus">False</property>
+    <property name="events">GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK</property>
+
+        <child>
+          <object class="HdyFlap" id="flap">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <property name="fold-policy">never</property>
+            <property name="modal">False</property>
+            <child type="flap">
+              <object class="gtkmm__CustomObject_17TotemPlayerHeader" id="player_header">
+                <property name="visible">True</property>
+               </object>
+            </child>
+            <child>
+              <object class="GtkOverlay">
+                <property name="visible">True</property>
+                <child>
+                  <object class="gtkmm__CustomObject_16BaconVideoWidget" id="bvw">
+                    <property name="visible">True</property>
+                    <property name="events">GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK</property>
+                  </object>
+                </child>
+                <!-- <child type="overlay">
+                  <object class="GtkSpinner" id="spinner">
+                    <property name="visible">False</property>
+                    <property name="vexpand">True</property>
+                    <property name="hexpand">True</property>
+                    <style>
+                      <class name="osd"/>
+                    </style>
+                  </object>
+                </child> -->
+                <child type="overlay">
+                  <object class="GtkBox" id="toolbar">
+                    <property name="visible">True</property>
+                    <property name="orientation">horizontal</property>
+                    <property name="can_focus">False</property>
+                    <property name="border_width">0</property>
+                    <property name="opacity">0.86</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="valign">end</property>
+                    <style>
+                      <class name="osd"/>
+                      <class name="bottom"/>
+                      <class name="inline-toolbar"/>
+                    </style>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="margin-top">10</property>
+                        <property name="margin-bottom">10</property>
+                        <child>
+                          <object class="GtkBox" id="controls_box">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <style>
+                              <class name="linked"/>
+                            </style>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="action-name">app.previous-chapter</property>
+                                <property name="tooltip-text" translatable="yes">Previous Chapter/Movie</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Previous Chapter/Movie</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="icon-name">media-skip-backward-symbolic</property>
+                                    <property name="icon-size">1</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="play_button">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="image">icon_play</property>
+                                <property name="action-name">app.play</property>
+                                <property name="tooltip-text" translatable="yes">Play / Pause</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Play / Pause</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="action-name">app.next-chapter</property>
+                                <property name="tooltip-text" translatable="yes">Next Chapter/Movie</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject">
+                                    <property name="AtkObject::accessible-name" translatable="yes">Next Chapter/Movie</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="visible">True</property>
+                                    <property name="icon-name">media-skip-forward-symbolic</property>
+                                    <property name="icon-size">1</property>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="bottom_row">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="border_width">0</property>
+                            <property name="spacing">4</property>
+
+                            <child>
+                              <object class="gtkmm__CustomObject_14BaconTimeLabel" id="time_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_start">16</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+
+
+                            <child>
+                              <object class="gtkmm__CustomObject_13BitfieldScale" id="bitfield_progress_bar">
+                                <property name="visible">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="draw_value">False</property>
+                                <property name="restrict-to-fill-level">False</property>   
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+
+                            <child>
+                              <object class="gtkmm__CustomObject_14BaconTimeLabel" id="time_rem_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <!-- <property name="remaining">True</property> -->
+                                <property name="margin_end">16</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkBox" id="box2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkMenuButton" id="go_button">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="relief">normal</property>
+                                <property name="valign">center</property>
+                                <property name="use-popover">True</property>
+                                <property name="menu-model">gomenu</property>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                                <child>
+                                  <object class="GtkImage" id="go_button_image">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="icon_name">totem-playback-options-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                        
+                        <child>
+                          <object class="GtkBox" id="box1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkVolumeButton" id="volume_button">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="relief">none</property>
+                                <property name="focus_on_click">False</property>
+                                <property name="orientation">vertical</property>
+                                <property name="valign">center</property>
+                                <property name="icons">audio-volume-muted-symbolic
+audio-volume-high-symbolic
+audio-volume-low-symbolic
+audio-volume-medium-symbolic</property>
+                                <property name="use_symbolic">True</property>
+                                <style>
+                                  <class name="image-button"/>
+                                </style>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pass-through">True</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <!-- <packing> -->
+            <!-- <property name="name">player</property> -->
+          <!-- </packing> -->
+        </child>
+
+    
+  </object>  
+</interface>

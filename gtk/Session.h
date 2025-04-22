@@ -56,12 +56,10 @@ public:
         ERR_NO_MORE_TORRENTS = 1000 /* finished adding a batch */
     };
 
-  
-
     using Model = IF_GTKMM4(Gio::ListModel, Gtk::TreeModel);
 
-public:
 
+public:
 
     ~Session() override;
 
@@ -134,7 +132,7 @@ public:
 
     lt::torrent_handle const find_torrent(std::uint32_t uniq_id);
 
-    lt::torrent_status find_torrent_status(std::uint32_t uniq_id);
+    lt::torrent_status const& find_torrent_status(std::uint32_t uniq_id);
 
     Glib::RefPtr<Torrent> const& find_Torrent(std::uint32_t uniq_id);
 
@@ -190,6 +188,16 @@ public:
     // void start_now(std::uint32_t id);
 
 
+    
+    /*-----Totem-gstbt-related-----*/
+    void retrieve_btdemux_gobj(GObject* obj);
+    lt::bitfield const& totem_fetch_piece_bitfield();
+    int totem_get_total_num_pieces();
+    void totem_should_open(std::uint32_t id);
+    void btdemux_should_close();
+    bool is_totem_active();
+
+
 
     /**
     ***  Set a preference *settings_pack* value, save the prefs file, and emit the "prefs-changed" signal
@@ -213,10 +221,10 @@ public:
     sigc::signal<void(int const)>& signal_prefs_changed();
 
         
-    protected:
+protected:
         explicit Session(lt::session_params && sp);
 
-    private:
+private:
         class Impl;
         std::unique_ptr<Impl> const impl_;
 };

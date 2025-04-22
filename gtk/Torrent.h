@@ -122,6 +122,7 @@ public:
     //an integer identifier
     std::uint32_t get_uniq_id() const;
     
+  
 
 
     Glib::ustring const& get_name_collated() const;
@@ -160,6 +161,9 @@ public:
     static int compare_by_uniq_id(Glib::RefPtr<Torrent const> const& lhs, Glib::RefPtr<Torrent const> const& rhs);
     static bool less_by_uniq_id(Glib::RefPtr<Torrent const> const& lhs, Glib::RefPtr<Torrent const> const& rhs);
 
+
+    /*Totem-gstbt related*/
+    int get_total_num_pieces();
 
 
 
@@ -206,3 +210,5 @@ private:
 };
 
 DEFINE_FLAGS_OPERATORS(Torrent::ChangeFlag)
+
+

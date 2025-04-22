@@ -3375,8 +3375,9 @@ namespace {
 				, [this](torrent const* lhs, torrent const* rhs)
 				{ return lhs->seed_rank(m_settings) > rhs->seed_rank(m_settings); });
 		}
+											#if 0
 											printf("In recalculate_auto_managed_torrents v \n");
-
+											#endif
 		auto_manage_checking_torrents(checking, checking_limit);
 
 		if (settings().get_bool(settings_pack::auto_manage_prefer_seeds))
@@ -4434,7 +4435,7 @@ namespace {
 		tcp::endpoint bind_ep(address_v4(), 0);
 		if (m_settings.get_int(settings_pack::outgoing_port) > 0)
 		{
-			printf("]]]]]JJJ\n");
+			// printf("]]]]]JJJ\n");
 #ifdef TORRENT_WINDOWS
 			s.set_option(exclusive_address_use(true), ec);
 #else
@@ -4494,13 +4495,14 @@ namespace {
 
 		if (!m_outgoing_interfaces.empty())
 		{
+			#if 0
 			printf("m_outgoing_interface>>>\n");
 			for(auto s: m_outgoing_interfaces)
 			{
 				printf("%s,", s.c_str());
 			}
 			printf("end of m_outgonig_interface\n");
-
+			#endif
 			if (m_interface_index >= m_outgoing_interfaces.size()) m_interface_index = 0;
 			std::string const& ifname = m_outgoing_interfaces[m_interface_index++];
 
@@ -4515,7 +4517,7 @@ namespace {
 		if (bind_ep.address().is_unspecified())
 		{
 
-			printf("]]]]]LLL\n");
+			// printf("]]]]]LLL\n");
 
 			if (remote_address.is_v6())
 				bind_ep.address(address_v6::any());

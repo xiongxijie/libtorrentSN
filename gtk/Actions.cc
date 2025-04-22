@@ -47,7 +47,7 @@ namespace
 
 Session* myCore = nullptr;
 
-void action_cb(Gio::SimpleAction& action, gpointer user_data)
+void action_cb(Gio::SimpleAction& action, gpointer user_data/*Application obj*/)
 {
     gtr_actions_handler(action.get_name(), user_data);
 }
@@ -61,6 +61,7 @@ void sort_changed_cb(Gio::SimpleAction& action, Glib::VariantBase const& value, 
 std::array<std::string_view, 2> const show_toggle_entries = {
     "toggle-main-window"sv,
     "toggle-message-log"sv,
+
 };
 
 void toggle_pref_cb(Gio::SimpleAction& action, int const key, gpointer /*user_data*/)
@@ -92,7 +93,7 @@ std::unordered_map<std::string_view, int> const pref_toggle_entries = {
 // };
 
 
-std::array<std::string_view, 29> const entries = {
+std::array<std::string_view, 30> const entries = {
     "copy-magnet-link-to-clipboard"sv,
     "open-torrent-from-url"sv,
     "open-torrent"sv,
@@ -121,21 +122,29 @@ std::array<std::string_view, 29> const entries = {
     "queue-move-up"sv,
     "queue-move-down"sv,
     "queue-move-bottom"sv,
-    "present-main-window"sv
+    "present-main-window"sv,
+    "open-totem"sv,
+   
 };
+
+
 
 Gtk::Builder* myBuilder = nullptr;
 
 std::unordered_map<Glib::ustring, Glib::RefPtr<Gio::SimpleAction>> key_to_action;
 
+
 } //anonymous namespace
+
+
+
 
 void gtr_actions_set_core(Glib::RefPtr<Session> const& core)
 {
     myCore = core.get();
 }
 
-Glib::RefPtr<Gio::SimpleActionGroup> gtr_actions_init(Glib::RefPtr<Gtk::Builder> const& builder, gpointer callback_user_data, lt::settings_pack sett)
+Glib::RefPtr<Gio::SimpleActionGroup> gtr_actions_init(Glib::RefPtr<Gtk::Builder> const& builder, gpointer callback_user_data/*Application obj*/, lt::settings_pack sett)
 {
 
     myBuilder = builder.get();
@@ -217,6 +226,7 @@ void gtr_action_set_toggled(Glib::ustring const& name, bool is_toggled)
     get_action(name)->change_state(is_toggled);
 }
 
+//get from resources in gresource.xml
 Glib::RefPtr<Glib::Object> gtr_action_get_object(Glib::ustring const& name)
 {
     return myBuilder->get_object(name);

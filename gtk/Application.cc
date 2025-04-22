@@ -20,6 +20,16 @@
 #include "RelocateDialog.h"
 #include "Session.h"
 #include "StatsDialog.h"
+#include "TotemWindow.h" // for MyHdyApplicationWindow (the Window for Totem)
+#include "TotemPlayerHeader.h"
+#include "TotemPrefsDialog.h"
+#include "BaconVideoWidget.h"
+#include "BaconTimeLabel.h"
+#include "BitfieldScale.h"
+
+
+
+
 #include "Utils.h"
 #include "tr-transmission.h"
 #include "tr-log.h"
@@ -250,7 +260,8 @@ private:
         MakeDialog,
         RelocateDialog,
         StatsDialog,
-        TorrentUrlChooserDialog 
+        TorrentUrlChooserDialog,
+        TotemWindow
     };
 
     std::string getPeriphralDialogName(PeriphralDialogEnum dialog);
@@ -303,8 +314,11 @@ private:
     std::unordered_map<PeriphralDialogEnum, std::shared_ptr<Gtk::Dialog>> active_dialogs_;
 
 
+    std::unordered_map<PeriphralDialogEnum, std::shared_ptr<Gtk::Window>> special_dialogs_;
+
     // lt::session ses_;
     // lt::session_proxy ses_proxy_;
+
 
 };
 
@@ -361,6 +375,8 @@ std::string Application::Impl::getPeriphralDialogName(PeriphralDialogEnum dialog
             return "StatsDialog";
         case PeriphralDialogEnum::TorrentUrlChooserDialog:
             return "TorrentUrlChooserDialog";
+        case PeriphralDialogEnum::TotemWindow:
+            return "TotemWindow";
         default:
             return "UnknownDialog";
     }
@@ -441,6 +457,11 @@ bool Application::Impl::refresh_actions()
 
         auto const sel_counts = get_selected_torrent_counts();
         bool const has_selection = sel_counts.total_count > 0;
+
+
+        //Only allowed one Totem for one torrnet, if want to open for another torrent, must close the current Totem Window
+        gtr_action_set_sensitive("open-totem", sel_counts.total_count == 1 && !core_->is_totem_active());
+
 
         gtr_action_set_sensitive("select-all", total != 0);
         gtr_action_set_sensitive("deselect-all", total != 0);
@@ -615,6 +636,9 @@ void Application::Impl::on_startup()
     PathButton();
 
 
+
+
+
 #ifdef G_OS_UNIX
     g_unix_signal_add(SIGINT, &signal_handler, this);
     g_unix_signal_add(SIGTERM, &signal_handler, this);
@@ -638,7 +662,7 @@ void Application::Impl::on_startup()
     core_ = Session::create(std::move(tr_sessionLoadSettings()));
  
 
-            std::printf("In Application::on_startup core_ %p !\n", &(core_->get_session()));
+            std::printf("In Application::on_startup core_ %p !\n", static_cast<void*>(&(core_->get_session())));
 
     /* ensure the directories are created */
     if (auto const str = core_->get_sett().get_str(lt::settings_pack::TR_KEY_download_dir); !str.empty())
@@ -654,6 +678,7 @@ void Application::Impl::on_startup()
     ui_builder_ = Gtk::Builder::create_from_resource(gtr_get_full_resource_path("transmission-ui.xml"s));
     auto const actions = gtr_actions_init(ui_builder_, this, core_->get_sett());
 
+    // main-window-menu written in transmission-ui.xml
     auto const main_menu = gtr_action_get_object<Gio::Menu>("main-window-menu");
     app_.set_menubar(main_menu);
 
@@ -732,7 +757,7 @@ std::vector<lt::torrent_status> Application::Impl::get_torrent_status() const
 
     for(auto& i : unq_ids)
     {
-        auto st = core_->find_torrent_status(i);
+        auto const& st = core_->find_torrent_status(i);
         if(!st.handle.is_valid())
             continue;
         ret.push_back(st);
@@ -1164,6 +1189,20 @@ bool Application::Impl::on_session_closed()
         ptr.reset();
     }
     active_dialogs_.clear();
+
+
+
+    for (auto& [key, ptr] : special_dialogs_) 
+    {
+        std::string const& keyName = getPeriphralDialogName(key);
+        std::cout << "on_session_closed: Destruct " << keyName << std::endl;
+
+        //manage referencec count
+        ptr.reset();
+    }
+    special_dialogs_.clear();
+
+
 
 
     /*Destruct Glib::RefPtr<Session>*/
@@ -1967,6 +2006,63 @@ void Application::Impl::actions_handler(Glib::ustring const& action_name)
         gtr_window_present(prefs_);
     }
 
+    else if (action_name == "open-totem")
+    {
+        //uniq_ids is sure to contain only one element
+        auto const uniq_ids = get_selected_torrent_uniq_ids();
+        std::uint32_t cur_tor_uniq_id = uniq_ids.front();
+
+        core_->totem_should_open(cur_tor_uniq_id);
+
+
+        app_.mark_busy();/*************************************/
+
+        
+        //this is maybe to register this type (let its class_init(),instance_init() method be called), so totem.ui file can use their type
+        TotemPlayerHeader();
+        BaconTimeLabel();
+        BitfieldScale();
+        BaconVideoWidget();
+                                // printf ("Application.cc (typeid of BaconVideoWidget is %s) \n", typeid(BaconVideoWidget).name());
+                                // printf ("Application.cc (typeid of TotemPlayerHeader is %s) \n", typeid(TotemPlayerHeader).name());
+                                // printf ("Application.cc (typeid of BaconTimeLabel is %s) \n", typeid(BaconTimeLabel).name());
+                                // printf ("Application.cc (typeid of BitfieldScale is %s) \n", typeid(BitfieldScale).name());
+
+        auto wnd = std::shared_ptr<MyHdyApplicationWindow>(MyHdyApplicationWindow::create(*wind_, core_, cur_tor_uniq_id));
+        
+
+        app_.unmark_busy();/*************************************/
+
+        //its owneris `special_dialogs_` field, so it kept alive even though go out of this else-if scope
+        special_dialogs_[PeriphralDialogEnum::TotemWindow] = wnd;
+
+        // Capture as weak_ptr, dont need to worry the reference count that it may not destructed successfully
+        std::weak_ptr<MyHdyApplicationWindow> weak_dialog = wnd; 
+
+        // when you open multiple this Dialog, the original (shared_ptr) reference count 
+        // will drop to zero and its destrutor be called, 
+        // so we cannot (no need to) open multiple identical Dialogs  
+        gtr_window_on_close(*wnd, [weak_dialog,this]() mutable { 
+            core_->btdemux_should_close();
+            // Check if dialog is still alive
+            if (auto locked_dialog = weak_dialog.lock()) 
+            { 
+                locked_dialog->on_closing_sync_display();
+                special_dialogs_.erase(PeriphralDialogEnum::TotemWindow);
+                std::cout << "Destruct MyHdyApplicationWindow on handler" << std::endl;
+                // Decrease the reference count
+                locked_dialog.reset(); 
+            }
+        });
+
+        //after created instance, call show() method on it
+        wnd->show();
+
+        wnd->init_plugins_system();
+    }
+
+
+
     /*MessageLogWindow*/
     else if (action_name == "toggle-message-log")
     {
@@ -2008,7 +2104,6 @@ void Application::Impl::actions_handler(Glib::ustring const& action_name)
             // Capture as weak_ptr, dont need to worry the reference count that it may not destructed successfully
             std::weak_ptr<RelocateDialog> weak_dialog = dialog; 
 
-  
             // when you open multiple this Dialog, the original (shared_ptr) reference count 
             // will drop to zero and its destrutor be called, 
             // so we cannot (no need to) open multiple identical Dialogs  

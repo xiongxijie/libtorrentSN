@@ -99,8 +99,8 @@ namespace
             | alert_category::peer_log
             // | alert_category::incoming_request
             // | alert_category::port_mapping_log
-            | alert_category::file_progress;
-            // | alert_category::piece_progress;
+            | alert_category::file_progress
+            | alert_category::piece_progress;
 
         lt::settings_pack pack;
         pack.set_int(settings_pack::alert_mask, mask);

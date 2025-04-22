@@ -7,7 +7,7 @@
 
 #include "GtkCompat.h"
 
-#include "tr-transmission.h"
+#include "tr-error.h"
 #include "tr-macros.h"
 #include "tr-values.h"
 

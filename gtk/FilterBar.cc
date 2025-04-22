@@ -733,6 +733,8 @@ FilterBarExtraInit::FilterBarExtraInit()
 
 void FilterBarExtraInit::class_init(void* klass, void* /*user_data*/)
 {
+    // printf ("(FilterBarExtraInit::class_init)\n");
+
     auto* const widget_klass = GTK_WIDGET_CLASS(klass);
 
     gtk_widget_class_set_template_from_resource(widget_klass, gtr_get_full_resource_path("FilterBar.ui").c_str());
@@ -745,6 +747,8 @@ void FilterBarExtraInit::class_init(void* klass, void* /*user_data*/)
 
 void FilterBarExtraInit::instance_init(GTypeInstance* instance, void* /*klass*/)
 {
+    // printf ("(FilterBarExtraInit::class_init)\n");
+
     gtk_widget_init_template(GTK_WIDGET(instance));
 }
 
@@ -767,7 +771,11 @@ FilterBar::FilterBar(
 
 
 
-FilterBar::~FilterBar() = default;
+FilterBar::~FilterBar() /*= default;*/
+{
+    std::cout << "FilterBar::~FilterBar() " << std::endl;
+
+}
 
 
 
@@ -819,6 +827,7 @@ FilterBar::Impl::Impl(FilterBar& widget, Glib::RefPtr<Session> const& core)
     filter_->signal_changed().connect([this](auto /*changes*/) { update_count_label_idle(); });
 
 
+
     /********** */
     filter_model_ = FilterListModel<Torrent>::create(core_->get_sorted_model() /*Glib::RefPtr<Gtk::TreeModel>*/, filter_);
 
@@ -840,6 +849,9 @@ FilterBar::Impl::Impl(FilterBar& widget, Glib::RefPtr<Session> const& core)
     entry_->signal_changed().connect(sigc::mem_fun(*this, &Impl::update_filter_text));
 
 }
+
+
+
 
 
 FilterBar::Impl::~Impl()

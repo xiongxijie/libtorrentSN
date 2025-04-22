@@ -16,6 +16,7 @@ set(CMAKE_MACOSX_RPATH ON)
 project(libtorrent
 	DESCRIPTION "Bittorrent library"
 	VERSION 2.11.0
+	LANGUAGES C CXX
 )
 set (SOVERSION "2.11")
 
@@ -1117,19 +1118,36 @@ if(PKG_CONFIG_FOUND)
 	message("---- PKG_CONFIG FOUND !!! \n")
 endif()
 
+# GTK3 is the prefix for the variables that pkg_check_modules generates, not the gtk3 lib
+# -----${GTK3_FOUND} → Indicates whether the required packages were found (TRUE or FALSE).
+# -----{GTK3_LIBRARIES} → List of libraries to link against.
+# -----${GTK3_CFLAGS} → Compiler flags needed for these packages.
+# -----${GTK3_INCLUDE_DIRS} → List of include directories for the found packages.
 pkg_check_modules(GTK3
 	gtkmm-3.0>=${GTKMM3_MINIMUM}
 	glibmm-2.4>=${GLIBMM_MINIMUM}
 	giomm-2.4>=${GIOMM_MINIMUM}
 	glib-2.0
+	libhandy-1 #used by totem ui
+	libpeas-1.0 #used by totem plugins system 
+	gobject-introspection-1.0>=0.6.7 #used by totem plugin engine
+	libportal-gtk3 #used by totem's open-directory plugin
+	gstreamer-1.0>=1.21.1
+	gstreamer-tag-1.0>=1.21.1 # maybe redundant, gstreamer-1.0 already cover these modules for us
+	gstreamer-video-1.0>=1.21.1
+	gstreamer-pbutils-1.0>=1.21.1
+	gstreamer-base-1.0>=1.21.1
+	gstreamer-plugins-base-1.0>=1.21.1
+	gstreamer-plugins-good-1.0>=1.21.1
+	# pangomm-1.4 # gtkmm-3.0 already use pangomm,since we dont explicitly include pangomm headers, so no need to declare it as a explicit dependecy
 	)
 set(GTK_VERSION 3)
 set(GTK_FOUND ${GTK3_FOUND})
 
-message("---- GTK3_FOUND:${GTK3_FOUND}!!!!\n")
+message("---- dependencies listed in GTK3 found: ${GTK3_FOUND}!!!!\n")
 
 if(NOT GTK_FOUND)
-	message(FATAL_ERROR "GTK wasn't found")
+	message(FATAL_ERROR "dependencies listed in GTK3 no all found")
 endif()
 
 
@@ -1137,8 +1155,90 @@ endif()
 
 
 
-### Compiler Warnings
 
+
+
+
+
+
+
+
+
+
+#************* Check the target version Gstreamer(system one or custom one) have plugins we needed for BaconVideoWidget is available
+# If you export PKG_CONFIG_PATH to your custom GStreamer installation before running pkg_check_modules, it will prioritize that version
+
+# If you want to hardcode the custom GStreamer path directly in the CMake file
+# set(MY_GST_PATH "/custom/path/to/my gstreamer")
+# set(ENV{PKG_CONFIG_PATH} "${MY_GST_PATH}/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
+# pkg_check_modules(GST REQUIRED gstreamer-1.0)
+
+#  pkg-config will prioritize the GStreamer version found in PKG_CONFIG_PATH path when resolving gstreamer-1.0
+# so we can retrieve the tools directory from pkg-config for our targeted version gstreamer (whether system install one or our custom path one)
+execute_process(
+    COMMAND pkg-config --variable=toolsdir gstreamer-1.0
+    OUTPUT_VARIABLE OUR_GST_TOOLSDIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# NO_DEFAULT_PATH flag in the find_program command ensures that only the paths you provide will be searched for the program gst-inspect-1.0. 
+# Without this flag, CMake would also check the system's default locations (e.g., system-wide directories like /usr/bin, etc.) for the program.
+find_program(GST_INSPECT gst-inspect-1.0 PATHS ${OUR_GST_TOOLSDIR} NO_DEFAULT_PATH)
+if(NOT GST_INSPECT)
+    message(FATAL_ERROR "Cannot find required GStreamer-1.0 tool 'gst-inspect-1.0'. It should be part of gstreamer-1_0-utils. Please install it.")
+endif()
+
+#we can use gst-inspect-1.0 [plugin_name] | echo $? manually in terminal to check whether that plugin exists in your target gstreamer(system one or custom one)
+set(GST_BASE_PLUGINS_NEEDED filesrc videoscale decodebin)
+set(GST_GOOD_PLUGINS_NEEDED autoaudiosink autovideosink scaletempo gtkglsink glsinkbin)
+# Flag to check if all gsteamer plugins are found
+set(ALL_GST_PLUGINS_FOUND TRUE)
+foreach(PLUGIN IN LISTS GST_BASE_PLUGINS_NEEDED)
+    execute_process(
+        COMMAND ${GST_INSPECT} ${PLUGIN}
+        RESULT_VARIABLE RESULT
+        OUTPUT_QUIET ERROR_QUIET
+    )
+    if(NOT RESULT EQUAL 0)
+        message(FATAL_ERROR "Cannot find required GStreamer-1.0 plugin '${PLUGIN}'. It should be part of gst-plugins-base. Please install it.")
+		set(ALL_GST_PLUGINS_FOUND FALSE)
+    endif()
+endforeach()
+foreach(PLUGIN IN LISTS GST_GOOD_PLUGINS_NEEDED)
+    execute_process(
+        COMMAND ${GST_INSPECT} ${PLUGIN}
+        RESULT_VARIABLE RESULT
+        OUTPUT_QUIET ERROR_QUIET
+    )
+    if(NOT RESULT EQUAL 0)
+        message(FATAL_ERROR "Cannot find required GStreamer-1.0 plugin '${PLUGIN}'. It should be part of gst-plugins-good. Please install it.")
+		set(ALL_GST_PLUGINS_FOUND FALSE)
+    endif()
+endforeach()
+# Print success message if all plugins are found
+if(ALL_GST_PLUGINS_FOUND)
+    message(STATUS "All required GStreamer plugins are installed and found.\n\n\n")
+endif()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Compiler Warnings
 set(C_WARNING_FLAGS)
 set(CXX_WARNING_FLAGS)
 
@@ -1260,20 +1360,28 @@ add_compile_options(
 
 
 if(GTK_FOUND)
-	add_library(gtk_impl INTERFACE IMPORTED)
+		# INTERFACE means does not compile or link any object files itself, but instead, it propagates its properties 
+		# (like compiler options, include directories, and link libraries) to other targets that link to it.
+		
+		# IMPORTED means exists externally libs, CMake does not compile or link anything for an IMPORTED target
+	add_library(gtk_impl INTERFACE IMPORTED) # creates a virtual target named gtk_impl that is not compiled, 
+	# Any target that links to gtk_impl will automatically get all GTK3-related settings
 
+	# This applies compiler flags (like -DGTK_ENABLE_DEBUG or -fPIC) needed for `GTK3`(a pkg_check_modules preifx) to all targets who try link to gtk_impl.
     target_compile_options(gtk_impl
         INTERFACE
             ${GTK${GTK_VERSION}_CFLAGS_OTHER})
 
+	#  add GTK3(a pkg_check_modules prefix) include directories to any target who link against gtk_impl. 
     target_include_directories(gtk_impl
         INTERFACE
             ${GTK${GTK_VERSION}_INCLUDE_DIRS})
 
+	# sets the GTK3(a pkg_check_modules prefix) library search paths, ensuring that the linker can find libraries in GTK3  
     target_link_directories(gtk_impl
         INTERFACE
             ${GTK${GTK_VERSION}_LIBRARY_DIRS})
-
+	# This makes gtk_impl propagate the GTK3(a pkg_check_modules prefix) library dependencies (e.g., libgtk-3.so, libglib-2.0.so) to any target who will links with gtk_impl
     target_link_libraries(gtk_impl
         INTERFACE
             ${GTK${GTK_VERSION}_LIBRARIES})

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="transmission-gtk">
+  <!-- interface-requires gtk+ 3.11 -->
+  <template class="gtkmm__CustomObject_17TotemPlayerHeader" parent="GtkBin">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="HdyHeaderBar" id="header_bar">
+            <property name="show-close-button">True</property>
+            <property name="visible">True</property>
+            
+            <!-- svg icon files actually reside in /usr/share/icons/Yaru/scalable -->
+
+            <child>
+              <object class="GtkButton" id="unfullscreen_button">
+                <property name="visible">False</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.fullscreen</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-restore-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+
+
+            <child>
+              <object class="GtkMenuButton" id="player_menu_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="use-popover">True</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-more-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+
+
+
+            <child>
+              <object class="GtkButton" id="fullscreen_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.fullscreen</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">view-fullscreen-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="pack-type">end</property>
+              </packing>
+            </child>
+
+            
+          </object>
+        </child>
+  </template>
+</interface>

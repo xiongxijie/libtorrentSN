@@ -114,7 +114,7 @@ private:
 
 private:
 
-    Glib::RefPtr<Gtk::Builder> const& builder_;
+    Glib::RefPtr<Gtk::Builder> const& builder_;// a reference, not a copy
 
     Glib::RefPtr<Session> const& core_;
 
@@ -742,15 +742,13 @@ private:
 
 private:
     PrefsDialog& dialog_;
-    //const-reference of RefPtr dont affect reference count
+    //reference (const or not) of RefPtr dont affect reference count
     Glib::RefPtr<Session> const& core_;
 
-    // Glib::RefPtr<Gtk::Builder> builder_;
 
-    //their lifetime is managed by PrefSDialog::Impl
-    // SpeedPage* speed_pg_ = nullptr;
-    // DownloadingPage* down_pg_ = nullptr;
-    // NetworkPage* network_pg_ = nullptr;
+    SpeedPage* speed_page_;
+    DownloadingPage* down_page_;
+    NetworkPage* net_page_;
 };
 
 
@@ -790,17 +788,18 @@ void PrefsDialog::Impl::response_cb(int response)
 PrefsDialog::Impl::Impl(PrefsDialog& dialog, Glib::RefPtr<Gtk::Builder> const& builder, Glib::RefPtr<Session> const& core)
     : dialog_(dialog)
     , core_(core)
-    // , builder_(builder)
-    // , speed_pg_(gtr_get_widget_derived<SpeedPage>(builder, "speed_page_layout", core_))
-    // , down_pg_(gtr_get_widget_derived<DownloadingPage>(builder, "downloading_page_layout", core_))
-    // , network_pg_(gtr_get_widget_derived<NetworkPage>(builder, "network_page_layout", core_))
+  
 {
 
-    // no field to receivce the returned widget ptr,
-    // automactically destructed as long as copying builder as a field  
-    gtr_get_widget_derived<SpeedPage>(builder, "speed_page_layout", core_);
-    gtr_get_widget_derived<DownloadingPage>(builder, "downloading_page_layout", core_);
-    gtr_get_widget_derived<NetworkPage>(builder, "network_page_layout", core_);
+    /*
+        A Gtk::Builder holds a reference to all objects that it has constructed
+        and drops these references when it is deleted. This deletion can
+        cause the destruction of non-widget objects or widgets which are not
+        contained in a toplevel window.
+    */
+    speed_page_=gtr_get_widget_derived<SpeedPage>(builder, "speed_page_layout", core_);
+    down_page_=gtr_get_widget_derived<DownloadingPage>(builder, "downloading_page_layout", core_);
+    net_page_=gtr_get_widget_derived<NetworkPage>(builder, "network_page_layout", core_);
 
     dialog_.signal_response().connect(sigc::mem_fun(*this, &Impl::response_cb));
 
@@ -809,7 +808,10 @@ PrefsDialog::Impl::Impl(PrefsDialog& dialog, Glib::RefPtr<Gtk::Builder> const& b
 
 std::unique_ptr<PrefsDialog> PrefsDialog::create(Gtk::Window& parent, Glib::RefPtr<Session> const& core)
 {
+    // as long as there is a reference to the builder object, it will not be destroyed
     auto const builder = Gtk::Builder::create_from_resource(gtr_get_full_resource_path("PrefsDialog.ui"));
+    // --Passing a Glib::RefPtr by const reference (const&) does not increase the reference count.
+    // --Passing a Glib::RefPtr by value or assigning it to another Glib::RefPtr will increase the reference count.
     return std::unique_ptr<PrefsDialog>(gtr_get_widget_derived<PrefsDialog>(builder, "PrefsDialog", parent, core));
 }
 
@@ -831,11 +833,18 @@ PrefsDialog::~PrefsDialog() /*= default;*/
 
 PrefsDialog::Impl::~Impl()
 {
-                            std::cout << "PrefsDialog::Impl::~Impl() " << std::endl;
+                    
+    std::cout << "PrefsDialog::Impl::~Impl() " << std::endl;
 
     // builder_->unreference();
     // builder_.reset();
 
+
+    ///No need to manually manage lifetime of builder, it is wrapped in Glib::RefPtr,
+    //--  when you have ref on it , it will not free prematurely
+    //--  when you no more needs it, its ref is down to zero, then it will be freed automatically
+
+    
     //call PageBase::builder_ field unreference() instead
     // delete speed_pg_;
     // delete down_pg_;

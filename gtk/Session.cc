@@ -41,8 +41,8 @@
 #endif
 
 
-// #include <glib.h>
-// #include <glib-object.h> 
+#include <glib.h>
+#include <glib-object.h> 
 
 #include <fmt/core.h>
 
@@ -81,7 +81,8 @@
 
 
 
-
+//totem-gstbt
+#include "gst_bt_demux.hpp" // for btdemux exposed function
 
 
 using namespace lt;
@@ -148,11 +149,15 @@ public:
     static lt::torrent_handle empty_handle_;
     static Glib::RefPtr<Torrent> empty_Tor_RefPtr_;
 
+    /*-----gstbt-related-----*/
+    void retrieve_btdemux_gobj(GObject* obj);
+    lt::bitfield const& totem_fetch_piece_bitfield();
+    int totem_get_total_num_pieces();
+    void totem_should_open(std::uint32_t id);
+    void btdemux_should_close();
+    bool is_totem_active();
 
-
-
-
-    lt::torrent_status find_torrent_status(std::uint32_t uniq_id);
+    lt::torrent_status const& find_torrent_status(std::uint32_t uniq_id);
 
     lt::torrent_handle const find_torrent(std::uint32_t uniq_id);
 
@@ -354,11 +359,15 @@ private:
 
     // sigc::connection idle_handle_alerts_;
 
+
     std::mutex handle_alerts_mutex_;
 
     bool closing_ = false;
 
-    AlertQueue alert_queue_;
+
+    // AlertQueue alert_queue_;
+    GObject* btdemux_gobj_ = nullptr;
+    std::uint32_t totem_uniq_id_ = -1;
 
     int num_outstanding_resume_data_ = 0;
 
@@ -1064,12 +1073,12 @@ void Session::Impl::dispatch_torrent_status_alert(std::vector<lt::torrent_status
     {
         auto j = m_all_torrents_.find(t.handle);   
 
-        // add new 
+        //----add new one
         if (j == m_all_torrents_.end())
 		{
             continue;
 		}
-        //update existent one
+        //----update existent one
 		else
 		{           
                     // std::cout << "in Session::Impl::dispatch_torrent_status_alert" << std::endl;
@@ -1077,7 +1086,9 @@ void Session::Impl::dispatch_torrent_status_alert(std::vector<lt::torrent_status
 
             std::lock_guard<std::mutex> lock(underlying->fetch_tor_status_mutex());  // Lock before modifying
 
-            underlying->get_status_ref() = std::move(t);// Safely update
+            //**get_status_ref() exposed a non-const reference of its private field "tor_status_" in class Torrent::Impl 
+            // Safely update: 1.The content of t is moved into tor_status_. 2.The old value of tor_status_ is destroyed (freed) 
+            underlying->get_status_ref() = std::move(t);
 
                     // std::cout << "update tor_statsu_ " << std::endl;
 
@@ -1596,9 +1607,9 @@ void Session::Impl::dispatch_trackers_alert(lt::torrent_handle& hdl , std::vecto
 bool Session::Impl::post_alerts_on_session()try
 {
    
-    /****post alerts */
+    /****post alerts ****/
     auto& ses = get_session();
-    ses.post_torrent_updates();
+    ses.post_torrent_updates();//post state_update_alert
     ses.post_session_stats();
 
     
@@ -1841,8 +1852,22 @@ bool Session::Impl::post_alerts_on_session()try
                         break;
 
                     }
-                    
+                    /*******************feed gst-btdemux loop********************/
+                    case read_piece_alert::alert_type:
+                    {
+                        if(totem_uniq_id_ > -1){
+                            btdemux_feed_read_piece_alert(btdemux_gobj_, a);
+                        }
+                        break;
+                    }
 
+                    case piece_finished_alert::alert_type:
+                    {
+                        if(totem_uniq_id_ > -1){
+                            btdemux_feed_piece_finished_alert(btdemux_gobj_, a);
+                        }
+                        break;
+                    }
 
 
                 }
@@ -1943,6 +1968,10 @@ Session::Impl::~Impl()
     post_torrent_update_timer_.disconnect();
     // alert_queue_.stop_processing();
     handle_alerts_timer_.disconnect();
+
+    if(btdemux_gobj_){
+        btdemux_gobj_ = nullptr;
+    }
 
 }
 
@@ -3026,13 +3055,13 @@ lt::torrent_handle const Session::Impl::find_torrent(std::uint32_t uniq_id)
 }
 
 
-lt::torrent_status Session::find_torrent_status(std::uint32_t uniq_id) 
+lt::torrent_status const& Session::find_torrent_status(std::uint32_t uniq_id) 
 {
     return impl_->find_torrent_status(uniq_id);
 }
 
 //wrapper
-lt::torrent_status Session::Impl::find_torrent_status(std::uint32_t uniq_id) 
+lt::torrent_status const& Session::Impl::find_torrent_status(std::uint32_t uniq_id) 
 {
     
     //got torrent_handle
@@ -3042,13 +3071,14 @@ lt::torrent_status Session::Impl::find_torrent_status(std::uint32_t uniq_id)
     if(j != m_all_torrents_.end())
     {
         auto& Tor = j->second;
-        lt::torrent_status st = Tor->get_status_ref();
-        if(st.handle.is_valid())
-        {
+        //no copy, still origin reference!!!
+        lt::torrent_status const& st = Tor->get_status_ref();
+        // if(st.handle.is_valid())
+        // {
             return st;
-        }
+        // }
     }
-    return lt::torrent_status();
+    // return lt::torrent_status();
 }
 
 
@@ -3113,6 +3143,108 @@ sigc::signal<void(std::unordered_set<std::uint32_t> const&, Torrent::ChangeFlags
 {
     return impl_->signal_torrents_changed();
 }
+
+
+
+
+
+
+
+
+
+/*-------------------Totem-gstbt-related--------------------------*/
+void Session::retrieve_btdemux_gobj(GObject* obj)
+{
+    impl_->retrieve_btdemux_gobj(obj);
+}
+void Session::Impl::retrieve_btdemux_gobj(GObject* obj)
+{
+   if(btdemux_gobj_ == nullptr)
+   {
+        btdemux_gobj_ = obj;
+        //fetch torrent handle of the streaming torrent opened in Totem
+        lt::torrent_handle const handle_copy = find_torrent(totem_uniq_id_);
+        //pass this handle whether by copy or by ref to gstbtdemux
+        btdemux_feed_playlist(btdemux_gobj_, handle_copy);
+
+   }
+}
+
+
+//for update Totem BitfieldScale
+lt::bitfield const& Session::totem_fetch_piece_bitfield()
+{
+    return impl_->totem_fetch_piece_bitfield();
+}
+//return ref's copy or copy's ref, ref's ref and copy's copy
+lt::bitfield const& Session::Impl::totem_fetch_piece_bitfield()
+{
+    lt::torrent_status const& st = find_torrent_status(totem_uniq_id_);
+    return st.pieces;
+}
+
+
+
+int Session::totem_get_total_num_pieces()
+{
+    return impl_->totem_get_total_num_pieces();
+}
+int Session::Impl::totem_get_total_num_pieces()
+{
+    //totem_uniq_id_ has been set (which means totem has opened for one of our torrent)
+    if(totem_uniq_id_/*std::uint32_t*/ > 0)
+    {
+        //make a ref of copy
+        Glib::RefPtr<Torrent> const& Tor = find_Torrent(totem_uniq_id_);
+        if(Tor->is_Tor_valid())
+        {
+            return Tor->get_total_num_pieces();
+        }
+    }
+}
+
+
+
+void Session::totem_should_open(std::uint32_t id)
+{
+    impl_->totem_should_open(id);
+}
+void Session::Impl::totem_should_open(std::uint32_t id)
+{
+    if(totem_uniq_id_ == -1)
+    {
+        totem_uniq_id_ = id;
+    }
+}
+
+
+//Stop feed remote gst_btdemux plugin(located at libgstbt.so), this happens before BaconVideoWidget destructs
+void Session::btdemux_should_close()
+{
+    impl_->btdemux_should_close();
+}
+void Session::Impl::btdemux_should_close()
+{
+    std::cout << "Session will stop feed control loop to remote gst_btdemux plugin(located at libgstbt.so)"
+    if(totem_uniq_id_ >-1)
+    {
+        totem_uniq_id_ = -1;
+    }
+}
+
+
+bool Session::is_totem_active()
+{
+    return impl_->is_totem_active();
+}
+
+bool Session::Impl::is_totem_active()
+{
+    return (totem_uniq_id_ > -1);
+}
+
+
+
 
 
 

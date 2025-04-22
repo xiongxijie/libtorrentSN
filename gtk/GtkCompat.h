@@ -108,7 +108,7 @@
 // NOLINTEND(cppcoreguidelines-macro-usage)
 
 
-
+// Backporting RefPtr Features for Older glibmm Versions
 namespace Glib
 {
 

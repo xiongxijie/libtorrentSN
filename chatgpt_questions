@@ -1,0 +1,175 @@
+class MyHdyApplicationWindow : public Gtk::Window ,  public ITotemWindow
+{
+
+
+private:
+    class Impl;
+    std::unique_ptr<Impl> const impl_;
+}
+
+
+
+
+class MyHdyApplicationWindow::Impl
+{
+public:
+
+    Glib::RefPtr<Gio::Menu> get_plugin_menu_placeholder (MenuPlaceHolderType type) override;
+private:
+MyHdyApplicationWindow& parent_;
+Glib::RefPtr<Gio::Menu> rotation_placeholder_;
+
+};
+
+MyHdyApplicationWindow::Impl::Impl()
+{
+
+
+	printf ("This is %p\n", static_cast<void*>(this));
+
+    totem_wrapper_from_gtkmm_instance(&parent_);
+
+    Glib::RefPtr<Glib::Object> rot_obj = builder->get_object("rotation-placeholder");
+    if(rot_obj)
+    {
+        if(!rotation_placeholder_)
+        {
+            std::cout << "before rotation_placeholder_ is empty " << std::endl;
+        }
+        rotation_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_dynamic(rot_obj);
+        if(rotation_placeholder_)
+        {
+            std::cout << "after rotation_placeholder_ is ok ----------------" << std::endl;
+            printf ("This rotation-placeholder is %p\n", static_cast<void*>(rotation_placeholder_->gobj()));
+            
+        }
+    }
+
+    
+}
+
+class ITotemWindow {
+
+    public:
+        //in derived class ctor, we no need to call this interface's ctor, since no data field to init
+        virtual ~ITotemWindow() = default;
+    
+        
+    virtual Glib::RefPtr<Gio::Menu> get_plugin_menu_placeholder (MenuPlaceHolderType type) = 0;
+};    
+
+
+
+
+
+struct _TotemWrapper {
+    GObject parent_instance;      // GObject parent class
+    ITotemWindow *gtkmm_instance; // The wrapped gtkmm instance (only access its ITotemWindow part)
+
+};
+
+
+// Define the GObject type for TotemWrapper
+G_DEFINE_TYPE(TotemWrapper, totem_wrapper, G_TYPE_OBJECT)
+
+
+
+
+TotemWrapper *totem_wrapper_from_gtkmm_instance (ITotemWindow *gtkmm_instance) 
+{
+    g_return_val_if_fail (gtkmm_instance!=nullptr, nullptr);
+
+    // Ensure we have a valid gtkmm instance
+    if (!gtkmm_instance) 
+    {
+        return NULL;
+    }
+
+    // Create a new TotemWrapper wrapper instance
+    TotemWrapper *obj = totem_wrapper_new();
+    
+    if (!obj) 
+    {
+        return NULL;  // Handle allocation failure gracefully
+    }
+
+    // Set the existing gtkmm instance into the wrapper
+    obj->gtkmm_instance = gtkmm_instance;
+
+    // printf ("called totem_wrapper_from_gtkmm_instance \n");
+    return obj;
+}
+
+
+
+Glib::RefPtr<Gio::Menu> totem_wrapper_get_menu_section (TotemWrapper* self, MenuPlaceHolderType type)
+{
+    g_return_val_if_fail (TOTEM_IS_WRAPPER (self), Glib::RefPtr<Gio::Menu>());
+
+    Glib::RefPtr<Gio::Menu> ret;
+    ITotemWindow* underlying = self->gtkmm_instance;
+
+
+    if(underlying!=NULL)
+    {
+        ret = underlying->get_plugin_menu_placeholder(type);
+    }
+
+    if(ret)
+    {
+        printf ("(totem_wrapper_get_menu_section) OK\n");
+        return ret;
+    }else{
+        printf ("(totem_wrapper_get_menu_section) EMPTY\n");
+
+        return Glib::RefPtr<Gio::Menu>();
+    }
+}
+
+
+
+
+Glib::RefPtr<Gio::Menu> MyHdyApplicationWindow::get_plugin_menu_placeholder(MenuPlaceHolderType type) 
+{
+	return impl_->get_plugin_menu_placeholder(type);
+}
+Glib::RefPtr<Gio::Menu> MyHdyApplicationWindow::Impl::get_plugin_menu_placeholder(MenuPlaceHolderType type) 
+{
+
+	printf ("get_plugin_menu_placeholder\n");
+	Glib::RefPtr<Gio::Menu> ret;
+
+	printf ("get_plugin_menu_placeholder This is %p\n", static_cast<void*>(this));
+	printf ("get_plugin_menu_placeholder This rotation-placeholder is %p\n", static_cast<void*>(rotation_placeholder_->gobj()));
+
+	switch(type)
+	{
+		case MenuPlaceHolderType::ROTATION_PLACEHOLDER:
+				ret = rotation_placeholder_;
+			break;	
+
+		default:
+			break;
+	}
+
+	return ret;
+}
+
+
+
+
+
+all these code are expose the ITotemWIndow interface instance ,so let outsider to use its method get_plugin_menu_placeholder(), and TOtemWrapper wrapped all these call,
+TotemWrapper is used by the outsider,
+
+so in outsider code: it already hold a TOtemWrapper pointer,
+so can call function 
+menu = totem_wrapper_get_menu_section(pi->totem, MenuPlaceHolderType::ROTATION_PLACEHOLDER);
+but Error occured now!! in MyHdyApplicationWindow::Impl::get_plugin_menu_placeholder,
+it seems the this pointer address it different with in the constructor ,and rotation_placeholder_ field seems a invalid , so it will got SIGSEGV fault,
+
+i a bit doubt that since this pointer different, that means  not the same MyHdyApplicationWindow::Impl, so its field rotation_placeholder_ is not the one in
+
+MyHdyApplicationWindow::Impl constructor which is we needed,
+
+i just not so sure, i need your help, 

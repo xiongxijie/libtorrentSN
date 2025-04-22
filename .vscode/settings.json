@@ -88,7 +88,23 @@
         "findfastfloat": "c",
         "netfwd": "cpp",
         "forward_list": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "totem-player-toolbar.h": "c",
+        "totem-preferences-plugin-row.h": "c",
+        "totem-plugins-engine.h": "c",
+        "looooooooog": "cpp",
+        "bacon-video-widget-enums.h": "c",
+        "unistd.h": "c",
+        "bacon-video-widget.h": "c",
+        "totem-gst-pixbuf-helpers.h": "c",
+        "totem-time-helpers.h": "c",
+        "libintl.h": "c",
+        "bacon-time-label.h": "c",
+        "totem-gst-helpers.h": "c",
+        "math.h": "c",
+        "baconvideowidget.h": "c",
+        "baconvideowidgetenums.h": "c",
+        "chatgpt_questions": "cpp"
     },
     "mesonbuild.configureOnOpen": false
 }

@@ -1,0 +1,40 @@
+# Create a build directory for out-of-source build inside the libtorrent root directory::
+
+	mkdir build
+
+# and ``cd`` there::
+
+	cd build
+
+# Run ``cmake`` in the build directory, like this::
+
+	cmake -DCMAKE_BUILD_TYPE=DEBUG -G Ninja ..
+
+
+    ninja
+
+
+
+
+
+# if totem can't find gsettings schema,   will error "GLib-GIO-ERROR **: 00:47:26.927: Settings schema 'org.gnome.trtotem' is not installed"
+# type below command
+export GSETTINGS_SCHEMA_DIR=/media/pal/E/Downloads/libtorrent-SN/build/gtk/gschemas
+
+
+#use our own built glib (For Debug)
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/glib-2.80.0/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+
+
+# Letting libgstbt.so can be found by GStreamer
+export GST_PLUGIN_PATH=/media/pal/E/Downloads/libtorrent-SN/build/gtk:$GST_PLUGIN_PATH
+
+
+
+#let program crash on critical glib "warnings", so gdb can show backtrace callstack (For Debug)
+export G_DEBUG=fatal-criticals
+
+
+
+

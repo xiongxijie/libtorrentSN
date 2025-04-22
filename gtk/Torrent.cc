@@ -283,6 +283,9 @@ public:
 
     void total_updown_delta_at_remove(std::int64_t& up, std::int64_t& down);
     
+    /*Totem-gstbt related*/
+    int get_total_num_pieces();
+
 
     lt::torrent_handle const& get_raw_torrent()
     {
@@ -350,6 +353,8 @@ private:
     std::int64_t total_upload_when_load_ = {};
     std::int64_t total_download_when_load_ = {};
 
+
+
 };
 
 
@@ -409,25 +414,29 @@ std::vector<std::int64_t>& Torrent::get_file_progress_vec_ref()
     return impl_->get_file_progress_vec_ref();
 
 }
-
 std::vector<std::int64_t>& Torrent::Impl::get_file_progress_vec_ref()
 {
     return files_progress_vec_;
 }
 
 
+
+
+//******returning a non-const reference to a private member
+//This allows the caller to read or write tor_status_ directly
 lt::torrent_status& Torrent::get_status_ref()
 {
     return impl_->get_status_ref();
 
 }
-
 lt::torrent_status& Torrent::Impl::get_status_ref()
 {
     // if(tor_status && tor_status_.handle.is_valid())
         return tor_status_;
     // return lt::torrent_status{};
 }
+
+
 
 
 // std::string to_hex(lt::sha1_hash const& s)
@@ -1089,7 +1098,7 @@ Torrent::Impl::Impl(Torrent& torrent, lt::torrent_handle const& handle)
     sigc::mem_fun(*this, &Impl::post_for_torrent), 1);
 
 
-
+    //update iniitally
     if (raw_torrent_.is_valid())
     {
         update_cache();
@@ -1415,4 +1424,16 @@ void Torrent::disconnect_signals()
 void Torrent::Impl::disconnect_signals()
 {
     post_torrent_timer_.disconnect();
+}
+
+
+
+
+int Torrent::get_total_num_pieces()
+{
+    return impl_->get_total_num_pieces();
+}
+int Torrent::Impl::get_total_num_pieces()
+{
+    return cache_.total_num_pieces;
 }
