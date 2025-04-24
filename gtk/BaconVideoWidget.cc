@@ -2073,6 +2073,18 @@ void BaconVideoWidget::Impl::bus_message_cb_method(GstBus * bus, GstMessage * me
 
       src_name = gst_object_get_name (GST_OBJECT_CAST(message->src));
 
+
+      
+      /*
+such as 
+when bvw-pipeline change state from READY to PAUSED, this happends when moov header got, and decodebin's out pad added (bvw/on_pad_added for decodebin
+
+when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), this will block at push_loop on gst_pad_push()......in gst_bt_demux_push_loop()
+
+      */
+
+
+
                   printf("(bvw_bus_message_cb) %s changed state from %s to %s\n", 
                       src_name,
                       gst_element_state_get_name (old_state),
@@ -2940,7 +2952,7 @@ GstCaps* BaconVideoWidget::Impl::get_caps_of_current_stream(StreamType type)
 
 
 
-
+//happens right after [mmov] header parsed
 void BaconVideoWidget::Impl::update_tags(GstTagList *tag_list, StreamType type)
 {
   GstTagList **cache = NULL;
@@ -3081,12 +3093,12 @@ GstTagList* BaconVideoWidget::Impl::get_tags_of_current_stream(StreamType stream
 }
 
 
-void BaconVideoWidget::Impl::get_metadata_string (BvwMetadataType type, Glib::ValueBase& value)
+void BaconVideoWidget::Impl::get_metadata_string(BvwMetadataType type, Glib::ValueBase& value)
 {
   char *string = NULL;
   gboolean res = FALSE;
 
-  value.init( Glib::Value<Glib::ustring>::value_type());
+  value.init(Glib::Value<Glib::ustring>::value_type());
 
   if (pipeline_ == NULL) {
     Glib::Value<Glib::ustring> string_val;  // Temporary typed value
@@ -3435,7 +3447,7 @@ void BaconVideoWidget::Impl::get_metadata(BvwMetadataType type, Glib::ValueBase&
     case BVW_INFO_AUDIO_CODEC:
     case BVW_INFO_AUDIO_CHANNELS:
     {
-      get_metadata_string (type, value);
+      get_metadata_string(type, value);
     }
       break;
     case BVW_INFO_DURATION:
@@ -3446,13 +3458,13 @@ void BaconVideoWidget::Impl::get_metadata(BvwMetadataType type, Glib::ValueBase&
     case BVW_INFO_TRACK_NUMBER:
     case BVW_INFO_AUDIO_SAMPLE_RATE:
     {
-      get_metadata_int (type, value);
+      get_metadata_int(type, value);
     }
       break;
     case BVW_INFO_HAS_VIDEO:
     case BVW_INFO_HAS_AUDIO:
     {
-      get_metadata_bool (type, value);
+      get_metadata_bool(type, value);
     }
       break;
     case BVW_INFO_FPS:
@@ -3469,7 +3481,7 @@ void BaconVideoWidget::Impl::get_metadata(BvwMetadataType type, Glib::ValueBase&
     }
       break;
     default:
-      g_return_if_reached ();
+      g_return_if_reached();
   }
 
   return;
@@ -4165,9 +4177,11 @@ bool BaconVideoWidget::Impl::play(GError ** error/*location of error*/)
 
   // GST_DEBUG ("play");
 
+  //!! state change may not instantly affects, it is done asynchronously, see GST_MESSAGE_STATE_CHANGED
               printf ("(bacon_video_widget_play) SET pipeline_ state to PLAYING\n");
 
   gst_element_set_state (pipeline_, GST_STATE_PLAYING);
+  
 
   /* will handle all errors asynchroneously */
   return TRUE;
@@ -4348,6 +4362,7 @@ void BaconVideoWidget::Impl::close()
 
 bool BaconVideoWidget::Impl::volume_readback_cb()
 {
+  std::cout << "volume_readback_cb at initial" << std::endl;
   gdouble vol;
 
   vol = gst_stream_volume_get_volume (GST_STREAM_VOLUME(volume_plugin_),

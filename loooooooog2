@@ -30,10 +30,6 @@ warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgl
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpeas-1.0.so.0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libglib-2.0.so.0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk-3.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstpbutils-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstvideo-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstaudio-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstreamer-1.0.so.0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgobject-2.0.so.0
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
@@ -41,28 +37,25 @@ warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/liblb
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlidec.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgmodule-2.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgsttag-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstbase-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/liborc-0.4.so.0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlicommon.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcap.so.2
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgvfsdbus.so
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gvfs/libgvfscommon.so
-[New Thread 0x7ffff31ff6c0 (LWP 14811)]
-[New Thread 0x7fffebfff6c0 (LWP 14812)]
-[New Thread 0x7ffff29fe6c0 (LWP 14813)]
+[New Thread 0x7ffff31ff6c0 (LWP 11991)]
+[New Thread 0x7fffebfff6c0 (LWP 11992)]
+[New Thread 0x7ffff29fe6c0 (LWP 11993)]
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcanberra.so.0
-[New Thread 0x7ffff20fa6c0 (LWP 14814)]
+[New Thread 0x7ffff20ab6c0 (LWP 11994)]
 FilterBar::~FilterBar() 
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgioremote-volume-monitor.so
-[New Thread 0x7ffff15366c0 (LWP 14816)]
-[New Thread 0x7ffff0d356c0 (LWP 14817)]
-[New Thread 0x7fffe8dff6c0 (LWP 14818)]
-[New Thread 0x7fffd3fff6c0 (LWP 14820)]
-[New Thread 0x7fffd37fe6c0 (LWP 14821)]
-[New Thread 0x7fffd2ffd6c0 (LWP 14822)]
-[New Thread 0x7fffd27fc6c0 (LWP 14823)]
-[New Thread 0x7fffd1ffb6c0 (LWP 14824)]
+[New Thread 0x7ffff14fd6c0 (LWP 11996)]
+[New Thread 0x7ffff0cfc6c0 (LWP 11997)]
+[New Thread 0x7fffe8dff6c0 (LWP 11998)]
+[New Thread 0x7fffd3fff6c0 (LWP 12000)]
+[New Thread 0x7fffd37fe6c0 (LWP 12001)]
+[New Thread 0x7fffd2ffd6c0 (LWP 12002)]
+[New Thread 0x7fffd27fc6c0 (LWP 12003)]
+[New Thread 0x7fffd1ffb6c0 (LWP 12004)]
 initialize default settings...... 
 in session::start
 initialize default settings...... 
@@ -71,9 +64,9 @@ in session_impl ctor
 @@ add_ses_extension @@
 @@ add_ses_extension @@
 @@ add_ses_extension @@
-[New Thread 0x7fffd17fa6c0 (LWP 14825)]
-In Session::Impl Ctor 0x555555ea3990 !
-In Application::on_startup core_ 0x555555ea3990 !
+[New Thread 0x7fffd17fa6c0 (LWP 12005)]
+In Session::Impl Ctor 0x555555da38e0 !
+In Application::on_startup core_ 0x555555da38e0 !
 ----update user agent----
 ----update_listen_interface----
 settings changed, Start upnp now 
@@ -101,43 +94,19 @@ torrnet contruct_storage
 ''''Add UT_PEX EXtension ''''
 ''''Add UT_Metadata EXtension ''''
 ''''Add UT_SMART_BAN EXtension ''''
-[New Thread 0x7fffd0ff96c0 (LWP 14826)]
+[New Thread 0x7fffd0ff96c0 (LWP 12006)]
 D:storage_utils: now in verify_resume_data , save_path:/home/pal/Downloads
 do_check_fastresume, no need full check
 on_resume_data_checked: should_start_full_check is 0
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpulse.so.0
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-16.1.so
-[New Thread 0x7fffabfff6c0 (LWP 14827)]
-[Thread 0x7fffd2ffd6c0 (LWP 14822) exited]
-[Thread 0x7fffd37fe6c0 (LWP 14821) exited]
-[Thread 0x7fffd3fff6c0 (LWP 14820) exited]
-[Thread 0x7fffe8dff6c0 (LWP 14818) exited]
-[Thread 0x7fffd27fc6c0 (LWP 14823) exited]
-[Thread 0x7ffff0d356c0 (LWP 14817) exited]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[New Thread 0x7fffabfff6c0 (LWP 12007)]
+[Thread 0x7fffd27fc6c0 (LWP 12003) exited]
+[Thread 0x7fffd3fff6c0 (LWP 12000) exited]
+[Thread 0x7ffff0cfc6c0 (LWP 11997) exited]
+[Thread 0x7ffff14fd6c0 (LWP 11996) exited]
+[Thread 0x7fffe8dff6c0 (LWP 11998) exited]
+[Thread 0x7fffd37fe6c0 (LWP 12001) exited]
 
 !!!!!!!!!!!!!!add_torrent_alert!!!!!!!!!!!!!!
 
@@ -187,25 +156,50 @@ resume data not modified , no need to save it
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 TotemPlayerHeader::~TotemPlayerHeader() 
 BaconTimeLabel::~BaconTimeLabel() 
 BitfieldScale::~BitfieldScale() 
 BaconVideoWidget::~BaconVideoWidget() 
 MyHdyFlap::MyHdyFlap ctor
-Bacon's Gstreamer version: GStreamer 1.24.2
+[Detaching after fork from child process 12010]
+(gst_bt_demux_class_init) 
+Bacon's Gstreamer version: GStreamer 1.25.0 (GIT)
 (gst_bt_demux_class_init) 
 (bt_demux_init) 
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstplayback.so
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstcoreelements.so
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstallocators-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstcontroller-1.0.so.0
+(gstdecodebin2)add static sink pad
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtinfo.so.6
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudiofx.so
-warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgstfft-1.0.so.0
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvolume.so
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstautodetect.so
-[New Thread 0x7ffff0d356c0 (LWP 14829)]
-warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstaudioconvert.so
+GL-SINKBIN::gst_gl_sink_bin_init 
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
+GTK-GLSINK:: gst_gtk_gl_sink_init 
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
+GL-SINKBIN::gst_gl_sink_bin_set_sink 
+[New Thread 0x7fffd37fe6c0 (LWP 12011)]
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 BitfieldScale::BitfieldScale ctor
 BaconTimeLabel::BaconTimeLabel ctor
 BaconTimeLabel::BaconTimeLabel ctor
@@ -213,6 +207,7 @@ TotemPrefsDialog::Impl::Impl ctor
 DisplayPrefsPage::DisplayPrefsPage ctor 
 AudioPrefsPage::AudioPrefsPage ctor 
 TotemPrefsDialog::TotemPrefsDialog ctor
+[connect to btdemux...](btdemux_feed_playlist)
 (btdemux_feed_playlist)Start streaming, num files: 2, num pieces: 248, piece length: 32768 
 gst_bt_demux_stream_class_init 
 gst_bt_demux_stream_init 
@@ -227,15 +222,15 @@ fill_totem_playst Japan/ForBiggerBlazes.mp4
 fill_totem_playst Japan/wwa.mp4
 (fill_totem_playlist) probe: len of playlist is 2
 before rotation_placeholder_ is empty 
-This is 0x555555e83590
+This is 0x5555561d2f50
 MyHdyApplicationWindow::Impl constructor finished. 
 void BaconVideoWidget::Impl::on_realize_behavior() 
-[New Thread 0x7fffd27fc6c0 (LWP 14830)]
-[New Thread 0x7fffd37fe6c0 (LWP 14831)]
-[New Thread 0x7fffe8dff6c0 (LWP 14832)]
-[New Thread 0x7fffd2ffd6c0 (LWP 14833)]
-[New Thread 0x7fffa8fff6c0 (LWP 14834)]
-[New Thread 0x7fff9c3ff6c0 (LWP 14835)]
+[New Thread 0x7fffe8dff6c0 (LWP 12012)]
+[New Thread 0x7ffff14fd6c0 (LWP 12013)]
+[New Thread 0x7fffd27fc6c0 (LWP 12014)]
+[New Thread 0x7fffa8fff6c0 (LWP 12015)]
+[New Thread 0x7fff9c3ff6c0 (LWP 12016)]
+[New Thread 0x7fff9bbfe6c0 (LWP 12017)]
 totem_wrapper_class_init 
 [init_plugins_system] TotemWrapper intialized success 
 IN totem_plugins_engine_get_default engine is (nil)
@@ -245,55 +240,656 @@ totem-rotation plugin activated
 (totem_wrapper_get_menu_section) OK
 totem rotation, get menu placeholder success 
 IN totem_plugins_engine_get_default , load one plugin
-(before return engine is 0x555555ac4f50) 
+(before return engine is 0x5555561df3d0) 
 (in update_plugin_rows) iterate on plugin Rotation Plugin
 In TotemPrefsPluginRow* TotemPrefsPluginRow::create 
 TotemPrefsPluginRow::Impl::Impl ctor 
 TotemPrefsPluginRow::TotemPrefsPluginRow ctor
 (on_audio_output_type_changed) Cur: stereo 
+volume_readback_cb at initial
 (bacon_video_widget_get_volume)
+MyHdyApplicationWindow [Start Play] 
+(totem_object_set_current_fileidx_and_play) get current fileidx 0 from totem-playlist 
+totem_object_set_fileidx_and_play, file_index=0 
+(totem_object_set_fileidx), file_idx=0 
+(totem_object_set_fileidx), file_idx=0 gonna call bacon_video_widget_open
+(bacon_video_widget_open) set cur_video_fileidx_within_tor to 0
+(btdemux/update_requested_stream) desired fileidx 0 
+(update_requested_stream) Mark stream of fileidx 0 as Requested 
+(bt_demux_stream_activate) waiting lock
+(bt_demux_stream_activate) recovery lock
+(bt_demux_stream_activate) Modifying thiz->current_piece to -1 (start_piece minus one) 
+(bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
+(bt_demux_stream_activate) Activating stream 'src_00', start: (0), start_offset: 0, end: 76, end_offset: 7757, current: (-1) buffering(No)
+(bt_demux_stream_activate) unlock
+(gst_bt_demux_switch_streams) Switching to stream 'src_00', reading piece 0, current: -1, buffering(No)
+(gst_bt_demux_switch_streams) call read_piece() on piece 0
+(btdemux/update_requested_stream) stream-idx(1) disable undesired streams(src pads)
+(btdemux/update_requested_stream) stream-idx(1) DISABLE gst_pad_set_active ok
+(bacon_video_widget_open) reset seekable back to unknown state (which is -1)
+mark_popup_busy opening file
+(totem_object_play) 
+(bacon_video_widget_play) cur_state:NULL
+play_starting_cb 
+-unmark_popup_busy opening file
+(bacon_video_widget_play) SET pipeline_ state to PLAYING
+[New Thread 0x7fff9abfd6c0 (LWP 12018)]
+[New Thread 0x7fff9a3fc6c0 (LWP 12019)]
+[Thread 0x7fff9a3fc6c0 (LWP 12019) exited]
+[New Thread 0x7fff9a3fc6c0 (LWP 12020)]
+[New Thread 0x7fff99bfb6c0 (LWP 12021)]
+[New Thread 0x7fff993fa6c0 (LWP 12022)]
+[New Thread 0x7fff98bf96c0 (LWP 12023)]
 
-Destruct MyHdyApplicationWindow on handler----------------------------------------------------------------------------------------------------
-MyHdyApplicationWindow::~MyHdyApplicationWindow()
-MyHdyApplicationWindow::Impl::~Impl() 
-TotemPrefsDialog::~TotemPrefsDialog() 
-TotemPrefsDialog::Impl::~Impl() 
-DisplayPrefsPage  ~DisplayPrefsPage() 
-HdyPrefsPageBase ~HdyPrefsPageBase()
-AudioPrefsPage  ~AudioPrefsPage() 
-HdyPrefsPageBase ~HdyPrefsPageBase()
-TotemPrefsPluginRow::~TotemPrefsPluginRow() 
-TotemPrefsPluginRow::Impl::~Impl() 
-PluginsPrefsPage  ~PluginsPrefsPage() 
-HdyPrefsPageBase ~HdyPrefsPageBase()
-MyHdyApplicationWindow::Impl::~Impl() call totem_plugins_engine_shut_down
-totem-rotation plugin deactivated 
-totem_plugins_engine_dispose 
-~TotemPlaylist()
-[Thread 0x7fff9c3ff6c0 (LWP 14835) exited]
-[Thread 0x7fffa8fff6c0 (LWP 14834) exited]
-void BaconVideoWidget::Impl::on_unrealize_behavior() 
-[Thread 0x7fffd2ffd6c0 (LWP 14833) exited]
-[Thread 0x7fffe8dff6c0 (LWP 14832) exited]
-BaconVideoWidget::~BaconVideoWidget() 
-BaconVideoWidget::Impl::~Impl()
-(bacon_video_widget_finalize) SET pipeline_ state to NULL
-(bvw/on_pad_removed for decodebin) :sink, pad_type is (null)
-(bvw/on_pad_removed for decodebin) (null) not found 
-(bt_demux_dispose) Disposing 
-(bt_demux_task_cleanup) 
-~~~~Disposing 
-~~~~Disposing 
-BaconTimeLabel::~BaconTimeLabel() 
-BitfieldScale::~BitfieldScale() 
-BaconTimeLabel::~BaconTimeLabel() 
-TotemPlayerHeader::~TotemPlayerHeader() 
-MyHdyFlap::~MyHdyFlap() 
+(gst_bt_demux_change_state) TRANSITION:10 
+(gstdecodebin2) state changed from READY to PAUSED 
+(gstTYPEFIND) start_typefinding 
+(gst_bt_demux_change_state) TRANSITION:19 
+-unmark_popup_busy paused
+(bvw_bus_message_cb) bvw-pipeline changed state from NULL to READY
+(bvw_bus_message_cb) disable updating slider and time label
+(bvw_query_timeout) could not get position
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(0)
+(bt_demux_handle_alert) stream-idx(0) Create the pad if needed and add the pad to element (0)
+(bt_demux_handle_alert) stream-idx(0) ENABLE gst_pad_set_active ok
+(on_btdemux_pad_added) btdemux src pad added: src_00
+(on_btdemux_pad_added) Successfully linked btdemux src pad (src_00) to decodebin sink pad 
+(on_btdemux_pad_added) gst_pad_is_active (pad) is 1 
+(on_btdemux_pad_added) Stream-start event pushed on pad 'src_00'
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(0), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 0 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_check_no_more_pads) We're done... Sending no more pads 
+(on_btdemux_no_more_pads) on no more pads: src_00
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(0)
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:-1,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type not emitted yet
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(-1), ipc_data->piece(0)
+(bt_demux_stream_push_loop) recovery lock (-1)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=0, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (0) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=2498125 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from -1 to 0 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (0) 
+(gstTYPEFIND) gst_type_find_element_emit_have_type 
+GST-DECODEBIN::type_found, it is video/quicktime 
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
+(qtdemux_init) 
+(qtdemux_sink_activate) activating push 
+(qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
+(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
+(qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
+(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
+(qtdemux_chain) Received buffer size:32768 demux offset:0
+(qtdemux_chain) pushing in inbuf 0x7fffc4000dd0,neededbytes:16,available: 32768
+(gst_qtdemux_process_adapter) demux->state=<INITIAL> 
+(gst_qtdemux_check_seekability) seekable:1, start:0 stop:2498125
+(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:24
+(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=24
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is ftyp
+(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=18446744073709551615
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset+=demux->neededbytes(24) 
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
+(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [moov] size:6373
+(qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=6373
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, fourcc is moov
+(qtdemux_process_adapter) Parsing [moov] 
+(qtdemux_process_adapter) demux->last_moov_offset= 24
+(qtdemux_parse_moov)parsing moov atom!!! 
+(qtdemux_parse_tree) we have read the complete moov node now at parse_tree 
+(_create_stream), stream_id=9de136d71179540b6e8b288f6c218a27/00/001 
+(qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=360 
+(qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=3 
+(qtdemux_stbl_init) allocating n_samples 360, (guint)sizeof(QtDemuxSample) is 32
+(qtdemux_parse_segments) created segment 0 time 0:00:00.000000000, media_start (0:00:00.000000000), media_stop (0:00:14.995000000), duration 0:00:14.995000000, timescale 48000
+(_create_stream), stream_id=9de136d71179540b6e8b288f6c218a27/00/002 
+(qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=647 
+(qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=9 
+(qtdemux_stbl_init) allocating n_samples 647, (guint)sizeof(QtDemuxSample) is 32
+(qtdemux_parse_segments), no segments, create one dummy segment to play the complete trak 0:00:15.023310657 
+(qtdemux_prepare_streams) num: 2 
+(qtdemux_add_stream) adding pad video_0 
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
+[New Thread 0x7fff7ffff6c0 (LWP 12024)]
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_awb.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal16.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_rms.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_slt.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libvpl.so.2
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libzvbi.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtheoraenc.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtheoradec.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libvdpau.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_usenglish.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmulex.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcjson.so.1
+
+FFMPEG,GST-AVVIDEC:: gst_ffmpegviddec_set_format
+[New Thread 0x7fff6cdff6c0 (LWP 12025)]
+[New Thread 0x7fff6c5fe6c0 (LWP 12026)]
+[New Thread 0x7fff6bdfd6c0 (LWP 12027)]
+[New Thread 0x7fff6b5fc6c0 (LWP 12028)]
+(qtdemux_add_stream) adding pad audio_0 
+(ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
+[New Thread 0x7fff6adfb6c0 (LWP 12029)]
+(gst_qtdemux_map_and_push_segments) 
+(qtdemux_activate_segment) (video_0) activate segment 0, offset 0:00:00.000000000
+(stream_segment_get_boundaries) (video_0) seg_time = 0:00:00.000000000 
+(stream_segment_get_boundaries) (video_0) result is start=0:00:00.000000000,stop=0:00:14.995000000,time=0:00:00.000000000
+(qtdemux_stream_update_segment) (video_0) new segment 0 from 0:00:00.000000000 to 0:00:14.995000000,time 0:00:00.000000000 
+(gst_qtdemux_push_tags) Checking pad qtdemux0:video_0 for tags
+(qtdemux_activate_segment) (audio_0) activate segment 0, offset 0:00:00.000000000
+(stream_segment_get_boundaries) (audio_0) seg_time = 0:00:00.000000000 
+(stream_segment_get_boundaries) (audio_0) result is start=0:00:00.000000000,stop=0:00:15.021666666,time=0:00:00.000000000
+(qtdemux_stream_update_segment) (audio_0) new segment 0 from 0:00:00.000000000 to 0:00:15.021666666,time 0:00:00.000000000 
+(gst_qtdemux_push_tags) Checking pad qtdemux0:audio_0 for tags
+(gst_qtdemux_push_tags) Checking pad qtdemux0:video_0 for tags
+(gst_qtdemux_push_tags) Checking pad qtdemux0:audio_0 for tags
+(qtdemux_process_adapter) Finished parsing the header 
+(qtdemux_process_adapter) only go back to the mdat if there are samples to play first_mdat=18446744073709551615
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->offset+=demux->neededbytes(6373) 
+(qtdemux_process_adapter) In QTDEMUX_STATE_HEADER, set demux->neededbytes=16 and demux->state back to QTDEMUX_STATE_INITIAL 
+(qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [mdat] size:2491728
+(qtdemux_process_adapter) FOURCC_mdat.  already got moov header
+(qtdemux_process_adapter) FOURCC_mdat. we have the headers, start playback, state set to QTDEMUX_STATE_MOVIE, and set neededbytes to 47737
+(bt_demux_stream_push_loop) Luckily we have next piece 1, call read_piece() on it, current:0
+(bt_demux_stream_push_loop) unlock cur:(0)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:0,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(1)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(1), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 1 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(1)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(0), ipc_data->piece(1)
+(bt_demux_stream_push_loop) recovery lock (0)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=1, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (1) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 0 to 1 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (1) 
+(qtdemux_chain) Received buffer size:32768 demux offset:6397
+(qtdemux_chain) pushing in inbuf 0x7fffc40d5090,neededbytes:47737,available: 59139
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(qtdemux_drop_data) dropping 8 bytes 
+(bt_demux_stream_push_loop) Luckily we have next piece 2, call read_piece() on it, current:1
+(bt_demux_stream_push_loop) unlock cur:(1)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:1,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(2)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(2), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 2 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(2)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(1), ipc_data->piece(2)
+(bt_demux_stream_push_loop) recovery lock (1)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=2, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (2) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 1 to 2 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (2) 
+(qtdemux_chain) Received buffer size:32768 demux offset:61428
+(qtdemux_chain) pushing in inbuf 0x7fffc40c2170,neededbytes:7663,available: 36876
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 3, call read_piece() on it, current:2
+(bt_demux_stream_push_loop) unlock cur:(2)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:2,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
 
 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(3)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(3), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 3 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(3)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(2), ipc_data->piece(3)
+(bt_demux_stream_push_loop) recovery lock (2)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=3, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (3) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 2 to 3 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (3) 
+(qtdemux_chain) Received buffer size:32768 demux offset:97915
+(qtdemux_chain) pushing in inbuf 0x7fffc422c9c0,neededbytes:3452,available: 33157
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bvw/on_pad_added for decodebin) :src_0
+decodebin's Video pad detected.
+(caps_set) video decoder caps: fps_n: 24000, fps_d: 1001, width: 1280, height: 720 
+(bvw_update_stream_info) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bvw/on_pad_added for decodebin) :src_1
+decodebin's Audio pad detected.
+(caps_set) video decoder caps: fps_n: 24000, fps_d: 1001, width: 1280, height: 720 
+(bvw_update_stream_info) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+GTK-GLSINK::gst_gtk_gl_sink_event: stream-start 
+GTK-GLSINK::gst_gtk_gl_sink_event: caps 
+GTK-GLSINK::gst_gtk_gl_sink_event: segment 
+(bvw_update_tags) gain video Tags: 0x7fff74000d40A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+GTK-GLSINK::gst_gtk_gl_sink_event: tag 
+(bvw_update_tags) gain video Tags: 0x7fffc4075ab0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+GTK-GLSINK::gst_gtk_gl_sink_event: tag 
+(bvw_update_tags) Pipeline sent video tags update with no changes 
+GTK-GLSINK::gst_gtk_gl_sink_event: tag 
+(bvw_update_tags) gain audio Tags: 0x7fff64001510A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) gain audio Tags: 0x7fff640033f0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+[New Thread 0x7fff68fde6c0 (LWP 12032)]
+(gst_bt_demux_change_state) TRANSITION:28 
+(bvw_bus_message_cb) bvw-pipeline changed state from READY to PAUSED
+(bvw_bus_message_cb) disable updating slider and time label
+(bacon_video_widget_update_and_get_seekable) seeking query says the stream is seekable 
+(got_time_tick) From now on, (Initial) the stream become seekable 
+(caps_set) video decoder caps: fps_n: 24000, fps_d: 1001, width: 1280, height: 720 
+(bvw_update_stream_info) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bvw_bus_message_cb) In GST_MESSAGE_ASYNC_DONE case: Maybe starting deferred playback after seek
+(bacon_video_widget_play) cur_state:PLAYING
+(bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
+(bvw_bus_message_cb) resume updating slider and time label
+(bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
+(bvw_update_tags) gain audio Tags: 0x7fff64000cf0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+
+(bvw_update_tags) gain audio Tags: 0x7fff64001510A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(update_current_time) From now on, We get the stream_length, which is 15021 
+(bt_demux_stream_push_loop) Luckily we have next piece 4, call read_piece() on it, current:3
+(bt_demux_stream_push_loop) unlock cur:(3)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:3,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(4)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(4), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 4 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(4)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(3), ipc_data->piece(4)
+(bt_demux_stream_push_loop) recovery lock (3)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=4, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (4) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 3 to 4 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (4) 
+(qtdemux_chain) Received buffer size:32768 demux offset:130026
+(qtdemux_chain) pushing in inbuf 0x7fffc421eb60,neededbytes:11380,available: 33814
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 5, call read_piece() on it, current:4
+(bt_demux_stream_push_loop) unlock cur:(4)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:4,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(5)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(5), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 5 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(5)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(4), ipc_data->piece(5)
+(bt_demux_stream_push_loop) recovery lock (4)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=5, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (5) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 4 to 5 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (5) 
+(qtdemux_chain) Received buffer size:32768 demux offset:160373
+(qtdemux_chain) pushing in inbuf 0x7fffc421e700,neededbytes:3525,available: 36235
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 6, call read_piece() on it, current:5
+(bt_demux_stream_push_loop) unlock cur:(5)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:5,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
 
 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(6)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(6), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 6 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(5), ipc_data->piece(6)
+(bt_demux_stream_push_loop) recovery lock (5)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=6, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (6) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 5 to 6 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (6) 
+(qtdemux_chain) Received buffer size:32768 demux offset:191824
+(qtdemux_chain) pushing in inbuf 0x7fffc40c2170,neededbytes:5981,available: 37552
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(6)
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bvw_update_tags) gain audio Tags: 0x7fff64000cf0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bt_demux_stream_push_loop) Luckily we have next piece 7, call read_piece() on it, current:6
+(bt_demux_stream_push_loop) unlock cur:(6)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:6,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(7)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(7), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 7 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(7)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(6), ipc_data->piece(7)
+(bt_demux_stream_push_loop) recovery lock (6)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=7, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (7) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 6 to 7 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (7) 
+(qtdemux_chain) Received buffer size:32768 demux offset:229090
+(qtdemux_chain) pushing in inbuf 0x7fffc407a0d0,neededbytes:3996,available: 33054
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 8, call read_piece() on it, current:7
+(bt_demux_stream_push_loop) unlock cur:(7)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:7,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
 
 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(8)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(8), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 8 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(8)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(7), ipc_data->piece(8)
+(bt_demux_stream_push_loop) recovery lock (7)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=8, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (8) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 7 to 8 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (8) 
+(qtdemux_chain) Received buffer size:32768 demux offset:261734
+(qtdemux_chain) pushing in inbuf 0x7fffc40c2170,neededbytes:548,available: 33178
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 9, call read_piece() on it, current:8
+(bt_demux_stream_push_loop) unlock cur:(8)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:8,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
 
 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(9)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(9), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 9 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(9)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(8), ipc_data->piece(9)
+(bt_demux_stream_push_loop) recovery lock (8)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=9, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (9) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 8 to 9 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (9) 
+(qtdemux_chain) Received buffer size:32768 demux offset:292172
+(qtdemux_chain) pushing in inbuf 0x7fffc422dc70,neededbytes:4109,available: 35508
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bvw_update_tags) gain audio Tags: 0x7fff64011630A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bvw_update_tags) gain audio Tags: 0x7fff640033f0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+(bt_demux_stream_push_loop) Luckily we have next piece 10, call read_piece() on it, current:9
+(bt_demux_stream_push_loop) unlock cur:(9)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:9,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(10)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(10), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 10 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(10)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(9), ipc_data->piece(10)
+(bt_demux_stream_push_loop) recovery lock (9)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=10, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (10) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 9 to 10 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (10) 
+(qtdemux_chain) Received buffer size:32768 demux offset:327572
+(qtdemux_chain) pushing in inbuf 0x7fffc40c2170,neededbytes:2011,available: 32876
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 11, call read_piece() on it, current:10
+(bt_demux_stream_push_loop) unlock cur:(10)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:10,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(11)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(11), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 11 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(11)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(10), ipc_data->piece(11)
+(bt_demux_stream_push_loop) recovery lock (10)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=11, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (11) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 10 to 11 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (11) 
+(qtdemux_chain) Received buffer size:32768 demux offset:331623
+(qtdemux_chain) pushing in inbuf 0x7fffc421e6c0,neededbytes:43581,available: 61593
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 12, call read_piece() on it, current:11
+(bt_demux_stream_push_loop) unlock cur:(11)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:11,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(12)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(12), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 12 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(12)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(11), ipc_data->piece(12)
+(bt_demux_stream_push_loop) recovery lock (11)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=12, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (12) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 11 to 12 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (12) 
+(qtdemux_chain) Received buffer size:32768 demux offset:392692
+(qtdemux_chain) pushing in inbuf 0x7fffc40d5090,neededbytes:549,available: 33292
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 13, call read_piece() on it, current:12
+(bt_demux_stream_push_loop) unlock cur:(12)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:12,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(13)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(13), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 13 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(13)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(12), ipc_data->piece(13)
+(bt_demux_stream_push_loop) recovery lock (12)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=13, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (13) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 12 to 13 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (13) 
+(qtdemux_chain) Received buffer size:32768 demux offset:424552
+(qtdemux_chain) pushing in inbuf 0x7fffc422db50,neededbytes:6349,available: 34200
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 14, call read_piece() on it, current:13
+(bt_demux_stream_push_loop) unlock cur:(13)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:13,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+(totem-menu) Play/Pause Button Pressed ------------------------
+(totem_object_play_pause) 
+(totem_object_play_pause) next line to call bacon_video_widget_pause
+(bacon_video_widget_pause) Pausing
+(bacon_video_widget_pause) SET pipeline_ state to PAUSED
+(gst_bt_demux_change_state) TRANSITION:35 
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(14)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(14), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 14 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(14)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(13), ipc_data->piece(14)
+(bt_demux_stream_push_loop) recovery lock (13)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=14, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (14) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 13 to 14 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (14) 
+(qtdemux_chain) Received buffer size:32768 demux offset:458415
+(qtdemux_chain) pushing in inbuf 0x7fffc421f140,neededbytes:4306,available: 33105
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 15, call read_piece() on it, current:14
+(bt_demux_stream_push_loop) unlock cur:(14)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:14,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(15)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(15), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 15 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(15)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(14), ipc_data->piece(15)
+(bt_demux_stream_push_loop) recovery lock (14)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=15, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (15) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 14 to 15 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (15) 
+(qtdemux_chain) Received buffer size:32768 demux offset:482141
+(qtdemux_chain) pushing in inbuf 0x7fffc40c2170,neededbytes:12563,available: 42147
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 16, call read_piece() on it, current:15
+(bt_demux_stream_push_loop) unlock cur:(15)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:15,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(16)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(16), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 16 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(16)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(15), ipc_data->piece(16)
+(bt_demux_stream_push_loop) recovery lock (15)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=16, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (16) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 15 to 16 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (16) 
+(qtdemux_chain) Received buffer size:32768 demux offset:523132
+(qtdemux_chain) pushing in inbuf 0x7fffc40d5090,neededbytes:8308,available: 33924
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 17, call read_piece() on it, current:16
+(bt_demux_stream_push_loop) unlock cur:(16)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:16,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+
+
+Got read_piece_alert 
+(btdemux_feed_read_piece_alert) 
+(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(17)
+(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(17), size=32768 
+(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 17 
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(17)
+(bt_demux_stream_push_loop) waiting lock thiz->current_piece(16), ipc_data->piece(17)
+(bt_demux_stream_push_loop) recovery lock (16)
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=17, this buffer actual size:32768 
+(bt_demux_stream_push_loop) Received piece (17) of size 32768 and actual size 32768 on file 0 
+(bt_demux_stream_push_loop) Modifying thiz->current_piece from 16 to 17 
+(bt_demux_stream_push_loop) Pushing buffer, actual size: 32768, file: 0, cur piece: (17) 
+(qtdemux_chain) Received buffer size:32768 demux offset:556861
+(qtdemux_chain) pushing in inbuf 0x7fffc4079fb0,neededbytes:562,available: 32963
+(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
+(bt_demux_stream_push_loop) Luckily we have next piece 18, call read_piece() on it, current:17
+(bt_demux_stream_push_loop) unlock cur:(17)
+bt_demux_stream_push_loop, END 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:76],current_piece:17,pad task state 0 
+(bt_demux_stream_push_loop) decodebin ghost sink pad is ok to have target
+(bt_demux_stream_push_loop) have_type emitted, proceeding 
+^C
+Thread 1 "transmission-gt" received signal SIGINT, Interrupt.
+0x00007ffff591b4cd in __GI___poll (fds=0x55555619db90, nfds=4, timeout=200) at ../sysdeps/unix/sysv/linux/poll.c:29
+warning: 29	../sysdeps/unix/sysv/linux/poll.c: No such file or directory
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 11987] will be killed.
+
+Quit anyway? (y or n) y
+pal@pal-desktop79:/media/pal/E/Downloads/libtorrent-SN/build/gtk$ 

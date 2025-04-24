@@ -51,6 +51,7 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 /* used in update_properties_from_bvw() */
 #define UPDATE_FROM_STRING(type, name) \
 	do { \
+		Glib::ValueBase value; \
 		const char *temp; \
 		totem_wrapper_get_bvw_metadata (totem, \
 						 type, value); \
@@ -67,6 +68,7 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 
 #define UPDATE_FROM_INT(type, name, format, empty) \
 	do { \
+		Glib::ValueBase value; \
 		char *temp; \
 		totem_wrapper_get_bvw_metadata (totem, \
 						 type, value); \
@@ -85,13 +87,15 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 
 #define UPDATE_FROM_INT2(type1, type2, name, format) \
 	do { \
+		Glib::ValueBase value1; \
+		Glib::ValueBase value2; \
 		int x, y; \
 		char *temp; \
 		totem_wrapper_get_bvw_metadata (totem, \
-						 type1, value); \ 
+						 type1, value1); \ 
 		x =  static_cast<const Glib::Value<int>&>(value).get();  \
 		totem_wrapper_get_bvw_metadata (totem, \
-							type2, value); \
+							type2, value2); \
 		y = static_cast<const Glib::Value<int>&>(value).get();  \
 		temp = g_strdup_printf (format, x, y); \
 		g_object_set (G_OBJECT (pi->props), name, temp, NULL); \
@@ -107,12 +111,13 @@ update_properties_from_bvw (TotemMoviePropertiesPlugin *pi)
 {
 	gboolean has_video, has_audio;
 
-	//to hold underlying Glib::Value<T>, everytime it call totem_wrapper_get_bvw_metadata(), it is holding new GLib::Value<T>, so the previous one will be destructed automatically
+	//use Glib::ValueBase value; to hold underlying Glib::Value<T>, everytime it call totem_wrapper_get_bvw_metadata(), it is holding new GLib::Value<T>, so the previous one will be destructed automatically
 	//which is type-erase on reassignment (Glib::Value holds type info while Glib::ValueBase not)
-	Glib::ValueBase value;
+	
 	
 	TotemWrapper *totem;
-	totem = TOTEM_WRAPPER (g_object_get_data (G_OBJECT (pi), "object"));
+	totem = TOTEM_WRAPPER(g_object_get_data (G_OBJECT (pi), "object"));
+
 
 	//even if some tag has fetched,we still update it , such as BVW_INFO_CONTAINER will update everytime even if it is constant
 
@@ -124,21 +129,31 @@ update_properties_from_bvw (TotemMoviePropertiesPlugin *pi)
 	UPDATE_FROM_STRING (BVW_INFO_COMMENT, "comment");
 	UPDATE_FROM_STRING (BVW_INFO_CONTAINER, "container");
 
-	totem_wrapper_get_bvw_metadata (totem, BVW_INFO_DURATION, value);
-	int duration = static_cast<const Glib::Value<int>&>(value).get();
-	bacon_video_widget_properties_set_duration (BACON_VIDEO_WIDGET_PROPERTIES(pi->props),
-						    duration * 1000);
-	
+
+	{
+		Glib::ValueBase value; 
+		totem_wrapper_get_bvw_metadata (totem, BVW_INFO_DURATION, value);
+		int duration = static_cast<const Glib::Value<int>&>(value).get();
+		bacon_video_widget_properties_set_duration(BACON_VIDEO_WIDGET_PROPERTIES(pi->props),
+								duration * 1000);
+	}
+
 
 	/* Types */
-	totem_wrapper_get_bvw_metadata (totem, BVW_INFO_HAS_VIDEO, value);
-	has_video = static_cast<const Glib::Value<bool>&>(value).get();
+	{
+		Glib::ValueBase value; 
+		totem_wrapper_get_bvw_metadata (totem, BVW_INFO_HAS_VIDEO, value);
+		has_video = static_cast<const Glib::Value<bool>&>(value).get();
+	}
 
-	totem_wrapper_get_bvw_metadata (totem, BVW_INFO_HAS_AUDIO, value);
-	has_audio = static_cast<const Glib::Value<bool>&>(value).get();
 
-	bacon_video_widget_properties_set_has_type (BACON_VIDEO_WIDGET_PROPERTIES(pi->props), has_video, has_audio);
-
+	{
+		Glib::ValueBase value; 
+		totem_wrapper_get_bvw_metadata (totem, BVW_INFO_HAS_AUDIO, value);
+		has_audio = static_cast<const Glib::Value<bool>&>(value).get();
+	}
+	
+	bacon_video_widget_properties_set_has_type(BACON_VIDEO_WIDGET_PROPERTIES(pi->props), has_video, has_audio);
 
 	/* Video */
 	if (has_video != FALSE)
@@ -148,9 +163,13 @@ update_properties_from_bvw (TotemMoviePropertiesPlugin *pi)
 		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "video-codec");
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 "%d kbps", "N/A");
-		totem_wrapper_get_bvw_metadata (totem, BVW_INFO_FPS, value);
-		int framerate = static_cast<const Glib::Value<int>&>(value).get();
-		bacon_video_widget_properties_set_framerate (BACON_VIDEO_WIDGET_PROPERTIES(pi->props), framerate);
+		
+		{
+			Glib::ValueBase value; 
+			totem_wrapper_get_bvw_metadata (totem, BVW_INFO_FPS, value);
+			int framerate = static_cast<const Glib::Value<int>&>(value).get();
+			bacon_video_widget_properties_set_framerate (BACON_VIDEO_WIDGET_PROPERTIES(pi->props), framerate);
+		}
 	}
 
 

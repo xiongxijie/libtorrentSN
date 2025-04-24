@@ -373,7 +373,6 @@ MyHdyApplicationWindow::Impl::Impl(
 	busy_popup_ht_(g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL))
 {
 
-
 	//btdemux lifetime
     GObject* btdemux_gobj =  bvw_->fetch_btdemux();
     if(btdemux_gobj != nullptr)
@@ -446,11 +445,14 @@ MyHdyApplicationWindow::Impl::Impl(
 	/*Plugins shoud initalized later by caller,do it after we fully Constructed, 
 		so Don't put them in the constructor to avoid SIGSEGV */
 
+
+
 	/* Delegate to do the real thing, play */
-	// Glib::signal_idle().connect([this](){
-	// 	set_current_fileidx_and_play();
-	// 	return false;
-	// });
+	Glib::signal_idle().connect([this](){
+		std::cout << "MyHdyApplicationWindow [Start Play] " << std::endl;
+		set_current_fileidx_and_play();
+		return false;
+	});
 
 	std::cout << "MyHdyApplicationWindow::Impl constructor finished. " << std::endl;
 
@@ -498,6 +500,7 @@ void MyHdyApplicationWindow::Impl::init_plugins_system()
 
 void MyHdyApplicationWindow::on_closing_sync_display() 
 {
+	std::cout << "void MyHdyApplicationWindow::on_closing_sync_display()" << std::endl;
 	Glib::RefPtr<Gdk::Display> display = get_display();
 	display->sync();
 }
@@ -791,11 +794,11 @@ void MyHdyApplicationWindow::Impl::set_current_fileidx_and_play()
 
 	file_index_cur = playlist_.get_current_fileidx();
 
-					printf ("(totem_object_set_current_fileidx_and_play) get current fileidx %d from totem-playlist \n", file_index_cur);
+					printf("(totem_object_set_current_fileidx_and_play) get current fileidx %d from totem-playlist \n", file_index_cur);
 
-	if (file_index_cur != -1)
+	if(file_index_cur != -1)
 	{
-		set_fileidx_and_play (file_index_cur);
+		set_fileidx_and_play(file_index_cur);
 	}
 }
 
@@ -803,7 +806,7 @@ void MyHdyApplicationWindow::Impl::set_current_fileidx_and_play()
 void MyHdyApplicationWindow::Impl::set_fileidx_and_play(int file_index)
 {
 							printf("totem_object_set_fileidx_and_play, file_index=%d \n", file_index);
-	set_fileidx (file_index);
+	set_fileidx(file_index);
 	play();
 }
 
@@ -815,7 +818,7 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 
 	//when switch to another item in playlist, we should close the current one,
 	//FIXME:btdemux may keep pushing even if we Press Next Chapter, call below code, seems it knows nothing about our request
-	if (streaming_file_idx_ != -1) 
+	if(streaming_file_idx_ != -1) 
 	{
 									printf("(totem_object_set_fileidx, file_idx=%d) Closing the current stream first \n", file_index);
 		bvw_->close();
@@ -823,7 +826,7 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 		play_pause_set_label(STATE_STOPPED);
 	}
 
-	if(streaming_file_idx_ == -1)
+	if(file_index == -1)
 	{
 		play_pause_set_label(STATE_PAUSED);
 	
@@ -854,19 +857,19 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 
 							printf("(totem_object_set_fileidx), file_idx=%d gonna call bacon_video_widget_open\n", file_index);
 							
-
 		bvw_->open(file_index);
-		mark_popup_busy("opening file");
+		mark_popup_busy("opening file");//----------Mark as busy, unmark it when play_starting_cb
 
-
+		/**************SET FILEIDX***********/
 		streaming_file_idx_ = file_index;
+		/************************************/
 
 		// Enable Play/Pause Button
 		action_set_sensitive("play", true);
 
 		/* Volume */
 		can_vol_seek = bvw_->can_set_volume();
-		bitfield_scale_->set_sensitive(can_vol_seek);
+		volume_->set_sensitive(can_vol_seek);
 	
 		/* Set the playlist */
 		play_pause_set_label (STATE_PAUSED);
@@ -878,12 +881,13 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 
 		const char* title_cur = playlist_.get_current_filename();
 		update_player_header_title(title_cur);
-
 	}
 
 	// update Previous and Next Button sensitivity per playlist 
 	update_buttons();
 }
+
+
 
 
 
@@ -968,25 +972,38 @@ void MyHdyApplicationWindow::Impl::pause()
 
 void MyHdyApplicationWindow::Impl::properties_metadata_updated()
 {
-	Glib::ValueBase value;
+
 	Glib::ustring title;
 	Glib::ustring album;
 	Glib::ustring artist;
 	
-	bvw_->get_metadata(BVW_INFO_TITLE, value);
-	title = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+	/*use curly brackets scope to prevents the "already initialized GValue" error.*/
+	{	
+		Glib::ValueBase value;
+		bvw_->get_metadata(BVW_INFO_TITLE, value);
+		title = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+	} // temporary scope, value destructs goes out of scope
 
 
-	bvw_->get_metadata(BVW_INFO_ARTIST, value);
-	album = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+
+	{
+		Glib::ValueBase value;
+		bvw_->get_metadata(BVW_INFO_ARTIST, value);
+		album = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+	} // temporary scope, value destructs goes out of scope
 
 
-	bvw_->get_metadata(BVW_INFO_ALBUM, value);
-	album = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+
+	{
+		Glib::ValueBase value;
+		bvw_->get_metadata(BVW_INFO_ALBUM, value);
+		album = static_cast<const Glib::Value<Glib::ustring>&>(value).get();
+	} // temporary scope, value destructs goes out of scope
+
 
 							printf ("(totem_get_nice_name_for_stream) emit_metadata_updated \n");
 
-	//tell totem-movie-properties to get metadata tags from BaconVideoWidget
+	// tell totem-movie-properties to get metadata tags from BaconVideoWidget
 	emit_metadata_updated(title.c_str(),
 	                       album.c_str(),
 						   artist.c_str());
@@ -996,7 +1013,7 @@ void MyHdyApplicationWindow::Impl::properties_metadata_updated()
 
 
 
-
+//update title on the TotemPlayerHeader
 void MyHdyApplicationWindow::Impl::update_player_header_title(const char *name)
 {
 	if (name == NULL) 
@@ -1203,7 +1220,7 @@ void MyHdyApplicationWindow::Impl::reset_seek_status()
 void MyHdyApplicationWindow::Impl::play_pause_set_label(TotemStates state)
 {
 
-				// printf("(totem-object/play_pause_set_label) \n");
+				printf("(totem-object/play_pause_set_label) \n");
 
 	Gtk::Image *image = nullptr;
 	const char *id, *tip;
@@ -1231,16 +1248,16 @@ void MyHdyApplicationWindow::Impl::play_pause_set_label(TotemStates state)
 			tip = "Play";
 			break;
 		default:
-			g_assert_not_reached ();
+			g_assert_not_reached();
 			return;
 	}
 
 
-	play_button_->set_tooltip_text (tip);
+	play_button_->set_tooltip_text(tip);
 	image = dynamic_cast<Gtk::Image*>(play_button_->get_image());
 	// image = play_button_->get_image();
 	if(image)
-		image->set_from_icon_name (id, Gtk::ICON_SIZE_MENU);
+		image->set_from_icon_name(id, Gtk::ICON_SIZE_MENU);
 	
 	state_ = state;
 
@@ -1252,9 +1269,9 @@ void MyHdyApplicationWindow::Impl::play_pause_set_label(TotemStates state)
 //this is to update disable or enable of Previous and Next Button 
 void MyHdyApplicationWindow::Impl::update_buttons()
 {
-	action_set_sensitive ("previous-chapter",
+	action_set_sensitive("previous-chapter",
 				       can_seek_previous());
-	action_set_sensitive ("next-chapter",
+	action_set_sensitive("next-chapter",
 				       can_seek_next());
 }
 
@@ -1495,7 +1512,6 @@ void MyHdyApplicationWindow::Impl::update_volume_sliders()
 	double volume;
 	volume = bvw_->get_volume();
 	volume_changed_tag_.block();
-	// gtk_scale_button_set_value (GTK_SCALE_BUTTON (volume_), volume);
 	volume_->set_value(volume);
 	volume_changed_tag_.unblock();
 }
@@ -1689,7 +1705,7 @@ void MyHdyApplicationWindow::Impl::schedule_hiding_popup()
 
 /****MenuButton popup menu manage******/
 //these two methods and the GHashTable is for: when popup-menu(toolbox go-menu and player header menu) is shown,or during bacon open, or during seek
-//don't hide the butt toolbox automatically
+//It Tell Totem's Window: Hey,  Don't hide the buttom toolbox automatically
 void MyHdyApplicationWindow::Impl::mark_popup_busy(const char *reason)
 {
 

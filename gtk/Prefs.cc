@@ -39,7 +39,7 @@ using namespace std::literals;
 
 /* config_dir destination path, fetch settings file in this directory ,equals to  `tr_getDefaultConfigDir()`
 
-gl_confdir about located at /home/pal/.cinfig/transmission
+gl_confdir about located at /home/pal/.config/transmissionSN
 
 STRUCTURE:
     gl_configdir_____                       

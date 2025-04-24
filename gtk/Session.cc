@@ -33,6 +33,7 @@
 #include <glibmm/stringutils.h>
 #include <glibmm/variant.h>
 #include <glibmm/refptr.h>
+#include <glibmm/thread.h>
 
 #if GTKMM_CHECK_VERSION(4, 0, 0)
 #include <gtkmm/sortlistmodel.h>
@@ -267,9 +268,10 @@ private:
 
 
 
+    bool start_pop_alerts_thread();
+    void pop_alerts_thread_func();
+    void/*bool*/ post_alerts_on_session();
 
-    bool post_alerts_on_session();
-    // void handle_alerts();
 
 
     void OnRenameDone(lt::error_code ec);
@@ -282,7 +284,6 @@ private:
 
     void dispatch_trackers_alert(lt::torrent_handle& hdl , std::vector<lt::announce_entry> && trackers);
 
-    // void process_alerts();
 
     
 private:
@@ -306,9 +307,21 @@ private:
     sigc::signal<void(bool)> signal_busy_;
     sigc::signal<void(int const)> signal_prefs_changed_;
     sigc::signal<void(std::unordered_set<std::uint32_t> const&, Torrent::ChangeFlags)> signal_torrents_changed_;
-    sigc::connection post_torrent_update_timer_;
-    sigc::connection handle_alerts_timer_;
+    // sigc::connection post_torrent_update_timer_;
+    // sigc::connection handle_alerts_timer_;
     
+
+
+    Glib::Thread* pop_alerts_thread_ = nullptr;
+
+
+    bool pop_alerts_thread_working_ = false; 
+
+
+
+
+
+
 
 
     Glib::RefPtr<Gio::FileMonitor> watchdir_monitor_;
@@ -357,17 +370,11 @@ private:
     accum_stats across_ses_stats{std::time(nullptr)/* time now*/};
 
 
-    // sigc::connection idle_handle_alerts_;
-
-
-    std::mutex handle_alerts_mutex_;
-
     bool closing_ = false;
 
-
-    // AlertQueue alert_queue_;
+ 
     GObject* btdemux_gobj_ = nullptr;
-    std::uint32_t totem_uniq_id_ = -1;
+    std::uint32_t totem_uniq_id_ = 0;
 
     int num_outstanding_resume_data_ = 0;
 
@@ -1137,494 +1144,37 @@ void Session::Impl::dispatch_trackers_alert(lt::torrent_handle& hdl , std::vecto
 
 
 
-// void Session::Impl::process_alerts()
-// {
-          
-//     // if (alert_queue_.processing_stopped())
-//     //     return; // Skip processing if stopped
-
-
-//     std::vector<lt::alert*> alerts;
-//     {
-//         std::lock_guard<std::mutex> lock(handle_alerts_mutex_);
-//         // alerts = alert_queue_.pop();  // Pop the alerts for processing
-
-//     }
-
-
-//     for(lt::alert* a : alerts)
-//     {   
-     
-//         //when torrents state not update, p->status is empty
-//         if (auto* p = alert_cast<state_update_alert>(a))
-//         {       
-//             if(p->status.empty())
-//             {
-//                 break;
-//             }
-//             dispatch_torrent_status_alert(std::move(p->status));
-//         }
-
-//         //details -> peers_info (ipaddr,)
-//         else if (auto* p = alert_cast<peer_info_alert>(a))
-//         {
-//             dispatch_peers_alert(p->handle ,std::move(p->peer_info));
-//         }
-//         else if (auto* p = alert_cast<file_progress_alert>(a))
-//         {
-//             auto j = m_all_torrents_.find(p->handle);
-//             if (j != m_all_torrents_.end())
-//             {
-//                 auto& underlying = j->second;
-//                 underlying->get_file_progress_vec_ref() = std::move(p->files);
-//             }
-//         }
-//         // else if (auto* p = alert_cast<piece_availability_alert>(a))
-//         // {
-            
-//         // }
-//         // else if (auto* p = alert_cast<piece_info_alert>(a))
-//         // {
-           
-//         // }
-//         //
-//         // else if (auto* p = alert_cast<torrent_deleted_alert>(a))
-//         // {
-           
-//         // }
-//         else if(auto* p = alert_cast<metadata_received_alert>(a))
-//         {
-// 		    p->handle.save_resume_data(torrent_handle::save_info_dict);
-//             ++num_outstanding_resume_data_;	
-//         }
-//         //details -> trackers, in filterbar tracker_combonox
-//         else if (auto* p = alert_cast<tracker_list_alert>(a))
-//         {
-//             dispatch_trackers_alert(p->handle, std::move(p->trackers));
-//         }
-
-//         //add or load from resume 
-//         else if (auto* p = alert_cast<add_torrent_alert>(a))
-//         {   
-
-//                                 std::cout << "add_torrent_alert!!!!!!!!!!!!!!" << std::endl;
-
-
-//             if(p->error)
-//             {
-//                 //trying to add duplicated torrents
-//                 if(p->error == lt::errors::duplicate_torrent)
-//                 {
-//                     //libtorrent internal will handle duplicate torrent
-//                     // signal_add_error_.emit(ERR_ADD_TORRENT_DUP, p->torrent_name());
-//                 }
-//                 //another errors
-//                 else 
-//                 {
-//                     signal_add_error_.emit(ERR_ADD_TORRENT_ERR, p->torrent_name());     
-//                 }
-//             }
-//             else        
-//             {       
-//                 //a copy, handle is assumed to be valid
-//                 auto h = p->handle;
-    
-//                 //store the handle in our Session field
-//                 auto j = m_all_torrents_.emplace(std::move(h), Glib::RefPtr<Torrent>{}).first;
-//                 if(!j->first.is_valid())
-//                 {                       
-//                    return;
-//                 }
-
-//                 Glib::RefPtr<Torrent> newTorr = Torrent::create(j->first);
-//                 if(auto tmp_iter = m_all_torrents_.find(j->first); tmp_iter != m_all_torrents_.end())
-//                 {
-//                     //move ownership to our Session field
-//                     tmp_iter->second = std::move(newTorr);
-//                 }   
-    
-//                                 std::cout << "\n\n" << std::endl;
-//                                 for(auto const& pari : m_all_torrents_)
-//                                 {
-//                                     std::cout << pari.first.name() << " ," << (pari.second->is_Tor_valid() ? "YES " : "NO ")  << pari.second->get_uniq_id() << std::endl; 
-//                                 }
-//                                 std::cout << "info hash:" << j->second->get_ih_str_form() << std::endl;
-//                                 std::cout << "\n\n" << std::endl;
-
-
-//                 //record to our Session field, just use copy
-//                 m_uid_ih_.emplace(j->second->get_uniq_id(), j->second->get_ih());
-                                
-    
-
-//                 //call callback others register to us
-//                 bool add_or_load_ref {};
-//                 auto mag_link = onTorHandleFetched(j->first, j->second, add_or_load_ref);
-//                 if(!mag_link.empty())
-//                 {
-//                     j->second->saveMagnetLink(std::move(mag_link));
-//                 }
-
-//                 //add new torrents
-//                 if(add_or_load_ref)
-//                 {          
-//                          std::cout << "from add" << std::endl;
-//                     add_torrent_ui(j->second);
-//                 }
-//                 //load resume torrents
-//                 else
-//                 {           
-//                         std::cout << "from load" << std::endl; 
-//                     auto const model = get_raw_model();
-//                     model->append(j->second);
-//                 }
-
-//                 //dont forget to save fast-resume file 
-//                 j->first.save_resume_data(torrent_handle::save_info_dict | torrent_handle::if_metadata_changed);
-//                 ++num_outstanding_resume_data_;	
-
-//             }
-//         }
-
-//         /*for session global stats*/
-//         else if (auto* p = alert_cast<session_stats_alert>(a))
-// 	    {
-// 		    ses_view_.update_counters(p->counters(), p->timestamp());
-// 	    }
-
-
-//         //torrent finished - need save resume data
-//         else if (auto* p = alert_cast<torrent_finished_alert>(a))
-//         {
-//             lt::torrent_handle h = p->handle;
-// 		    // h.set_max_connections(max_connections_per_torrent / 2);
-//             h.save_resume_data(torrent_handle::save_info_dict | torrent_handle::if_download_progress);
-//             ++num_outstanding_resume_data_;	
-//         }
-//         // when resume data is ready, save it     
-//         else if (auto* p = alert_cast<save_resume_data_alert>(a))
-//         {
-//                     std::cout << "In save_resume_data_alert" << std::endl;
-//             --num_outstanding_resume_data_;	
-//             tr_torrentSaveResume(p->params); 
-//         }
-//         //resume data-saving failed
-//         else if (auto* p = alert_cast<save_resume_data_failed_alert>(a))
-//         {
-           
-//         }
-//         //torrent paused
-//         else if (auto* p = alert_cast<torrent_paused_alert>(a))
-//         {
-           
-//         }
-
-       
-//         else if (auto* p = alert_cast<torrent_removed_alert>(a))
-//         {
-            
-//         }
-//         else if (auto* p = alert_cast<piece_info_alert>(a))
-//         {
-         
-//         }
-
-
-//         else if (auto* p = alert_cast<storage_moved_failed_alert>(a))
-//         {
-//             auto j = m_all_torrents_.find(p->handle);
-//             //we found it 
-//             if(j != m_all_torrents_.end())
-//             {
-//                 move_storage_ec_ = p->error;
-  
-//             }
-//         }
-//         else if (auto* p = alert_cast<storage_moved_alert>(a))
-//         {   
-//             //save new save_path to resume file
-//             p->handle.save_resume_data(torrent_handle::if_config_changed);
-//             ++num_outstanding_resume_data_;	
-//         }
-
-      
-   
-//         else if (auto* p = alert_cast<file_rename_failed_alert>(a))
-//         {
-//             OnRenameDone(std::move(p->error));
-        
-//         }
-//         else if (auto* p = alert_cast<file_renamed_alert>(a))
-//         {
-//             p->handle.save_resume_data(torrent_handle::if_config_changed);
-//             ++num_outstanding_resume_data_;	
-//             OnRenameDone(lt::error_code{}/*empty*/);
-//         }
-
-//         else if(auto* p = alert_cast<alerts_dropped_alert>(a))
-//         {
-//             std::cerr<< " alert dropped: "<< a->message() << std::endl;
-//         }
-//     }
-
-//     {
-//         std::lock_guard<std::mutex> lock(handle_alerts_mutex_);
-//         alert_queue_.signal_processing_complete();
-//     }
-
-
-// }
-
-
-
-// void Session::Impl::handle_alerts() 
-// {                           
-//         // std::cout << "we handle alerts" << std::endl;
-//     auto& ses = get_session();
-//     std::vector<lt::alert*> alerts;
-
-//     // Lock the mutex to ensure safe access to alerts
-//     {
-//         std::lock_guard<std::mutex> lock(handle_alerts_mutex_);
-//         session_.pop_alerts(&alerts);
-//     }
-
-//             // std::cout << "KKKL:got alerts cluster " << alerts.size() << std::endl;
-
-//     // Process alerts outside the locked section
-//     for(auto a : alerts)
-//     {
-//         //when torrents state not update, p->status is empty
-//         if (auto* p = alert_cast<state_update_alert>(a))
-//         {       
-//             if(p->status.empty())
-//             {
-//                 break;
-//             }
-//             dispatch_torrent_status_alert(std::move(p->status));
-//         }
-
-//         //details -> peers
-//         else if (auto* p = alert_cast<peer_info_alert>(a))
-//         {
-//             dispatch_peers_alert(p->handle ,std::move(p->peer_info));
-//         }
-//         else if (auto* p = alert_cast<file_progress_alert>(a))
-//         {
-//             auto j = m_all_torrents_.find(p->handle);
-//             if (j != m_all_torrents_.end())
-//             {
-//                 auto& underlying = j->second;
-//                 underlying->get_file_progress_vec_ref() = std::move(p->files);
-//             }
-//         }
-//         // else if (auto* p = alert_cast<piece_availability_alert>(a))
-//         // {
-            
-//         // }
-//         // else if (auto* p = alert_cast<piece_info_alert>(a))
-//         // {
-           
-//         // }
-//         //
-//         // else if (auto* p = alert_cast<torrent_deleted_alert>(a))
-//         // {
-           
-//         // }
-//         else if(auto* p = alert_cast<metadata_received_alert>(a))
-//         {
-// 		    p->handle.save_resume_data(torrent_handle::save_info_dict);
-//         }
-//         //details -> trackers
-//         else if (auto* p = alert_cast<tracker_list_alert>(a))
-//         {
-//             dispatch_trackers_alert(p->handle, std::move(p->trackers));
-//         }
-
-//         //add or load from resume 
-//         else if (auto* p = alert_cast<add_torrent_alert>(a))
-//         {   
-
-//                                 std::cout << "add_torrent_alert!!!!!!!!!!!!!!" << std::endl;
-
-
-//             if(p->error)
-//             {
-//                 //trying to add duplicated torrents
-//                 if(p->error == lt::errors::duplicate_torrent)
-//                 {
-//                     //handled elsewhere
-//                     // signal_add_error_.emit(ERR_ADD_TORRENT_DUP, p->torrent_name());
-//                 }
-//                 //another errors
-//                 else 
-//                 {
-//                     signal_add_error_.emit(ERR_ADD_TORRENT_ERR, p->torrent_name());     
-//                 }
-//             }
-//             else        
-//             {       
-//                 //a copy, handle is assumed to be valid
-//                 auto h = p->handle;
-    
-//                 //store the handle in our Session field
-//                 auto j = m_all_torrents_.emplace(std::move(h), Glib::RefPtr<Torrent>{}).first;
-//                 if(!j->first.is_valid())
-//                 {                       
-//                    return;
-//                 }
-
-//                 Glib::RefPtr<Torrent> newTorr = Torrent::create(j->first);
-//                 if(auto tmp_iter = m_all_torrents_.find(j->first); tmp_iter != m_all_torrents_.end())
-//                 {
-//                     //move ownership to our Session field
-//                     tmp_iter->second = std::move(newTorr);
-//                 }   
-    
-//                                 std::cout << "\n\n" << std::endl;
-//                                 for(auto const& pari : m_all_torrents_)
-//                                 {
-//                                     std::cout << pari.first.name() << " ," << (pari.second->is_Tor_valid() ? "YES " : "NO ")  << pari.second->get_uniq_id() << std::endl; 
-//                                 }
-//                                 std::cout << "info hash:" << j->second->get_ih_str_form() << std::endl;
-//                                 std::cout << "\n\n" << std::endl;
-
-
-//                 //record to our Session field, just use copy
-//                 m_uid_ih_.emplace(j->second->get_uniq_id(), j->second->get_ih());
-                                
-    
-
-//                 //call callback others register to us
-//                 bool add_or_load_ref {};
-//                 auto mag_link = onTorHandleFetched(j->first, j->second, add_or_load_ref);
-//                 if(!mag_link.empty())
-//                 {
-//                     j->second->saveMagnetLink(std::move(mag_link));
-//                 }
-
-//                 //add new torrents
-//                 if(add_or_load_ref)
-//                 {          
-//                          std::cout << "from add" << std::endl;
-//                     add_torrent_ui(j->second);
-//                 }
-//                 //load resume torrents
-//                 else
-//                 {           
-//                         std::cout << "from load" << std::endl; 
-//                     auto const model = get_raw_model();
-//                     model->append(j->second);
-//                 }
-
-//                 //dont forget to save fast-resume file 
-//                 // j->first.save_resume_data(torrent_handle::save_info_dict | torrent_handle::if_metadata_changed);
-//             }
-//         }
-
-//         /*for session global stats*/
-//         else if (auto* p = alert_cast<session_stats_alert>(a))
-// 	    {
-// 		    ses_view_.update_counters(p->counters(), p->timestamp());
-// 	    }
-
-
-//         //torrent finished - need save resume data
-//         else if (auto* p = alert_cast<torrent_finished_alert>(a))
-//         {
-//             lt::torrent_handle h = p->handle;
-// 		    // h.set_max_connections(max_connections_per_torrent / 2);
-//             h.save_resume_data();
-//         }
-//         // when resume data is ready, save it     
-//         else if (auto* p = alert_cast<save_resume_data_alert>(a))
-//         {
-//                     std::cout << "In save_resume_data_alert" << std::endl;
-//             tr_torrentSaveResume(p->params); 
-//         }
-//         //resume data-saving failed
-//         else if (auto* p = alert_cast<save_resume_data_failed_alert>(a))
-//         {
-           
-//         }
-//         //torrent paused
-//         else if (auto* p = alert_cast<torrent_paused_alert>(a))
-//         {
-           
-//         }
-
-       
-//         else if (auto* p = alert_cast<torrent_removed_alert>(a))
-//         {
-            
-//         }
-//         else if (auto* p = alert_cast<piece_info_alert>(a))
-//         {
-         
-//         }
-
-
-//         else if (auto* p = alert_cast<storage_moved_failed_alert>(a))
-//         {
-//             auto j = m_all_torrents_.find(p->handle);
-//             //we found it 
-//             if(j != m_all_torrents_.end())
-//             {
-//                 move_storage_ec_ = p->error;
-  
-//             }
-//         }
-//         else if (auto* p = alert_cast<storage_moved_alert>(a))
-//         {   
-//             //save new save_path to resume file
-//             p->handle.save_resume_data(torrent_handle::if_config_changed);
-//         }
-
-      
-   
-//         else if (auto* p = alert_cast<file_rename_failed_alert>(a))
-//         {
-//             OnRenameDone(std::move(p->error));
-        
-//         }
-//         else if (auto* p = alert_cast<file_renamed_alert>(a))
-//         {
-//             p->handle.save_resume_data(torrent_handle::if_config_changed);
-//             OnRenameDone(lt::error_code{}/*empty*/);
-//         }
-
-//         else if(auto* p = alert_cast<alerts_dropped_alert>(a))
-//         {
-//             std::cerr<< " alert dropped: "<< a->message() << std::endl;
-//         }
-//     }
-
-
-// }
-
-
-
-bool Session::Impl::post_alerts_on_session()try
+void Session::Impl::pop_alerts_thread_func()
 {
-   
-    /****post alerts ****/
+    std::cout << "Enter pop_alerts_thread_func" << std::endl;
+    if(pop_alerts_thread_working_)
+    {
+        std::cout << "pop_alerts_thread_working_ is true" << std::endl;
+    }else
+    {
+        std::cout << "pop_alerts_thread_working_ is false" << std::endl;
+
+    }
+    while(pop_alerts_thread_working_)
+    {
+        post_alerts_on_session();
+    }
+    std::cout << "Exit pop_alerts_thread_func" << std::endl;
+}
+
+
+void/*bool*/ Session::Impl::post_alerts_on_session()try
+{
     auto& ses = get_session();
     ses.post_torrent_updates();//post state_update_alert
     ses.post_session_stats();
 
-    
-    /*****push alerts to AlertQueue */
+
     std::vector<lt::alert*> alerts;
+    ses.pop_alerts(&alerts);
+
+    if(!alerts.empty())
     {
-        std::lock_guard<std::mutex> lock(handle_alerts_mutex_);
-        // Collect alerts and push them to the queue
-        /*******************IMPORTANT********************/
-        // if (alert_queue_.is_processing_complete()  ) 
-        // {
-            ses.pop_alerts(&alerts);
-         
-            if(!alerts.empty())
-            {
                                                 // std::cout << "popped " << alerts.size() << " cnt " << std::endl;
 
                 for (alert* a : alerts) 
@@ -1845,6 +1395,14 @@ bool Session::Impl::post_alerts_on_session()try
                         break;
                     }
 
+                    case metadata_received_alert::alert_type:
+                    {
+                            std::cout << "when add from magnet uri, metadata_received_alert arrived" << std::endl;
+                        auto* p = static_cast<torrent_finished_alert*>(a);
+                        p->handle.save_resume_data(torrent_handle::save_info_dict);
+                        ++num_outstanding_resume_data_;
+                        break;
+                    }
                     case session_stats_alert::alert_type:
                     {
                         auto* p = static_cast<session_stats_alert*>(a);
@@ -1852,10 +1410,12 @@ bool Session::Impl::post_alerts_on_session()try
                         break;
 
                     }
+
                     /*******************feed gst-btdemux loop********************/
                     case read_piece_alert::alert_type:
                     {
-                        if(totem_uniq_id_ > -1){
+                        if(totem_uniq_id_ > 0){
+                            std ::cout << "Session Got read_piece_alert " << std::endl;
                             btdemux_feed_read_piece_alert(btdemux_gobj_, a);
                         }
                         break;
@@ -1863,49 +1423,27 @@ bool Session::Impl::post_alerts_on_session()try
 
                     case piece_finished_alert::alert_type:
                     {
-                        if(totem_uniq_id_ > -1){
+                        if(totem_uniq_id_ > 0){
                             btdemux_feed_piece_finished_alert(btdemux_gobj_, a);
                         }
                         break;
                     }
-
-
                 }
-
             }
-                                                // std::cout << std::endl;
-                // alert_queue_.push(std::move(alerts)); 
-            }
-        // }
+                                        // std::cout << std::endl;     
     }
-    
-    // Ensure that *only one* idle handler is connected
-    // if (!idle_handle_alerts_.connected()) 
-    // {
-    //     idle_handle_alerts_ = Glib::signal_idle().connect([this]() { 
-    //         try{ 
-
-    //             process_alerts();
-    //             return false;//call once
-    //         }
-    //         catch(const std::exception& e) 
-    //         {
-    //             // Handle the exception (e.g., log it, clean up resources)
-    //             std::cerr << "Exception caught in handle_alerts handler: " << e.what() << std::endl;
-    //             return false; // Stop calling this idle function if necessary
-    //         }
-    //     });
-
-    // }
-
-    return true;//continue timer
+       
+    alerts.clear();
+    // return true;//continue timer
 }
 catch(const std::exception& e) 
 {
     // Handle the exception (e.g., log it, clean up resources)
     std::cerr << "Exception caught in handle_alerts handler: " << e.what() << std::endl;
-    return false; // Stop calling this idle function if necessary
+    // return false; // Stop calling this idle function if necessary
 }
+
+
 
 
 
@@ -1940,23 +1478,15 @@ Session::Impl::Impl(Session &core, lt::session_params&& sp)
                                   { on_pref_changed(key); });
 
 
-    post_torrent_update_timer_ = Glib::signal_timeout().connect_seconds(
-    sigc::mem_fun(*this, &Impl::post_alerts_on_session),
-    1);
+    // post_torrent_update_timer_ = Glib::signal_timeout().connect_seconds(
+    // sigc::mem_fun(*this, &Impl::post_alerts_on_session),
+    // 1);
 
-    // handle_alerts_timer_ = Glib::signal_timeout().connect_seconds([this]() { 
-    //         try{ 
+    
 
-    //             process_alerts();
-    //             return true;//not call just once
-    //         }
-    //         catch(const std::exception& e) 
-    //         {
-    //             // Handle the exception (e.g., log it, clean up resources)
-    //             std::cerr << "Exception caught in handle_alerts handler: " << e.what() << std::endl;
-    //             return false; // Stop calling this idle function if necessary
-    //         }
-    //     }, 1);
+    Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &Impl::start_pop_alerts_thread), 1);
+
+
 }
 
 Session::Impl::~Impl()
@@ -1965,9 +1495,21 @@ Session::Impl::~Impl()
     // close();
     watchdir_monitor_tag_.disconnect();
     watch_monitor_idle_tag_.disconnect();
-    post_torrent_update_timer_.disconnect();
+    // post_torrent_update_timer_.disconnect();
     // alert_queue_.stop_processing();
-    handle_alerts_timer_.disconnect();
+    // handle_alerts_timer_.disconnect();
+
+
+    if(pop_alerts_thread_)
+    {
+        pop_alerts_thread_working_ = false;
+        pop_alerts_thread_->join();
+        pop_alerts_thread_ = nullptr;
+
+        std::cout << "Clean-up Glib::Thread for pop_alerts in Session::Impl::~Impl" << std::endl;
+
+    }
+
 
     if(btdemux_gobj_){
         btdemux_gobj_ = nullptr;
@@ -1976,6 +1518,17 @@ Session::Impl::~Impl()
 }
 
 
+bool Session::Impl::start_pop_alerts_thread()
+{
+    try {
+        pop_alerts_thread_working_ = true;
+        pop_alerts_thread_ = Glib::Thread::create(sigc::mem_fun(*this, &Impl::pop_alerts_thread_func));
+    } catch (const Glib::ThreadError& err)
+    {
+        std::cerr <<"Glib::Thread::create failed" << std::endl;
+    }
+    return false;
+}
 
 
 void Session::close()
@@ -2049,8 +1602,8 @@ void Session::Impl::close()
     //also clear singal in Session
     watchdir_monitor_tag_.disconnect();
     watch_monitor_idle_tag_.disconnect();
-    post_torrent_update_timer_.disconnect();
-    handle_alerts_timer_.disconnect();
+    // post_torrent_update_timer_.disconnect();
+    // handle_alerts_timer_.disconnect();
 
 
     std::cout << "close session, save resume data and cleanup finished.\n" << std::endl;
@@ -2140,19 +1693,6 @@ std::pair<Glib::RefPtr<Torrent>, guint> Session::Impl::find_torrent_by_uniq_id(s
 
     return {};
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3211,7 +2751,7 @@ void Session::totem_should_open(std::uint32_t id)
 }
 void Session::Impl::totem_should_open(std::uint32_t id)
 {
-    if(totem_uniq_id_ == -1)
+    if(totem_uniq_id_ == 0)
     {
         totem_uniq_id_ = id;
     }
@@ -3225,10 +2765,10 @@ void Session::btdemux_should_close()
 }
 void Session::Impl::btdemux_should_close()
 {
-    std::cout << "Session will stop feed control loop to remote gst_btdemux plugin(located at libgstbt.so)"
-    if(totem_uniq_id_ >-1)
+    std::cout << "Session will stop feed control loop to remote gst_btdemux plugin(located at libgstbt.so)" << std::endl;
+    if(totem_uniq_id_ > 0)
     {
-        totem_uniq_id_ = -1;
+        totem_uniq_id_ = 0;
     }
 }
 
@@ -3240,8 +2780,13 @@ bool Session::is_totem_active()
 
 bool Session::Impl::is_totem_active()
 {
-    return (totem_uniq_id_ > -1);
+    return (totem_uniq_id_ > 0);
 }
+
+
+
+
+
 
 
 

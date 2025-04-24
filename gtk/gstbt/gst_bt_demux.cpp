@@ -284,7 +284,7 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
   ipc_data = (GstBtDemuxBufferData *) g_async_queue_pop (thiz->ipc);
   if (!ipc_data) 
   {
-                          printf("(bt_demux_stream_push_loop) !ipc_data, so return\n");
+                          printf("(bt_demux_stream_push_loop) nil ipc_data, so return\n");
 
     gst_pad_pause_task (GST_PAD (thiz));
     return;
@@ -424,7 +424,7 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
 
                                           printf("(bt_demux_stream_push_loop) Pushing buffer, actual size: %d, file: %d, cur piece: (%d) \n", buf_size, thiz->file_idx, thiz->current_piece);
 
-
+  /*this call may block*/
   ret = gst_pad_push (GST_PAD (thiz), buf);
 
   if (ret != GST_FLOW_OK) 
@@ -1977,6 +1977,89 @@ gst_bt_demux_switch_streams (GstBtDemux * thiz, gint desired_file_idx)
 
 
 
+// static void
+// gst_bt_demux_task_resume (GstBtDemux * thiz)
+// {
+
+//                           printf("(gst_bt_demux_task_resume) \n");
+
+//   using namespace libtorrent;
+//   GSList *walk;
+
+//   /* pause every task */
+//   g_mutex_lock (thiz->streams_lock);
+//   for (walk = thiz->streams; walk; walk = g_slist_next (walk)) {
+//     GstBtDemuxStream *stream = GST_BT_DEMUX_STREAM (walk->data);
+ 
+//     if(stream->requested == FALSE)
+//       continue;
+
+
+//     // GstBtDemuxBufferData *ipc_data;
+//     // /* send a empty buffer, avoid g_async_queue block on empty state*/
+//     // ipc_data = g_new0 (GstBtDemuxBufferData, 1);
+//     // g_async_queue_push (stream->ipc, ipc_data);
+
+//     GstTaskState tstate = gst_pad_get_task_state (GST_PAD (stream));
+//     if(tstate == GST_TASK_PAUSED)
+//     {
+//       printf("(gst_bt_demux_task_pause) unset need_paused \n");
+
+//       stream->need_paused = FALSE;
+//     }
+//   }
+//   g_mutex_unlock (thiz->streams_lock);
+
+//   printf("(gst_bt_demux_task_resume) END\n");
+
+// }
+
+
+
+
+
+
+
+
+
+// static void
+// gst_bt_demux_task_pause (GstBtDemux * thiz)
+// {
+
+//                           printf("(gst_bt_demux_task_pause) \n");
+
+//   using namespace libtorrent;
+//   GSList *walk;
+
+//   /* pause task */
+//   g_mutex_lock (thiz->streams_lock);
+//   for (walk = thiz->streams; walk; walk = g_slist_next (walk)) {
+//     GstBtDemuxStream *stream = GST_BT_DEMUX_STREAM (walk->data);
+
+//     if(stream->requested == FALSE)
+//       continue;
+
+//     GstBtDemuxBufferData *ipc_data;
+//     /* send a empty buffer, avoid g_async_queue block on empty state */
+//     ipc_data = g_new0 (GstBtDemuxBufferData, 1);
+//     g_async_queue_push (stream->ipc, ipc_data);
+
+//     GstTaskState tstate = gst_pad_get_task_state (GST_PAD (stream));
+//     if(tstate == GST_TASK_STARTED)
+//     {
+//       printf("(gst_bt_demux_task_pause) perform gst_pad_pause_task \n");
+
+//       gst_pad_pause_task (GST_PAD (stream));
+
+//       // stream->need_paused = TRUE;
+//     }
+//   }
+//   g_mutex_unlock (thiz->streams_lock);
+
+//                             printf("(gst_bt_demux_task_pause) END\n");
+
+// }
+
 
 
 
@@ -2037,6 +2120,9 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
     thiz = GST_BT_DEMUX (element);
 
 
+    printf("(gst_bt_demux_change_state) TRANSITION:%d \n", (int)transition);
+
+
     switch (transition) 
     {
 
@@ -2051,14 +2137,15 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
         break;
       //such as eos,but we do not close bt_demux_task ,should stop push_loop
       case GST_STATE_CHANGE_PAUSED_TO_READY:
-      {
-
         printf("(gst_bt_demux_change_state) PAUSED_TO_READY \n");
-
-      }
-
-        // gst_bt_demux_task_cleanup (thiz);
+        gst_bt_demux_task_cleanup (thiz);
         break;
+
+      case GST_STATE_CHANGE_PAUSED_TO_PLAYING:
+        printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PAUSED_TO_PLAYING \n");
+        // gst_bt_demux_task_resume (thiz);
+        break;
+
 
       default:
         break;
@@ -2068,11 +2155,18 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
 
     switch (transition) 
     {
+      //user press Play/Pause Button to Pause, so for sure push_loop should be paused! but feed_read_piece_alert need be paused ?
+      case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
+        printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PLAYING_TO_PAUSED \n");
+        // gst_bt_demux_task_pause (thiz);
+        break;
+
+
       case GST_STATE_CHANGE_PAUSED_TO_READY:
 
                   printf("(gst_bt_demux_change_state) PAUSED_TO_READY 2 \n");
 
-        // gst_bt_demux_cleanup (thiz);
+        gst_bt_demux_cleanup (thiz);
         break;
 
       case GST_STATE_CHANGE_READY_TO_NULL:
@@ -2095,7 +2189,7 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
 
 
 static void
-gst_bt_demux_dispose (GObject * object)
+gst_bt_demux_dispose(GObject * object)
 {
   GstBtDemux *thiz;
 
@@ -2438,7 +2532,7 @@ void btdemux_feed_playlist(GObject *thiz, libtorrent::torrent_handle const handl
   ptr_h = NULL;
 
 
-
+printf ("[connect to btdemux...](btdemux_feed_playlist)\n");
   GSList *walk;
   int i;
 
@@ -2480,6 +2574,7 @@ void btdemux_feed_playlist(GObject *thiz, libtorrent::torrent_handle const handl
       stream->requested = FALSE;
 
       stream->finished = FALSE;
+
 
       if (stream->cur_buffering_flags == NULL){
         stream->cur_buffering_flags = g_array_new (FALSE, FALSE, sizeof(gboolean));
@@ -2558,6 +2653,11 @@ void btdemux_feed_read_piece_alert(GObject* gobj, libtorrent::alert* a)
   if (ptr_h != NULL)
     h = *ptr_h;
   ptr_h = NULL;
+
+
+
+  printf ("(btdemux_feed_read_piece_alert) \n");
+
 
   switch (a->type()) 
   {
@@ -2726,7 +2826,9 @@ Video 1 territory (maybe moov header in the tail)        Video 2 territory
                                             ipc_data->piece, ipc_data->size);
 
 
-        /* start the task */
+   
+
+        /* start the task only if it do no paused by user(pressd Pause button in GUI)*/
         if (stream->requested) {
                 printf("(bt_demux_handle_alert) stream-idx(%d) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) %d \n", foo,static_cast<int>(p->piece));
                 #if HAVE_GST_1
@@ -2792,6 +2894,9 @@ void btdemux_feed_piece_finished_alert(GObject* gobj, libtorrent::alert* a)
   if (ptr_h != NULL)
     h = *ptr_h;
   ptr_h = NULL;
+
+  printf ("(btdemux_feed_piece_finished_alert) \n");
+
 
   switch (a->type()) 
   {
@@ -2892,6 +2997,27 @@ void btdemux_feed_piece_finished_alert(GObject* gobj, libtorrent::alert* a)
 
 
 
+/*
+adjust_piece_priority()
+{
+    // mark all pieces (across all files within torrent) to `low_priority` 
+    for (i = 0; i <ti->end_piece (); i++) 
+    {
+      
+      h.piece_priority (i, libtorrent::low_priority);
+      
+      // libtorrent::download_priority_t ret = h.piece_priority (i);
+
+      // printf ("(bt_demux_handle_alert) mark piece %d to low_priority, ret is %d\n", i, ret);
+
+    }
+
+    //make sure to download sequentially
+    h.set_sequential_download (true);
+}
+
+
+*/
 
 
 
@@ -2899,7 +3025,11 @@ void btdemux_feed_piece_finished_alert(GObject* gobj, libtorrent::alert* a)
 
 
 
+// disconnect()
+// {
 
 
+
+// }
 
 

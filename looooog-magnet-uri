@@ -1,0 +1,2576 @@
+pal@pal-desktop79:/media/pal/E/Downloads/libtorrent-SN/build/gtk$ gdb ./transmission-gtk 
+GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./transmission-gtk...
+(gdb) r
+Starting program: /media/pal/E/Downloads/libtorrent-SN/build/gtk/transmission-gtk 
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) 
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgtkmm-3.0.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdkmm-3.0.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgiomm-2.4.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libglibmm-2.4.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpeas-1.0.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libglib-2.0.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk-3.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgobject-2.0.so.0
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/liblber.so.2
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlidec.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libgmodule-2.0.so.0
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbrotlicommon.so.1
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcap.so.2
+warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgvfsdbus.so
+warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gvfs/libgvfscommon.so
+[New Thread 0x7ffff31ff6c0 (LWP 14319)]
+[New Thread 0x7ffff29fe6c0 (LWP 14320)]
+[New Thread 0x7ffff21fd6c0 (LWP 14321)]
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcanberra.so.0
+[New Thread 0x7ffff18aa6c0 (LWP 14322)]
+FilterBar::~FilterBar() 
+warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgioremote-volume-monitor.so
+[New Thread 0x7ffff0cfc6c0 (LWP 14323)]
+[New Thread 0x7fffdbfff6c0 (LWP 14324)]
+[New Thread 0x7fffd8dff6c0 (LWP 14325)]
+[New Thread 0x7fffd3fff6c0 (LWP 14327)]
+[New Thread 0x7fffd37fe6c0 (LWP 14328)]
+[New Thread 0x7fffd2ffd6c0 (LWP 14329)]
+[New Thread 0x7fffd27fc6c0 (LWP 14330)]
+[New Thread 0x7fffd1ffb6c0 (LWP 14331)]
+in session::start
+initialize default settings...... 
+'''' use mmap_disk_io ''''
+in session_impl ctor 
+@@ add_ses_extension @@
+@@ add_ses_extension @@
+@@ add_ses_extension @@
+[New Thread 0x7fffd17fa6c0 (LWP 14332)]
+In Session::Impl Ctor 0x555555e40e90 !
+In Application::on_startup core_ 0x555555e40e90 !
+----update user agent----
+----update_listen_interface----
+settings changed, Start upnp now 
+settings changed, Start natpmp now 
+settings changed, Start Lsd now 
+''''reopen listen sockets
+''''setup_listener
+~~~~in async_accept 
+''''setup_listener
+~~~~in async_accept 
+''''setup_listener
+~~~~in async_accept 
+''''setup_listener
+~~~~in async_accept 
+reopen listen socket, ---which means natpmp is Enabled---;
+reopen listen socket, ---which means upnp is Enabled---;
+Load Previous Torrents from Resume files 
+---------
+settings changed, Start Lsd now 
+----apply_settings_pack----
+----update_listen_interface----
+warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpulse.so.0
+warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-16.1.so
+[New Thread 0x7fffd0bf96c0 (LWP 14333)]
+----apply_settings_pack----
+----update_listen_interface----
+[Thread 0x7fffd27fc6c0 (LWP 14330) exited]
+[Thread 0x7fffd3fff6c0 (LWP 14327) exited]
+[Thread 0x7fffd8dff6c0 (LWP 14325) exited]
+[Thread 0x7fffdbfff6c0 (LWP 14324) exited]
+[Thread 0x7fffd37fe6c0 (LWP 14328) exited]
+[Thread 0x7fffd2ffd6c0 (LWP 14329) exited]
+[New Thread 0x7fffd2ffd6c0 (LWP 14334)]
+
+Enter pop_alerts_thread_func
+pop_alerts_thread_working_ is true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----apply_settings_pack----
+----update_listen_interface----
+[New Thread 0x7fffd37fe6c0 (LWP 14340)]
+[New Thread 0x7fffdbfff6c0 (LWP 14341)]
+[Thread 0x7fffdbfff6c0 (LWP 14341) exited]
+[Thread 0x7fffd37fe6c0 (LWP 14340) exited]
+[Thread 0x7ffff0cfc6c0 (LWP 14323) exited]
+[New Thread 0x7ffff0cfc6c0 (LWP 14367)]
+[New Thread 0x7fffdbfff6c0 (LWP 14368)]
+[New Thread 0x7fffd37fe6c0 (LWP 14369)]
+[New Thread 0x7fffd8dff6c0 (LWP 14370)]
+[New Thread 0x7fffd27fc6c0 (LWP 14371)]
+[New Thread 0x7fffabfff6c0 (LWP 14372)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Destruct TorrentUrlChooserDialog on handler
+TorrentUrlChooserDialog::~TorrentUrlChooserDialog() 
+[Thread 0x7fffd27fc6c0 (LWP 14371) exited]
+[Thread 0x7fffd8dff6c0 (LWP 14370) exited]
+[Thread 0x7fffdbfff6c0 (LWP 14368) exited]
+[Thread 0x7fffd37fe6c0 (LWP 14369) exited]
+[Thread 0x7fffabfff6c0 (LWP 14372) exited]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+''no torrent file, make empty torrent_info obj''
+''''Add UT_PEX EXtension ''''
+''''Add UT_Metadata EXtension ''''
+''''Add UT_SMART_BAN EXtension ''''
+----apply_settings_pack----
+!!!!!!!!!!!!!!add_torrent_alert!!!!!!!!!!!!!!
+----update_listen_interface----
+
+
+
+Japan ,YES 4,293,656,598
+info hash:9986d0fb1ae173049b83ea0496a164daa6a33430
+
+
+
+hello from OptionsDialo::addResponseCB ,magnet-uri Branch
+maglink is magnet:?xt=urn:btih:9986d0fb1ae173049b83ea0496a164daa6a33430&dn=Japan
+from add
+In Session::Impl::add_torrent_ui(
+add_torrent_alert, num_oustanding_resume++
+resume data is ready, save it 
+Destruct OptionsDialog on handler
+OptionsDialog::~OptionsDialog()
+OptionsDialog::Impl::~Impl()
+[New Thread 0x7fffabfff6c0 (LWP 14400)]
+[New Thread 0x7fffd37fe6c0 (LWP 14401)]
+FileList::~FileList() 
+FileList::Impl::~Impl()
+[Thread 0x7fffd37fe6c0 (LWP 14401) exited]
+[Thread 0x7fffabfff6c0 (LWP 14400) exited]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@@@@in UTP_socet_manager.cpp incoming packet 
+Incoming Connection======Hey====,127.0.0.1:6881
+))))Ctor bt_peer_conn 
+@@@@in UTP_socet_manager.cpp incoming packet 
+Incoming Connection======Hey====,192.168.0.110:6881
+))))Ctor bt_peer_conn 
+
+
+
+
+
+
+
+
+
+
+
+
+m_torrent_file->info_hashes().has_v1()
+torrnet contruct_storage 
+~~~~~~storage_holder new_torrent(),save_path:/home/pal/Downloads mmap
+~~~~~~ in async_check_files of mmap [0]
+[New Thread 0x7fffabfff6c0 (LWP 14404)]
+D:storage_utils: now in verify_resume_data , save_path:/home/pal/Downloads
+do_check_fastresume, no need full check
+on_resume_data_checked: should_start_full_check is 1
+in on_resume_data_checked() line before start_checking() 
+start_checking(),, 
+[New Thread 0x7fffd37fe6c0 (LWP 14405)]
+in auto_manage_checking_torrents() line before t->start_checking() 
+start_checking(),, 
+start_checking(),num_outstanding <=0 return;
+resume data is ready, save it 
+[Thread 0x7ffff0cfc6c0 (LWP 14367) exited]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+resume data is ready, save it 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+In Application::Impl::winclose() for MainWindow
+Application::Impl::on_app_exit start
+[New Thread 0x7ffff0cfc6c0 (LWP 14412)]
+enter new thread core_->close();
+close session...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...unreferencing Torrent object
+Torrent::~Torrent
+Torrent::Impl::~Impl
+close session, save resume data and cleanup finished.
+
+Destruct the GUI...
+Application::Impl::on_session_closed ...
+MainWindow::~MainWindow() 
+[Thread 0x7ffff0cfc6c0 (LWP 14412) exited]
+
+...unreferencing Session object 
+[New Thread 0x7ffff0cfc6c0 (LWP 14413)]
+Session::~Session() 
+Session::Impl::~Impl...
+
+Exit pop_alerts_thread_func
+Clean-up Glib::Thread for pop_alerts in Session::Impl::~Impl
+~~~~enter begin of lt::session Dtor~~~~
+~~~~enter lt::session Dtor [m_impl has not bee destructed]~~~~
+
+
+
+~~~~wait_for_asio_handlers~~~~
+lsd::on_announce: (4)
+2: 
+3: libtorrent::aux::session_impl::start_lsd()
+4: libtorrent::aux::session_impl::update_lsd()
+5: libtorrent::aux::session_impl::reopen_listen_sockets(bool)
+6: libtorrent::aux::session_impl::init()
+7: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+8: 
+9: 
+10: 
+
+mmap_disk_io::work: (2)
+2: 
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+natpmp::on_reply: (1)
+2: libtorrent::natpmp::start(libtorrent::ip_interface const&)
+3: libtorrent::aux::session_impl::start_natpmp(std::shared_ptr<libtorrent::aux::listen_socket_t> const&)
+4: libtorrent::aux::session_impl::reopen_listen_sockets(bool)
+5: libtorrent::aux::session_impl::init()
+6: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+7: 
+8: 
+9: 
+10: 
+
+session_impl::on_accept_connection: (4)
+2: libtorrent::aux::session_impl::async_accept(std::shared_ptr<boost::asio::basic_socket_acceptor<boost::asio::ip::tcp, boost::asio::any_io_executor> > const&)
+3: libtorrent::aux::session_impl::reopen_listen_sockets(bool)
+4: libtorrent::aux::session_impl::init()
+5: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+6: 
+7: 
+8: 
+9: 
+10: 
+
+session_impl::on_lsd_announce: (1)
+2: libtorrent::aux::session_impl::init()
+3: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+session_impl::on_tick: (1)
+2: libtorrent::aux::session_impl::init()
+3: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+session_impl::on_udp_packet: (4)
+2: libtorrent::aux::session_impl::setup_listener(libtorrent::aux::listen_endpoint_t const&, boost::system::error_code&)
+3: libtorrent::aux::session_impl::reopen_listen_sockets(bool)
+4: libtorrent::aux::session_impl::init()
+5: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+6: 
+7: 
+8: 
+9: 
+10: 
+
+upnp::on_expire: (1)
+2: libtorrent::upnp::on_upnp_map_response(boost::system::error_code const&, libtorrent::http_parser const&, libtorrent::upnp::rootdevice&, libtorrent::aux::strong_typedef<int, libtorrent::port_mapping_tag, void>, libtorrent::http_connection&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+upnp::on_reply: (2)
+2: libtorrent::upnp::open_multicast_socket(libtorrent::aux::socket_package&, boost::system::error_code&)
+3: libtorrent::upnp::start()
+4: libtorrent::aux::session_impl::start_upnp(std::shared_ptr<libtorrent::aux::listen_socket_t> const&)
+5: libtorrent::aux::session_impl::reopen_listen_sockets(bool)
+6: libtorrent::aux::session_impl::init()
+7: void libtorrent::aux::session_impl::wrap<void (libtorrent::aux::session_impl::*)()>(void (libtorrent::aux::session_impl::*)())
+8: 
+9: 
+10: 
+
+[Thread 0x7fffd2ffd6c0 (LWP 14334) exited]
+~~~~lt::session impl abort~~~~
+~~~~in on_accept_connection 
+~~~~in on_accept_connection 
+~~~~in on_accept_connection 
+~~~~in on_accept_connection 
+[Thread 0x7fffabfff6c0 (LWP 14404) exited]
+[Thread 0x7fffd37fe6c0 (LWP 14405) exited]
+
+==== Waiting to shut down: 1 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 2 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 3 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 4 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 5 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 6 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 7 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 8 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 9 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 10 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 11 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 12 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 13 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 14 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 15 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 16 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 17 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 18 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 19 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 20 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 21 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 22 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 23 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 24 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 25 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 26 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 27 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 28 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 29 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 30 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 31 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 32 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 33 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 34 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 35 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 36 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+
+==== Waiting to shut down: 37 ==== 
+
+http_connection::on_read: (1)
+2: libtorrent::http_connection::on_write(boost::system::error_code const&)
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+10: 
+
+http_connection::on_timeout: (1)
+2: libtorrent::http_connection::start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, bool, int, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+3: libtorrent::http_connection::get(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::chrono::duration<long, std::ratio<1l, 1000000000l> >, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, boost::optional<libtorrent::bind_info_t> const&, libtorrent::flags::bitfield_flag<unsigned char, libtorrent::aux::resolver_flag_tag, void>)
+4: libtorrent::upnp::connect(libtorrent::upnp::rootdevice&)
+5: libtorrent::upnp::try_map_upnp()
+6: libtorrent::upnp::on_reply(libtorrent::aux::socket_package&, boost::system::error_code const&, unsigned long)
+7: 
+8: 
+9: 
+10: 
+
+[Thread 0x7fffd17fa6c0 (LWP 14332) exited]
+
+==== Waiting to shut down: 38 ==== 
+
+
+
+EXPECTS NO MORE ASYNC OPS
+
+
+~~~~In lt::session_impl Dtor~~~~
+
+******main.cc returned value is: 0******
+
+handler allocator storage:
+
+    udp_handler: capacity: 168 allocated: 168 handler: boost::asio::detail::reactive_wait_op<libtorrent::aux::allocating_handler<libtorrent::aux::session_impl::setup_listener(libtorrent::aux::listen_endpoint_t const&, boost::system::error_code&)::{lambda(boost::system::error_code const&)#1}, 168ul, (libtorrent::aux::HandlerName)2>, boost::asio::any_io_executor>
+   tick_handler: capacity: 136 allocated: 136 handler: boost::asio::detail::wait_handler<libtorrent::aux::allocating_handler<libtorrent::aux::session_impl::on_tick(boost::system::error_code const&)::{lambda(boost::system::error_code const&)#1}, 136ul, (libtorrent::aux::HandlerName)3>, boost::asio::any_io_executor>
+  abort_handler: capacity: 72  allocated: 64  handler: boost::asio::detail::executor_op<boost::asio::detail::binder0<libtorrent::aux::allocating_handler<libtorrent::aux::session_impl::call_abort()::{lambda()#1}, 72ul, (libtorrent::aux::HandlerName)4> >, libtorrent::aux::handler_allocator<int, 72ul, (libtorrent::aux::HandlerName)4>, boost::asio::detail::scheduler_operation>
+  defer_handler: capacity: 80  allocated: 56  handler: boost::asio::detail::executor_op<boost::asio::detail::binder0<libtorrent::aux::handler_wrapper<libtorrent::aux::handler<libtorrent::torrent, void (libtorrent::torrent::*)() noexcept, &libtorrent::torrent::on_remove_peers, &libtorrent::torrent::on_error, &libtorrent::torrent::on_exception, libtorrent::aux::handler_storage<80ul, (libtorrent::aux::HandlerName)5>, &libtorrent::torrent::m_deferred_handler_storage> > >, libtorrent::aux::handler_allocator<libtorrent::aux::handler<libtorrent::torrent, void (libtorrent::torrent::*)() noexcept, &libtorrent::torrent::on_remove_peers, &libtorrent::torrent::on_error, &libtorrent::torrent::on_exception, libtorrent::aux::handler_storage<80ul, (libtorrent::aux::HandlerName)5>, &libtorrent::torrent::m_deferred_handler_storage>, 80ul, (libtorrent::aux::HandlerName)5>, boost::asio::detail::scheduler_operation>
+    utp_handler: capacity: 192 allocated: 184 handler: boost::asio::detail::reactive_wait_op<libtorrent::aux::allocating_handler<libtorrent::aux::session_impl::on_udp_packet(std::weak_ptr<libtorrent::aux::session_udp_socket>, std::weak_ptr<libtorrent::aux::listen_socket_t>, boost::system::error_code const&)::{lambda(boost::system::error_code const&)#1}, 192ul, (libtorrent::aux::HandlerName)6>, boost::asio::any_io_executor>
+ submit_handler: capacity: 72  allocated: 56  handler: boost::asio::detail::executor_op<boost::asio::detail::binder0<libtorrent::aux::allocating_handler<libtorrent::aux::session_impl::deferred_submit_jobs()::{lambda()#1}, 72ul, (libtorrent::aux::HandlerName)7> >, libtorrent::aux::handler_allocator<int, 72ul, (libtorrent::aux::HandlerName)7>, boost::asio::detail::scheduler_operation>
+[Thread 0x7ffff0cfc6c0 (LWP 14413) exited]
+[Thread 0x7fffd0bf96c0 (LWP 14333) exited]
+[Thread 0x7fffd1ffb6c0 (LWP 14331) exited]
+[Thread 0x7ffff18aa6c0 (LWP 14322) exited]
+[Thread 0x7ffff21fd6c0 (LWP 14321) exited]
+[Thread 0x7ffff29fe6c0 (LWP 14320) exited]
+[Thread 0x7ffff31ff6c0 (LWP 14319) exited]
+[Inferior 1 (process 14316) exited normally]
+(gdb) 

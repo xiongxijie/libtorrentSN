@@ -97,7 +97,8 @@ typedef struct _GstBtDemuxStream
 
   gboolean requested;
   gboolean added;
-
+  
+  
   //finished means this stream(movie) has completed downloading, holds all pieces belonging to this stream now
   gboolean finished;
 

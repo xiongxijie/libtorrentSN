@@ -14,3 +14,7 @@ export GST_PLUGIN_PATH=/media/pal/E/Downloads/libtorrent-SN/build/gtk:$GST_PLUGI
 
 
 
+
+#use our own built gstreamer tailored for our btdemux
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/gstreamer/install/lib/x86_64-linux-gnu/gstreamer-1.0:$LD_LIBRARY_PATH

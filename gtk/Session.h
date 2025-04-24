@@ -198,7 +198,6 @@ public:
     bool is_totem_active();
 
 
-
     /**
     ***  Set a preference *settings_pack* value, save the prefs file, and emit the "prefs-changed" signal
     **/
