@@ -13,8 +13,6 @@ a torrent client powered by libtorrent  (Clone&Copy&Paste oriented programming)
 ## Platform
 Ubuntu 24.04 LTS
 
-#actually functionality as Transmission, disabled DHT,SSH .etc, i dont understand them
-
 
 
 #Test Video
