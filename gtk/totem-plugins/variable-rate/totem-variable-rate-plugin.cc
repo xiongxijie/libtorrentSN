@@ -12,10 +12,20 @@
 // #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <string.h>
-#include <gdk/gdkkeysyms.h>
+// #include <gdk/gdkkeysyms.h>
 #include <libpeas/peas-activatable.h>
+#include <libpeas/peas-extension-base.h>
+#include <libpeas/peas-object-module.h>
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "totem-plugin.h"
+#ifdef __cplusplus
+}
+#endif
+
 #include "BaconVideoWidget.h"
 #include "TotemWrapper.h"
 #include "totem-plugins-engine.h"
@@ -80,6 +90,9 @@ variable_rate_action_callback (const Glib::VariantBase& parameter, TotemVariable
 		i = NORMAL_RATE_IDX;
 		if (!totem_wrapper_set_rate (pi->totem, rates[i].rate))
 			printf ("And failed to reset rate as well...\n");
+		else
+			printf ("resetting success.\n");
+
 	} else {
 		printf ("Managed to set rate to %f\n", rates[i].rate);
 	}
@@ -94,11 +107,18 @@ variable_rate_action_callback (const Glib::VariantBase& parameter, TotemVariable
 
 }
 
-
+/*
+This plugin is not built-in, you should enable it in preferences dialog
+*/
 
 static void
 impl_activate (PeasActivatable *plugin)
 {
+
+	
+	printf ("(totem-variable-rate-plugin) impl_activate \n");
+
+
 	TotemVariableRatePlugin *pi = TOTEM_VARIABLE_RATE_PLUGIN (plugin);
 	Glib::RefPtr<Gio::Menu> menu;
 	Glib::RefPtr<Gio::MenuItem> item;

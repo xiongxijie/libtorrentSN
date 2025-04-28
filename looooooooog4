@@ -14,8 +14,8 @@ Find the GDB manual and other documentation resources online at:
 
 For help, type "help".
 Type "apropos word" to search for commands related to "word"...
-Reading symbols from ./transmission-gtk...
-r(gdb) r
+rReading symbols from ./transmission-gtk...
+(gdb) r
 Starting program: /media/pal/E/Downloads/libtorrent-SN/build/gtk/transmission-gtk 
 
 This GDB supports auto-downloading debuginfo from the following URLs:
@@ -41,21 +41,20 @@ warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libbr
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcap.so.2
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgvfsdbus.so
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gvfs/libgvfscommon.so
-[New Thread 0x7ffff31ff6c0 (LWP 30935)]
-[New Thread 0x7fffebfff6c0 (LWP 30936)]
-[New Thread 0x7ffff29fe6c0 (LWP 30937)]
+[New Thread 0x7ffff31ff6c0 (LWP 22959)]
+[New Thread 0x7fffea7ff6c0 (LWP 22960)]
+[New Thread 0x7ffff29fe6c0 (LWP 22961)]
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcanberra.so.0
-[New Thread 0x7ffff20ab6c0 (LWP 30938)]
+[New Thread 0x7ffff20ab6c0 (LWP 22962)]
 FilterBar::~FilterBar() 
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/gio/modules/libgioremote-volume-monitor.so
-[New Thread 0x7ffff14fd6c0 (LWP 30940)]
-[New Thread 0x7ffff0cfc6c0 (LWP 30941)]
-[New Thread 0x7fffe8dff6c0 (LWP 30942)]
-[New Thread 0x7fffd3fff6c0 (LWP 30944)]
-[New Thread 0x7fffd37fe6c0 (LWP 30945)]
-[New Thread 0x7fffd2ffd6c0 (LWP 30946)]
-[New Thread 0x7fffd27fc6c0 (LWP 30947)]
-[New Thread 0x7fffd1ffb6c0 (LWP 30948)]
+[New Thread 0x7ffff14f46c0 (LWP 22964)]
+[New Thread 0x7ffff0cf36c0 (LWP 22965)]
+[New Thread 0x7fffeb3ff6c0 (LWP 22966)]
+[New Thread 0x7fffd3fff6c0 (LWP 22968)]
+[New Thread 0x7fffd37fe6c0 (LWP 22969)]
+[New Thread 0x7fffd2ffd6c0 (LWP 22970)]
+[New Thread 0x7fffd27fc6c0 (LWP 22971)]
 initialize default settings...... 
 in session::start
 initialize default settings...... 
@@ -64,9 +63,9 @@ in session_impl ctor
 @@ add_ses_extension @@
 @@ add_ses_extension @@
 @@ add_ses_extension @@
-[New Thread 0x7fffd17fa6c0 (LWP 30949)]
-In Session::Impl Ctor 0x555555f145b0 !
-In Application::on_startup core_ 0x555555f145b0 !
+[New Thread 0x7fffd1ffb6c0 (LWP 22972)]
+In Session::Impl Ctor 0x555555cec180 !
+In Application::on_startup core_ 0x555555cec180 !
 ----update user agent----
 ----update_listen_interface----
 settings changed, Start upnp now 
@@ -93,44 +92,25 @@ torrnet contruct_storage
 ''''Add UT_PEX EXtension ''''
 ''''Add UT_Metadata EXtension ''''
 ''''Add UT_SMART_BAN EXtension ''''
-[New Thread 0x7fffd0ff96c0 (LWP 30950)]
+[New Thread 0x7fffd17fa6c0 (LWP 22973)]
 D:storage_utils: now in verify_resume_data , save_path:/home/pal/Downloads
 do_check_fastresume, no need full check
-on_resume_data_checked: should_start_full_check is 0
+on_resume_data_checked: should_start_full_check is 1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libpulse.so.0
 warning: could not find '.gnu_debugaltlink' file for /usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-16.1.so
-[New Thread 0x7fffabfff6c0 (LWP 30951)]
-[Thread 0x7fffd27fc6c0 (LWP 30947) exited]
-[Thread 0x7fffd2ffd6c0 (LWP 30946) exited]
-[Thread 0x7fffd37fe6c0 (LWP 30945) exited]
-[Thread 0x7fffd3fff6c0 (LWP 30944) exited]
-[Thread 0x7fffe8dff6c0 (LWP 30942) exited]
-[Thread 0x7ffff14fd6c0 (LWP 30940) exited]
-[New Thread 0x7ffff14fd6c0 (LWP 30952)]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[New Thread 0x7fffd0bf96c0 (LWP 22974)]
+[Thread 0x7fffd2ffd6c0 (LWP 22970) exited]
+[Thread 0x7fffd3fff6c0 (LWP 22968) exited]
+[Thread 0x7ffff0cf36c0 (LWP 22965) exited]
+in do_resume() line before start_checking() 
+start_checking(),, 
+in auto_manage_checking_torrents() line before t->start_checking() 
+start_checking(),, 
+start_checking(),num_outstanding <=0 return;
+[New Thread 0x7fffd3fff6c0 (LWP 22976)]
+[Thread 0x7fffd37fe6c0 (LWP 22969) exited]
+[Thread 0x7fffeb3ff6c0 (LWP 22966) exited]
+[New Thread 0x7fffeb3ff6c0 (LWP 22977)]
 
 Enter pop_alerts_thread_func
 pop_alerts_thread_working_ is true
@@ -138,7 +118,7 @@ pop_alerts_thread_working_ is true
 
 
 
-Singnapore ,YES 4,293,656,650
+Singnapore ,YES 4,293,853,258
 info hash:ecbe799f276cc1797f01fe78611b80d7918869e6
 
 
@@ -146,7 +126,31 @@ info hash:ecbe799f276cc1797f01fe78611b80d7918869e6
 from load
 add_torrent_alert, num_oustanding_resume++
 resume data not modified , no need to save it 
-resume data not modified , no need to save it 
+in auto_manage_checking_torrents() line before t->start_checking() 
+start_checking(),, 
+start_checking(),num_outstanding <=0 return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -160,43 +164,39 @@ TotemPlayerHeader::~TotemPlayerHeader()
 BaconTimeLabel::~BaconTimeLabel() 
 BitfieldScale::~BitfieldScale() 
 BaconVideoWidget::~BaconVideoWidget() 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 MyHdyFlap::MyHdyFlap ctor
+[Detaching after fork from child process 22982]
 Bacon's Gstreamer version: GStreamer 1.25.0 (GIT)
 (gst_bt_demux_class_init) 
 (bt_demux_init) 
 (gstdecodebin2)add static sink pad
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libtinfo.so.6
+
+
+
+
+
+
+
+
+
 GL-SINKBIN::gst_gl_sink_bin_init 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 GTK-GLSINK:: gst_gtk_gl_sink_init 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 GL-SINKBIN::gst_gl_sink_bin_set_sink 
-[New Thread 0x7fffe8dff6c0 (LWP 30955)]
+[New Thread 0x7fffd37fe6c0 (LWP 22983)]
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
 BitfieldScale::BitfieldScale ctor
 BaconTimeLabel::BaconTimeLabel ctor
 BaconTimeLabel::BaconTimeLabel ctor
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 666 
 TotemPrefsDialog::Impl::Impl ctor
 DisplayPrefsPage::DisplayPrefsPage ctor 
 AudioPrefsPage::AudioPrefsPage ctor 
@@ -210,23 +210,29 @@ fill_totem_playlist Singnapore/HotSopt.mp4
 (fill_totem_playlist) probe: len of playlist is 2
 (totem-object/play_pause_set_label) 
 (bacon_video_widget_open) initial case: fileidx is -1 ,progressively SET bvw->pipeline state to READY and then PAUSED
-[New Thread 0x7fffd37fe6c0 (LWP 30956)]
-[Thread 0x7fffd37fe6c0 (LWP 30956) exited]
-[New Thread 0x7fffd37fe6c0 (LWP 30957)]
+[New Thread 0x7ffff0cf36c0 (LWP 22984)]
+[Thread 0x7ffff0cf36c0 (LWP 22984) exited]
+[New Thread 0x7ffff0cf36c0 (LWP 22985)]
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 void BaconVideoWidget::Impl::on_realize_behavior() 
-[New Thread 0x7fffd27fc6c0 (LWP 30958)]
-[New Thread 0x7fffa8fff6c0 (LWP 30959)]
-[New Thread 0x7fff983ff6c0 (LWP 30960)]
-[New Thread 0x7fff97bfe6c0 (LWP 30961)]
-[New Thread 0x7fff973fd6c0 (LWP 30962)]
-[New Thread 0x7fff96bfc6c0 (LWP 30963)]
-[New Thread 0x7fff963fb6c0 (LWP 30964)]
-[New Thread 0x7fff95bfa6c0 (LWP 30965)]
-[New Thread 0x7fff953f96c0 (LWP 30966)]
+[New Thread 0x7fffd2ffd6c0 (LWP 22986)]
+[New Thread 0x7fff64abe6c0 (LWP 22987)]
+[New Thread 0x7fff5ffff6c0 (LWP 22988)]
+[New Thread 0x7fff5f7fe6c0 (LWP 22989)]
+[New Thread 0x7fff5effd6c0 (LWP 22990)]
+[New Thread 0x7fff5e7fc6c0 (LWP 22991)]
+[New Thread 0x7fff5dffb6c0 (LWP 22992)]
+[New Thread 0x7fff5d7fa6c0 (LWP 22993)]
+[New Thread 0x7fff5cff96c0 (LWP 22994)]
 (gst_bt_demux_change_state) TRANSITION:10 
 (gstdecodebin2) state changed from READY to PAUSED 
 (gstTYPEFIND) start_typefinding 
 (gst_bt_demux_change_state) TRANSITION:19 
+Session Got piece_finished_alert 
 [connect to btdemux...](btdemux_feed_playlist)
 (btdemux_feed_playlist)Start streaming, num files: 2, num pieces: 2034, piece length: 1048576 
 gst_bt_demux_stream_class_init 
@@ -237,39 +243,22 @@ gst_bt_demux_stream_init
 (btdemux_feed_playlist) create src pad src_01 (aka.BtDemuxStream) 
 (bt_demux_handle_alert) Adding stream src_01 for file Singnapore/HotSopt.mp4 at fileidx 1, start_piece:905, start_ofset:771995,end_piece:2033,end_ofset:54374 (949733275,2131809382]
 MyHdyApplicationWindow::Impl constructor finished 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 totem_wrapper_class_init 
 [init_plugins_system] TotemWrapper initialized success 
 IN totem_plugins_engine_get_default engine is (nil)
 IN totem_plugins_engine_get_default ,path[]=/media/pal/E/Downloads/libtorrent-SN/build/gtk/totem-plugins
-plugin loading:TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN
-In totem-movie-properties.c impl_activeate 
-(totem_wrapper_get_menu_section) OK
-totem movie-properties, get menu placeholder success 
 plugin loading:TOTEM_TYPE_ROTATION_PLUGIN
 totem-rotation plugin activated 
 (totem_wrapper_get_menu_section) OK
 totem rotation, get menu placeholder success 
-plugin loading:TOTEM_TYPE_OPEN_DIRECTORY_PLUGIN
-OPEN-DIRECTORY: impl_activate
- (totem_wrapper_get_menu_section) OK
-IN totem_plugins_engine_get_default , load one plugin Variable Rate
-IN totem_plugins_engine_get_default , load one plugin Movie Properties
-IN totem_plugins_engine_get_default , load one plugin Rotation Plugin
-IN totem_plugins_engine_get_default , load one plugin Open directory
-(before return engine is 0x5555565e3760) 
-(in update_plugin_rows) iterate on plugin Variable Rate
-In TotemPrefsPluginRow* TotemPrefsPluginRow::create 
-TotemPrefsPluginRow::Impl::Impl ctor 
-TotemPrefsPluginRow::TotemPrefsPluginRow ctor
-(in update_plugin_rows) iterate on plugin Movie Properties
-In TotemPrefsPluginRow* TotemPrefsPluginRow::create 
-TotemPrefsPluginRow::Impl::Impl ctor 
-TotemPrefsPluginRow::TotemPrefsPluginRow ctor
+IN totem_plugins_engine_get_default , load one plugin
+(before return engine is 0x55555658ad20) 
 (in update_plugin_rows) iterate on plugin Rotation Plugin
-In TotemPrefsPluginRow* TotemPrefsPluginRow::create 
-TotemPrefsPluginRow::Impl::Impl ctor 
-TotemPrefsPluginRow::TotemPrefsPluginRow ctor
-(in update_plugin_rows) iterate on plugin Open directory
 In TotemPrefsPluginRow* TotemPrefsPluginRow::create 
 TotemPrefsPluginRow::Impl::Impl ctor 
 TotemPrefsPluginRow::TotemPrefsPluginRow ctor
@@ -277,6 +266,11 @@ TotemPrefsPluginRow::TotemPrefsPluginRow ctor
 (bvw_bus_message_cb) bvw-pipeline changed state from NULL to READY
 (bvw_bus_message_cb) disable updating slider and time label
 (bvw_query_timeout) could not get position
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 volume_readback_cb at initial
 property_notify_cb_volume
 (bacon_video_widget_get_volume)
@@ -302,7 +296,6 @@ totem_object_set_fileidx_and_play, file_index=0
 (bacon_video_widget_open) reset seekable back to unknown state (which is -1)
 mark_popup_busy opening file
 (totem-object/play_pause_set_label) 
-In totem_movie_properties_plugin_fileidx_opened 
 set_title of player_header_
 (totem_object_play) 
 (bacon_video_widget_play) cur_state:READY
@@ -311,15 +304,20 @@ play_starting_cb
 (bacon_video_widget_play) SET pipeline_ state to PLAYING
 (totem-object/play_pause_set_label) 
 -unmark_popup_busy paused
-[New Thread 0x7fff7ffff6c0 (LWP 30967)]
-[New Thread 0x7fff7f7fe6c0 (LWP 30968)]
-[New Thread 0x7fff7effd6c0 (LWP 30969)]
-[New Thread 0x7fff7e7fc6c0 (LWP 30970)]
-[New Thread 0x7fff7dffb6c0 (LWP 30971)]
-[New Thread 0x7fff7d7fa6c0 (LWP 30972)]
-[New Thread 0x7fff7cff96c0 (LWP 30973)]
-[New Thread 0x7fff63fff6c0 (LWP 30974)]
-[New Thread 0x7fff637fe6c0 (LWP 30975)]
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+[New Thread 0x7fff3f51f6c0 (LWP 22995)]
+[New Thread 0x7fff3ed1e6c0 (LWP 22996)]
+[New Thread 0x7fff3e51d6c0 (LWP 22997)]
+[New Thread 0x7fff3dd1c6c0 (LWP 22998)]
+[New Thread 0x7fff3d51b6c0 (LWP 22999)]
+[New Thread 0x7fff3cd1a6c0 (LWP 23000)]
+[New Thread 0x7fff27fff6c0 (LWP 23001)]
+[New Thread 0x7fff277fe6c0 (LWP 23002)]
+[New Thread 0x7fff26ffd6c0 (LWP 23003)]
 Session Got read_piece_alert 
 (btdemux_feed_read_piece_alert) 
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(0)
@@ -354,7 +352,7 @@ GST-DECODEBIN::type_found, it is video/quicktime
 (qtdemux_handle_sink_event) GST_EVENT_STREAM_START 
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_chain) Received buffer size:1048576 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fffd80021c0,neededbytes:16,available: 1048576
+(qtdemux_chain) pushing in inbuf 0x7fffd4004980,neededbytes:16,available: 1048576
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (gst_qtdemux_check_seekability) seekable:1, start:0 stop:949733275
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
@@ -373,6 +371,7 @@ GST-DECODEBIN::type_found, it is video/quicktime
 (qtdemux_process_adapter) FOURCC_mdat. no headers yet, try to get them
 (qtdemux_seek_offset) Seeking to 949157836
 (bt_demux_stream_event) Got Event, GST_EVENT_SEEK 
+
 (bt_demux_stream_seek) info 0,0 905,771995 
 (bt_demux_stream_seek) moov_after_mdat, this Seek event is posted by qtdemux 
 (bt_demux_stream_seek) rate:1.000000, start:949157836, stop:949733275 
@@ -387,12 +386,18 @@ GST-DECODEBIN::type_found, it is video/quicktime
 (bt_demux_stream_activate) recovery lock
 (bt_demux_stream_activate) Modifying thiz->current_piece to 904 (start_piece minus one) 
 (bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
-(bt_demux_stream_activate) Activating stream 'src_00', start: (905), start_offset: 196556, end: 905, end_offset: 771995, current: (904) buffering(No)
+(bt_demux_stream_activate) Activating stream 'src_00', start: (905), start_offset: 196556, end: 905, end_offset: 771995, current: (904) buffering(Yes)
 (bt_demux_stream_activate) unlock
-(bt_demux_stream_seek) Starting SEEK stream 'src_00', reading piece 905, current: 904 buffering(No) 
-(bt_demux_stream_seek) call read_piece() on piece 905
+(bt_demux_stream_seek) Starting SEEK stream 'src_00' go update buffering, start:905, current:904, buffering(Yes) 
+(gst_bt_demux_stream_update_buffering) between [905,905] buffered:0, buffering:1
+(gst_bt_demux_stream_update_buffering) Buffering level 0 (0/1) 
 (bt_demux_stream_seek) return FALSE to deliberately let qtdemux_seek_offset failed 
 (bt_demux_stream_seek) unlock lock (0)
+(gst_bt_demux_send_buffering) waiting lock (904)
+(gst_bt_demux_send_buffering) recovery lock (904)
+(gst_bt_demux_send_buffering) Buffering unfinished, post buffering level. current:904
+(gst_bt_demux_send_buffering) waiting lock (0)
+(gst_bt_demux_send_buffering) recovery lock (0)
 (qtdemux_process_adapter) seek failed/skipped : 40
 (qtdemux_process_adapter) although moov header not found in first 10MB, dont give up
 (qtdemux_process_adapter) Clear data in adapter, demux->mdatoffset=40
@@ -401,6 +406,107 @@ GST-DECODEBIN::type_found, it is video/quicktime
 bt_demux_stream_push_loop, END 
 (bt_demux_stream_push_loop) FIRE src_00 [start piece idx:905, end piece idx:905],current_piece:904,pad task state 0 
 (is_gsttypefind_have_type_emitted) have_type emitted, proceeding 
+(bvw_handle_buffering_message) Buffering... temporarily pausing playback 0% and SET pipeline_ state to PAUSED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Session Got piece_finished_alert 
+Piece 899 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 900 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 901 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 902 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 903 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 904 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 905 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:7) 
+(gst_bt_demux_handle_alert) in piece_finished_alert, updating buffering progress information 
+(gst_bt_demux_stream_update_buffering) between [905,905] buffered:1, buffering:1
+(gst_bt_demux_stream_update_buffering) Buffering level 100 (1/1) 
+(gst_bt_demux_send_buffering) waiting lock (904)
+(gst_bt_demux_send_buffering) recovery lock (904)
+(gst_bt_demux_send_buffering) Buffering finished, soon call read_piece() on piece 905, current:904
+(gst_bt_demux_send_buffering) waiting lock (0)
+(gst_bt_demux_send_buffering) recovery lock (0)
+(bvw_handle_buffering_message) Buffering done, call bacon_video_widget_play on it
+(bacon_video_widget_play) cur_state:READY
+play_starting_cb 
+-unmark_popup_busy opening file
+(bacon_video_widget_play) SET pipeline_ state to PLAYING
 Session Got read_piece_alert 
 (btdemux_feed_read_piece_alert) 
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(905)
@@ -417,7 +523,7 @@ Session Got read_piece_alert
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from 904 to 905 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 575439, file: 0, cur piece: (905) 
 (qtdemux_chain) Received buffer size:575439 demux offset:0
-(qtdemux_chain) pushing in inbuf 0x7fffd80021c0,neededbytes:16,available: 575439
+(qtdemux_chain) pushing in inbuf 0x7fffd4004980,neededbytes:16,available: 575439
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [moov] size:575439
 (qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=575439
@@ -426,12 +532,12 @@ Session Got read_piece_alert
 (qtdemux_process_adapter) demux->last_moov_offset= 0
 (qtdemux_parse_moov)parsing moov atom!!! 
 (qtdemux_parse_tree) we have read the complete moov node now at parse_tree 
-(_create_stream), stream_id=b4f0db449908b437bfddeb69ebe8f2ef/00/001 
+(_create_stream), stream_id=c7ac04722e5d2f06b93d8fa5705942a3/00/001 
 (qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=16866 
 (qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=2 
 (qtdemux_stbl_init) allocating n_samples 16866, (guint)sizeof(QtDemuxSample) is 32
 (qtdemux_parse_segments) created segment 0 time 0:00:00.000000000, media_start (0:00:00.066666666), media_stop (0:09:22.266666666), duration 0:09:22.200000000, timescale 15360
-(_create_stream), stream_id=b4f0db449908b437bfddeb69ebe8f2ef/00/002 
+(_create_stream), stream_id=c7ac04722e5d2f06b93d8fa5705942a3/00/002 
 (qtdemux_stbl_init) [stsz] stream->sample_size=0, stream->n_samples=26350 
 (qtdemux_stbl_init), [stsc] stream->n_samples_per_chunk=14756 
 (qtdemux_stbl_init) allocating n_samples 26350, (guint)sizeof(QtDemuxSample) is 32
@@ -439,7 +545,7 @@ Session Got read_piece_alert
 (qtdemux_prepare_streams) num: 2 
 (qtdemux_add_stream) adding pad video_0 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-[New Thread 0x7fff62ffd6c0 (LWP 30976)]
+[New Thread 0x7fff267fc6c0 (LWP 23006)]
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_awb.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmu_us_kal16.so.1
@@ -453,15 +559,14 @@ warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libvd
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_usenglish.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libflite_cmulex.so.1
 warning: could not find '.gnu_debugaltlink' file for /lib/x86_64-linux-gnu/libcjson.so.1
-
 FFMPEG,GST-AVVIDEC:: gst_ffmpegviddec_set_format
-[New Thread 0x7ffec4dff6c0 (LWP 30977)]
-[New Thread 0x7ffec45fe6c0 (LWP 30978)]
-[New Thread 0x7ffec3dfd6c0 (LWP 30979)]
-[New Thread 0x7ffec35fc6c0 (LWP 30980)]
+[New Thread 0x7ffec4dff6c0 (LWP 23007)]
+[New Thread 0x7ffec45fe6c0 (LWP 23008)]
+[New Thread 0x7ffec3dfd6c0 (LWP 23009)]
+[New Thread 0x7ffec35fc6c0 (LWP 23010)]
 (qtdemux_add_stream) adding pad audio_0 
 (ghostpad_pad_constructed) GST_PAD_UNSET_FLUSHING
-[New Thread 0x7ffec2dfb6c0 (LWP 30981)]
+[New Thread 0x7ffec2dfb6c0 (LWP 23011)]
 (gst_qtdemux_map_and_push_segments) 
 (qtdemux_activate_segment) (video_0) activate segment 0, offset 0:00:00.000000000
 (stream_segment_get_boundaries) (video_0) seg_time = 0:00:00.000000000 
@@ -497,17 +602,17 @@ Session Got read_piece_alert
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(0)
 (bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(0), size=1048576 
 (bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 0 
-(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(0)
 (bt_demux_stream_push_loop) waiting lock thiz->current_piece(-1), ipc_data->piece(0)
+(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
 (bt_demux_stream_push_loop) recovery lock (-1)
+(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(0)
 (gst_bt_demux_buffer_new) thiz->start_piece=0, piece=0, this buffer actual size:1048576 
 (bt_demux_stream_push_loop) Received piece (0) of size 1048576 and actual size 1048576 on file 0 
 (bt_demux_stream_push_loop) Push SEGMENT event, start_byte=0, end_byte=949733275 
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from -1 to 0 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (0) 
 (qtdemux_chain) Received buffer size:1048576 demux offset:40
-(qtdemux_chain) pushing in inbuf 0x7fffd80021c0,neededbytes:16,available: 1048576
+(qtdemux_chain) pushing in inbuf 0x7fffd4004980,neededbytes:16,available: 1048576
 (gst_qtdemux_process_adapter) demux->state=<INITIAL> 
 (qtdemux_process_adapter) InQTDEMUX_STATE_INITIAL, Peeking found [ftyp] size:32
 (qtdemux_process_adapter) already buffering still no moov header, set state to QTDEMUX_STATE_HEADER, set demux->neededbytes=32
@@ -536,6 +641,11 @@ decodebin's Video pad detected.
 set_title of player_header_
 (bvw/on_pad_added for decodebin) :src_1
 decodebin's Audio pad detected.
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 (caps_set) video decoder caps: fps_n: 30, fps_d: 1, width: 1920, height: 1080 
 (bvw_update_stream_info) emit got-metadata 
 (on_got_metadata) 
@@ -543,53 +653,50 @@ decodebin's Audio pad detected.
 set_title of player_header_
 GTK-GLSINK::gst_gtk_gl_sink_event: stream-start 
 GTK-GLSINK::gst_gtk_gl_sink_event: caps 
-(bvw_update_tags) gain audio Tags: 0x555556b40600A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-
-(transmission-gtk:30931): Pango-WARNING **: 07:11:40.890: Invalid UTF-8 string passed to pango_layout_set_text()
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 GTK-GLSINK::gst_gtk_gl_sink_event: segment 
-(bvw_update_tags) gain video Tags: 0x7ffecc000d80A 
+(bvw_update_tags) gain video Tags: 0x555556b3e250A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
-
-(transmission-gtk:30931): Pango-WARNING **: 07:11:40.891: Invalid UTF-8 string passed to pango_layout_set_text()
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x7fffd80759b0A 
+GTK-GLSINK::gst_gtk_gl_sink_event: tag 
+(bvw_update_tags) gain video Tags: 0x7fffd40768d0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
-
-(transmission-gtk:30931): Pango-WARNING **: 07:11:40.892: Invalid UTF-8 string passed to pango_layout_set_tset_title of player_header_
+set_title of player_header_
 GTK-GLSINK::gst_gtk_gl_sink_event: tag 
 (bvw_update_tags) Pipeline sent video tags update with no changes 
 GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-(bvw_update_tags) Pipeline sent video tags update with no changes 
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-ext()
-set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556c8a8b0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-
-(transmission-gtk:30931): Pango-WARNING **: 07:11:40.893: Invalid UTF-8 string passed to pango_layout_set_text()
-set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556b38580A 
+(bvw_update_tags) gain audio Tags: 0x7fff180017c0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-[New Thread 0x7ffebf94d6c0 (LWP 30983)]
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) Pipeline sent audio tags update with no changes 
+(bvw_update_tags) gain audio Tags: 0x7fff18003650A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+set_title of player_header_
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+[New Thread 0x7ffebf7f56c0 (LWP 23013)]
 (gst_bt_demux_change_state) TRANSITION:28 
 (gst_bt_demux_change_state) GST_STATE_CHANGE_PAUSED_TO_PLAYING 
 (bvw_bus_message_cb) bvw-pipeline changed state from READY to PAUSED
 (bvw_bus_message_cb) disable updating slider and time label
 (bacon_video_widget_update_and_get_seekable) seeking query says the stream is seekable 
 (got_time_tick) From now on, (Initial) the stream become seekable 
-(update_current_time) From now on, We get the stream_length, which is 562200 
 (caps_set) video decoder caps: fps_n: 30, fps_d: 1, width: 1920, height: 1080 
 (bvw_update_stream_info) emit got-metadata 
 (on_got_metadata) 
@@ -600,394 +707,105 @@ set_title of player_header_
 (bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
 (bvw_bus_message_cb) resume updating slider and time label
 (bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
-(bvw_update_tags) gain audio Tags: 0x555556cb1f70A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(bvw_update_tags) gain audio Tags: 0x7fff18000fa0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556b40600A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(bvw_update_tags) gain audio Tags: 0x7fff180017c0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555555b37840A 
+(bvw_update_tags) gain audio Tags: 0x7fff180031f0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556cb1790A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(update_current_time) From now on, We get the stream_length, which is 562200 
+(bvw_update_tags) gain audio Tags: 0x7fff180083d0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556b38580A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+
+(bvw_update_tags) gain audio Tags: 0x7fff18003650A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(totem-menu) Play/Pause Button Pressed 
-(totem_object_play_pause) 
-(totem_object_play_pause) next line to call bacon_video_widget_pause
-(bacon_video_widget_pause) Pausing
-(bacon_video_widget_pause) SET pipeline_ state to PAUSED
-(gst_bt_demux_change_state) TRANSITION:35 
-(gst_bt_demux_change_state) GST_STATE_CHANGE_PLAYING_TO_PAUSED 
-(totem-object/play_pause_set_label) 
-(bvw_bus_message_cb) bvw-pipeline changed state from PLAYING to PAUSED
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_reconfigure_tick_timeout) removing tick timeout 
-
-mark_popup_busy toolbar/go menu visible
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--unmark_popup_busy toolbar/go menu visible
-MyHdyApplicationWindow::Impl::on_open_prefs_dlg 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- TotemPrefsPluginRow::Impl::on_plugin_switch_toggled 
-on_plugin_switch_toggled, Plugin enabled 
-plugin loading:TOTEM_TYPE_VARIABLE_RATE_PLUGIN
-(totem-variable-rate-plugin) impl_activate 
-(totem_wrapper_get_menu_section) OK
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hide TotemPrefsDialog on handler
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-mark_popup_busy toolbar/go menu visible
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--unmark_popup_busy toolbar/go menu visible
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(totem-menu) Play/Pause Button Pressed 
-(totem_object_play_pause) 
-(bacon_video_widget_play) cur_state:PAUSED
-play_starting_cb 
--unmark_popup_busy opening file
-(bacon_video_widget_play) SET pipeline_ state to PLAYING
-(gst_bt_demux_change_state) TRANSITION:28 
-(gst_bt_demux_change_state) GST_STATE_CHANGE_PAUSED_TO_PLAYING 
-(totem-object/play_pause_set_label) 
-(bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
-(bvw_bus_message_cb) resume updating slider and time label
-(bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
-(bvw_update_tags) gain audio Tags: 0x555556cb1f70A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(bvw_update_tags) gain audio Tags: 0x7fff18000fa0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556b40600A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(bvw_update_tags) gain audio Tags: 0x7fff180017c0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(bvw_update_tags) gain audio Tags: 0x55555598dfe0A 
+Session Got piece_finished_alert 
+Piece 1129 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 1130 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 1131 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+(bvw_update_tags) gain audio Tags: 0x7fff18008c70A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-(bvw_update_tags) gain audio Tags: 0x555556cb1790A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-set_title of player_header_
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 (bt_demux_stream_push_loop) Luckily we have next piece 1, call read_piece() on it, current:0
 (bt_demux_stream_push_loop) unlock cur:(0)
 bt_demux_stream_push_loop, END 
 (bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:905],current_piece:0,pad task state 0 
 (is_gsttypefind_have_type_emitted) have_type emitted, proceeding 
+(bvw_update_tags) gain audio Tags: 0x7fff180083d0A 
+(bvw_update_tags) emit got-metadata 
+(on_got_metadata) 
+(totem_get_nice_name_for_stream) emit_metadata_updated 
+set_title of player_header_
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 Session Got read_piece_alert 
 (btdemux_feed_read_piece_alert) 
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(1)
@@ -1002,120 +820,67 @@ Session Got read_piece_alert
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from 0 to 1 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (1) 
 (qtdemux_chain) Received buffer size:1048576 demux offset:1044688
-(qtdemux_chain) pushing in inbuf 0x7fffd86f0ab0,neededbytes:20345,available: 1052464
+(qtdemux_chain) pushing in inbuf 0x7fffd445a3a0,neededbytes:20345,available: 1052464
 (gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-mark_popup_busy toolbar/go menu visible
-[Thread 0x7ffebf94d6c0 (LWP 30983) exited]
 
-(bacon_video_widget_set_rate) Setting new rate at 3676855000 
-GST-DECODEBIN:: gst_decode_pad_event seek 
-(bt_demux_stream_event) Got Event, GST_EVENT_SEEK 
-(bt_demux_stream_seek) format is not GST_FORMAT_BYTES 
-(qtdemux_do_push_seek) 
-(qtdemux_adjust_seek) 
-(qtdemux_find_segment) (video_0) find segment for 0:00:03.676855000, found 0 
-(qtdemux_find_index_linear) convert media_time (0:00:03.743521666) to mov format, mov_time=57501,timescale=15360 
-(qtdemux_find_index_linear) (video_0) found sample index 111 at 0:00:03.743521666 
-(qtdemux_find_keyframe) find_keyframe, (video_0) index before index 111 gave 108 
-(qtdemux_find_segment) (audio_0) find segment for 0:00:03.676855000, found 0 
-(qtdemux_find_index_linear) convert media_time (0:00:03.676855000) to mov format, mov_time=176490,timescale=48000 
-(qtdemux_find_index_linear) (audio_0) found sample index 172 at 0:00:03.676855000 
-(qtdemux_find_keyframe) find_keyframe, (audio_0) index before index 172 gave 172 
-(qtdemux_do_push_seek) corresponding BYTE position 1384819 
-(qtdemux_do_push_seek) push BYTE seek event, cur_type:1, stop_type:1, cur:1384819. stop:-1 
 
-(bt_demux_stream_event) Got Event, GST_EVENT_SEEK 
-(bt_demux_stream_seek) info 0,0 905,771995 
-(bt_demux_stream_seek) rate:1.750000, start:1384819, stop:949733275 
-(bt_demux_stream_seek) push flush_start 
-(qtdemux_handle_sink_event) got GST_EVENT_FLUSH_START 
-GTK-GLSINK::gst_gtk_gl_sink_event: flush-start 
-(bt_demux_stream_push_loop)!!Failed Pushing buffer,actual size: 1048576, file: 0, piece: (1) ret=-2
-(bt_demux_stream_push_loop) it is flushing  
-(bt_demux_stream_push_loop) otherwise, send eos downstream to avoid blcking on push_loop 
-(bt_demux_stream_push_loop) Sending EOS event on file 0, piece:1 
-(store_sticky_event) pad is flushing 
-(gst_pad_push_event) eventname:eos , we are flushing 
-(gst_pad_push_event) eventname:eos , we are done 
-(bt_demux_stream_push_loop) due to EOS or internal Error, suspend call read_piece() on next piece 2, current:1, end/last:905 
-(bt_demux_stream_push_loop) unlock cur:(1)
-bt_demux_stream_push_loop, END 
-(bt_demux_stream_seek) waiting lock (0)
-(bt_demux_stream_seek) recovery lock (0)
-(bt_demux_stream_seek) fileidx(0) start_byte_global = 0
-(bt_demux_stream_seek) Seeking to, start:1, start_offset:336243, end:905, end_offset:771995, start_byte1384819,end_byte949733275 
-(bt_demux_stream_seek) before activate, clear previous Three-Piece-Area [2,4]
-(bt_demux_stream_activate) waiting lock
-(bt_demux_stream_activate) recovery lock
-(bt_demux_stream_activate) Modifying thiz->current_piece to 0 (start_piece minus one) 
-(bt_demux_stream_activate) clearing historical cur_buffering_flags for activate stream
-(bt_demux_stream_activate) Activating stream 'src_00', start: (1), start_offset: 336243, end: 905, end_offset: 771995, current: (0) buffering(No)
-(bt_demux_stream_activate) unlock
-(bt_demux_stream_seek) Starting SEEK stream 'src_00', reading piece 1, current: 0 buffering(No) 
-(bt_demux_stream_seek) call read_piece() on piece 1
-(bt_demux_stream_seek) unlock lock (0)
-(bacon_video_widget_set_rate) Failed to change rate
-Failed to set rate to 1.750000, resetting 
-Session Got read_piece_alert 
-(btdemux_feed_read_piece_alert) 
-(bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(1)
-(bt_demux_handle_alert) in read_piece_alert, piece_idx on alert(aka ipc_data->piece)=(1), size=1048576 
-(bt_demux_handle_alert) stream-idx(0) in read_piece_alert, Start the pad task(bt_demux_stream_push_loop) 1 
-(gst_bt_demux_handle_alert) judge whether this read piece belongs to this stream
-(bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(1)
-(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:1, end piece idx:905],current_piece:0,pad task state 0 
-(is_gsttypefind_have_type_emitted) have_type emitted, proceeding 
-(bt_demux_stream_push_loop) waiting lock thiz->current_piece(0), ipc_data->piece(1)
-(bt_demux_stream_push_loop) recovery lock (0)
-(gst_bt_demux_buffer_new) thiz->start_piece=1, piece=1, this buffer actual size:712333 
-(bt_demux_stream_push_loop) Received piece (1) of size 1048576 and actual size 712333 on file 0 
-(bt_demux_stream_push_loop) Push SEGMENT event, start_byte=1384819, end_byte=949733275 
-(bt_demux_stream_push_loop) since flush_start sent, send flush_stop then 
-(qtdemux_handle_sink_event) got GST_EVENT_FLUSH_STOP 
-GTK-GLSINK::gst_gtk_gl_sink_event: flush-stop 
-(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-(gst_qtdemux_map_and_push_segments) 
-(qtdemux_activate_segment) (video_0) activate segment 0, offset 0:00:03.676855000
-(stream_segment_get_boundaries) (video_0) seg_time = 0:00:03.676855000 
-(stream_segment_get_boundaries) (video_0) result is start=0:00:03.743521666,stop=0:09:22.266666666,time=0:00:03.676855000
-(qtdemux_stream_update_segment) (video_0) new segment 0 from 0:00:03.743521666 to 0:09:22.266666666,time 0:00:03.676855000 
-(gst_qtdemux_push_tags) Checking pad qtdemux0:video_0 for tags
-(qtdemux_activate_segment) (audio_0) activate segment 0, offset 0:00:03.676855000
-(stream_segment_get_boundaries) (audio_0) seg_time = 0:00:03.676855000 
-(stream_segment_get_boundaries) (audio_0) result is start=0:00:03.676855000,stop=0:09:22.134000000,time=0:00:03.676855000
-(qtdemux_stream_update_segment) (audio_0) new segment 0 from 0:00:03.676855000 to 0:09:22.134000000,time 0:00:03.676855000 
-(gst_qtdemux_push_tags) Checking pad qtdemux0:audio_0 for tags
-(gst_qtdemux_push_tags) Checking pad qtdemux0:video_0 for tags
-(gst_qtdemux_push_tags) Checking pad qtdemux0:audio_0 for tags
-(gst_qtdemux_find_sample) 
-(qtdemux_move_stream) (video_0) moving to sample 108 of 16866 
-(qtdemux_move_stream) (audio_0) moving to sample 166 of 26350 
-(bt_demux_stream_push_loop) Modifying thiz->current_piece from 0 to 1 
-(bt_demux_stream_push_loop) Pushing buffer, actual size: 712333, file: 0, cur piece: (1) 
-(qtdemux_chain) Received buffer size:712333 demux offset:1384819
-(qtdemux_chain) pushing in inbuf 0x7fffd807bbf0,neededbytes:136272,available: 712333
-(gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-(bvw_update_tags) Pipeline sent audio tags update with no changes 
-GTK-GLSINK::gst_gtk_gl_sink_event: segment 
-(bvw_update_tags) gain video Tags: 0x7ffecc2a5b20A 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(bvw_update_tags) gain audio Tags: 0x7fff18003650A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-(bvw_update_tags) Pipeline sent video tags update with no changes 
-GTK-GLSINK::gst_gtk_gl_sink_event: tag 
-[New Thread 0x7ffebf94d6c0 (LWP 30996)]
-(bvw_bus_message_cb) In GST_MESSAGE_ASYNC_DONE case: Maybe starting deferred playback after seek
-(bacon_video_widget_play) cur_state:PAUSED
-play_starting_cb 
--unmark_popup_busy opening file
-(bacon_video_widget_play) SET pipeline_ state to PLAYING
-(bvw_bus_message_cb) bvw-pipeline changed state from PAUSED to PLAYING
-(bvw_bus_message_cb) resume updating slider and time label
-(bvw_reconfigure_tick_timeout) removing tick timeout 
-(bvw_reconfigure_tick_timeout) adding tick timeout (at 200ms) 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 
 
 
@@ -1130,118 +895,172 @@ play_starting_cb
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-(bvw_update_tags) gain audio Tags: 0x555555b37840A 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(bvw_update_tags) gain audio Tags: 0x7fff180090f0A 
 (bvw_update_tags) emit got-metadata 
 (on_got_metadata) 
 (totem_get_nice_name_for_stream) emit_metadata_updated 
 set_title of player_header_
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(bvw_update_tags) gain audio Tags: 0x7ffecc48e8e0A 
-(bvw_update_tags) emit got-metadata 
-(on_got_metadata) 
-(totem_get_nice_name_for_stream) emit_metadata_updated 
-set_title of player_header_
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 (bt_demux_stream_push_loop) Luckily we have next piece 2, call read_piece() on it, current:1
 (bt_demux_stream_push_loop) unlock cur:(1)
 bt_demux_stream_push_loop, END 
-(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:1, end piece idx:905],current_piece:1,pad task state 0 
+(bt_demux_stream_push_loop) FIRE src_00 [start piece idx:0, end piece idx:905],current_piece:1,pad task state 0 
 (is_gsttypefind_have_type_emitted) have_type emitted, proceeding 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
 Session Got read_piece_alert 
 (btdemux_feed_read_piece_alert) 
 (bt_demux_handle_alert) BEGIN in read_piece_alert, piece idx:(2)
@@ -1251,131 +1070,80 @@ Session Got read_piece_alert
 (bt_demux_handle_alert) EXIT in read_piece_alert, piece idx:(2)
 (bt_demux_stream_push_loop) waiting lock thiz->current_piece(1), ipc_data->piece(2)
 (bt_demux_stream_push_loop) recovery lock (1)
-(gst_bt_demux_buffer_new) thiz->start_piece=1, piece=2, this buffer actual size:1048576 
+(gst_bt_demux_buffer_new) thiz->start_piece=0, piece=2, this buffer actual size:1048576 
 (bt_demux_stream_push_loop) Received piece (2) of size 1048576 and actual size 1048576 on file 0 
 (bt_demux_stream_push_loop) Modifying thiz->current_piece from 1 to 2 
 (bt_demux_stream_push_loop) Pushing buffer, actual size: 1048576, file: 0, cur piece: (2) 
 (qtdemux_chain) Received buffer size:1048576 demux offset:2022932
-(qtdemux_chain) pushing in inbuf 0x7fffd8459210,neededbytes:133631,available: 1122796
+(qtdemux_chain) pushing in inbuf 0x7fffd445a980,neededbytes:133631,available: 1122796
 (gst_qtdemux_process_adapter) demux->state=<MOVIE> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--unmark_popup_busy toolbar/go menu visible
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(totem-menu) Play/Pause Button Pressed 
-(totem_object_play_pause) 
-(totem_object_play_pause) next line to call bacon_video_widget_pause
-(bacon_video_widget_pause) Pausing
-(bacon_video_widget_pause) SET pipeline_ state to PAUSED
-(gst_bt_demux_change_state) TRANSITION:35 
-(gst_bt_demux_change_state) GST_STATE_CHANGE_PLAYING_TO_PAUSED 
-(totem-object/play_pause_set_label) 
-(bvw_bus_message_cb) bvw-pipeline changed state from PLAYING to PAUSED
-(bvw_bus_message_cb) disable updating slider and time label
-(bvw_reconfigure_tick_timeout) removing tick timeout 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+(from hdy-header-bar) 000 
+
+Session Got piece_finished_alert 
+Piece 1824 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
+Session Got piece_finished_alert 
+Piece 1911 completed (down: 0 kb/s, up: 0 kb/s, peers: 0, prio:1) 
 ^C
 Thread 1 "transmission-gt" received signal SIGINT, Interrupt.
-0x00007ffff591b4cd in __GI___poll (fds=0x5555561c3d50, nfds=4, timeout=989)
+0x00007ffff591b4cd in __GI___poll (fds=0x555555cb0000, nfds=4, timeout=61)
     at ../sysdeps/unix/sysv/linux/poll.c:29
 warning: 29	../sysdeps/unix/sysv/linux/poll.c: No such file or directory
 (gdb) q
 A debugging session is active.
 
-	Inferior 1 [process 30931] will be killed.
+	Inferior 1 [process 22955] will be killed.
 
 Quit anyway? (y or n) y
 pal@pal-desktop79:/media/pal/E/Downloads/libtorrent-SN/build/gtk$ 
+
+
+
+
+
+
+
 

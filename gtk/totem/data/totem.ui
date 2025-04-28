@@ -74,10 +74,7 @@
 			<attribute name="label" translatable="yes">Prefere_nces</attribute>
 			<attribute name="action">app.preferences</attribute>
 		</item>
-		<!-- <item>
-			<attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
-			<attribute name="action">app.shortcuts</attribute>
-		</item> -->
+		
 	</section>
 	<section>
 		<section id="properties-placeholder"/>
@@ -104,8 +101,6 @@
 
   <object class="HdyApplicationWindow" id="totem_main_window">
     <property name="can_focus">False</property>
-    <property name="events">GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK</property>
-
         <child>
           <object class="HdyFlap" id="flap">
             <property name="visible">True</property>
@@ -123,19 +118,9 @@
                 <child>
                   <object class="gtkmm__CustomObject_16BaconVideoWidget" id="bvw">
                     <property name="visible">True</property>
-                    <property name="events">GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK</property>
                   </object>
                 </child>
-                <!-- <child type="overlay">
-                  <object class="GtkSpinner" id="spinner">
-                    <property name="visible">False</property>
-                    <property name="vexpand">True</property>
-                    <property name="hexpand">True</property>
-                    <style>
-                      <class name="osd"/>
-                    </style>
-                  </object>
-                </child> -->
+              
                 <child type="overlay">
                   <object class="GtkBox" id="toolbar">
                     <property name="visible">True</property>

@@ -129,6 +129,7 @@ void gtr_confirm_remove(
                     lt::torrent_handle const& h = s.handle;
                     if(s.handle.is_valid())
                     {
+                        //remove from session
                         core->remove_torrent(h, delete_files);
                     }
                     else

@@ -1421,9 +1421,13 @@ void/*bool*/ Session::Impl::post_alerts_on_session()try
                         break;
                     }
 
+                    //when open totem, the checking time may finished, so we will not received piece_finished_alert 
+                    //when open totem while torrent is checking, it will receive many piece-finished-alert since its open
                     case piece_finished_alert::alert_type:
                     {
+                    
                         if(totem_uniq_id_ > 0){
+                            std ::cout << "Session Got piece_finished_alert " << std::endl;
                             btdemux_feed_piece_finished_alert(btdemux_gobj_, a);
                         }
                         break;
@@ -2123,22 +2127,22 @@ void Session::Impl::remove_torrent(lt::torrent_handle const& han, bool delete_fi
         
         auto& ses = get_session();
 
-        // also delete the resume file
-        std::string resumepath = FetchTorResumePath(target_ih);
-
         if(delete_files)
         {
             ses.remove_torrent(han, lt::session::delete_files);
-             //if resume file do exists, delete it really
-            if (!resumepath.empty())
-            {
-                gtr_file_trash_or_remove(resumepath, nullptr);
-            }  
         }
         else
         {
             ses.remove_torrent(han);
         }  
+
+        //Whether delete files of torrent or not, we should delete .resume file
+        std::string resumepath = FetchTorResumePath(target_ih);
+        if(!resumepath.empty())
+        {
+            gtr_file_trash_or_remove(resumepath, nullptr);
+        }  
+
     }
 
     /* logging */

@@ -31,7 +31,7 @@ private:
 
     void display_plugin_details();
 
-    bool on_plugin_switch_toggled(bool state);
+    void on_plugin_switch_toggled();
 private:
     TotemPrefsPluginRow& widget_;   
 
@@ -206,37 +206,45 @@ void TotemPrefsPluginRow::Impl::display_plugin_details ()
 
 
 
-//No need to bind GSettings here
-bool TotemPrefsPluginRow::Impl::on_plugin_switch_toggled(bool state)
+//load or unload will change loaded-plugins property of PeasEngine which bind to active-plugins in gschemas
+void TotemPrefsPluginRow::Impl::on_plugin_switch_toggled()
 {
-    bool ret = FALSE;
+    std::cout << " TotemPrefsPluginRow::Impl::on_plugin_switch_toggled " << std::endl;
+
+    // bool ret = FALSE;
     if(engine_== nullptr || plugin_info_ == nullptr)
     {
-        return ret;
+    std::cout << " engine_== nullptr || plugin_info_ == nullptr " << std::endl;
+
+        return; /*ret;*/
     }
 
     PeasEngine* pe_obj = PEAS_ENGINE (engine_);
     if(pe_obj == nullptr)
     {
-        return ret;
+    std::cout << " pe_obj == nullptr " << std::endl;
+
+        return; /*ret;*/
     }
 
-    ret = TRUE;
+    // ret = TRUE;
+
+    bool state = plugin_switch_->get_active();
 
     if(state)
     {
-            std::cout << " Plugin enabled " << std::endl;
+            std::cout << "on_plugin_switch_toggled, Plugin enabled " << std::endl;
 		peas_engine_load_plugin (pe_obj, plugin_info_);
 
     }
     else
     {
-            std::cout << " Plugin disabled " << std::endl;
+            std::cout << "on_plugin_switch_toggled, Plugin disabled " << std::endl;
 
 		peas_engine_unload_plugin (pe_obj, plugin_info_);
     }
 
-    return ret;
+    // return ret;
 }
 
 
@@ -307,7 +315,7 @@ void TotemPrefsPluginRow::Impl::update_plugin_details(PeasPluginInfo *pi)
     //Also connect signal callabck when plugin_switch_ toggled;
     if(plugin_switch_)
     {
-        plugin_switch_->signal_state_set().connect(sigc::mem_fun(*this, &TotemPrefsPluginRow::Impl::on_plugin_switch_toggled));
+        plugin_switch_->property_active().signal_changed().connect(sigc::mem_fun(*this, &TotemPrefsPluginRow::Impl::on_plugin_switch_toggled));
     }
 
 }

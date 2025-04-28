@@ -46,4 +46,13 @@ export G_DEBUG=fatal-criticals
 
 #use our own built glib (For Debug)
 export LD_LIBRARY_PATH=/media/pal/E/FreeDsktop/glib-2.80.0/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+#use our own built libhandy-1
+export LD_LIBRARY_PATH=/media/pal/E/GnomeApp/libhandy-1-debian-latest/install/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+
+
+
+
+
+
 

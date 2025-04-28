@@ -2006,6 +2006,7 @@ void Application::Impl::actions_handler(Glib::ustring const& action_name)
         gtr_window_present(prefs_);
     }
 
+
     else if (action_name == "open-totem")
     {
         //uniq_ids is sure to contain only one element

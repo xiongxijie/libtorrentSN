@@ -57,6 +57,9 @@ public:
 
     void set_num_pieces(int total);
 
+protected:
+    bool on_button_press_event(GdkEventButton* event) override;
+
 private:
     class Impl;
     std::unique_ptr<Impl> const impl_;

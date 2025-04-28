@@ -206,7 +206,8 @@ lt::add_torrent_params FileList::empty_atp_ = lt::add_torrent_params();
 
 void FileList::Impl::clearData()
 {
-    timeout_tag_.disconnect();
+    if(timeout_tag_.connected())
+        timeout_tag_.disconnect();
 }
 
 FileList::Impl::~Impl()
@@ -257,12 +258,18 @@ namespace
         auto new_progress = double{};
         auto new_size = decltype(old_size){};
 
-        //single file
+        //child is single file
         if (is_file)
         {
             //lt::file_index_t
             auto const index = iter->get_value(file_cols.index);
-    
+            //-1 is only for dir node under top-level-dir
+            if(index == -1)//maybe redundant, but still in case
+            {
+
+std::cout << "In FileList.cc, index is -1. return " << index << std::endl;
+
+            }
             //on OptionsDialog, we dont have Torrnet yet, so priorty is set to download_priority::default just for initalization purpose
             if(!refresh_data.Tor)
             {
@@ -272,7 +279,7 @@ namespace
 
                 /*it is set to zero , this is used to calculate dir progress*/
                 new_have = 0;
-
+std::cout << "In FileList.cc, index is " << index << std::endl;
                 /*total size */
                 new_size = fs.file_size(index);
 
@@ -317,9 +324,13 @@ namespace
                 new_priority = static_cast<int>(file_prio[index]);
             }
         }
-        //dir 
+        //child is dir ,whose index is always -1 (since it is like a virtual node)
         else
         {
+            // auto const index = iter->get_value(file_cols.index);
+            // std::cout << "In FileList.cc, dir index is " << index << std::endl; //always print -1
+
+
             new_priority = NOT_SET;
 
             /* since gtk_tree_model_foreach() is depth-first, we can
@@ -602,7 +613,7 @@ namespace
             priority = isLeaf ? prios[child_data.index/*lt::file_index_t*/] : lt::default_priority /*4*/;
         }
 
-                // std::cout << child_data.index << " " << child_data.length << " " << child_data.name << std::endl;
+                std::cout << child_data.index << " " << child_data.length << " " << child_data.name << std::endl;
             
         auto const child_iter = build.store->prepend(build.iter->children());
         /* file_index_t */

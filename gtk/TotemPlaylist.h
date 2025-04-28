@@ -49,6 +49,7 @@ class TotemPlaylist {
     
     public:
         TotemPlaylist() {
+            std::cout << "create TotemPlayeList" << std::endl;
             settings = g_settings_new(TOTEM_GSETTINGS_SCHEMA);
         }
     

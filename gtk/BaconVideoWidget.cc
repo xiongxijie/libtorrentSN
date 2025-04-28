@@ -112,6 +112,7 @@ class BaconVideoWidget::Impl
 
         bool is_playing();
 
+        void initialize_state();
         void open(int fileidx);
         bool play(GError ** error);
         void pause();
@@ -469,10 +470,10 @@ void BaconVideoWidget::Impl::decodebin_audio_outpad_event_method(GstEvent * even
 
   if (GST_EVENT_TYPE (event) == GST_EVENT_TAG)
   {
-      GstTagList *tags;
+      GstTagList *tags = NULL;
       //@taglist: (out) (optional) (transfer none):
       gst_event_parse_tag (event, &tags);
-      if (tags)
+      if (tags != NULL)
       {
 
 // if (GST_IS_TAG_LIST(tags))
@@ -510,10 +511,9 @@ void BaconVideoWidget::Impl::decodebin_video_outpad_event_method(GstEvent * even
   if (GST_EVENT_TYPE (event) == GST_EVENT_TAG)
   {
       GstTagList *tags = NULL;
-      tags = gst_tag_list_new_empty ();
       //@taglist: (out) (optional) (transfer none):
       gst_event_parse_tag (event, &tags);
-      if (tags)
+      if (tags != NULL)
       {
 
 // if (GST_IS_TAG_LIST(tags))
@@ -562,12 +562,10 @@ BaconVideoWidget::BaconVideoWidget(
 
     set_events(
         get_events() |
-        Gdk::EventMask::SCROLL_MASK |
         Gdk::EventMask::POINTER_MOTION_MASK |
         Gdk::EventMask::BUTTON_MOTION_MASK |
         Gdk::EventMask::BUTTON_PRESS_MASK |
-        Gdk::EventMask::BUTTON_RELEASE_MASK |
-        Gdk::EventMask::KEY_PRESS_MASK
+        Gdk::EventMask::BUTTON_RELEASE_MASK 
     );
 
 }
@@ -2058,38 +2056,26 @@ void BaconVideoWidget::Impl::bus_message_cb_method(GstBus * bus, GstMessage * me
       GstState old_state, new_state;
       gchar *src_name;
 
-      gst_message_parse_state_changed (message, &old_state, &new_state, NULL);
+      gst_message_parse_state_changed(message, &old_state, &new_state, NULL);
 
-      if (old_state == new_state)
+      if(old_state == new_state)
       {
         break;
       }
 
       /* we only care about pipeline_'s state changes */
-      if (GST_MESSAGE_SRC (message) != GST_OBJECT (pipeline_))
+      if(GST_MESSAGE_SRC (message) != GST_OBJECT (pipeline_))
       {
         break;
       }
 
-      src_name = gst_object_get_name (GST_OBJECT_CAST(message->src));
-
-
-      
-      /*
-such as 
-when bvw-pipeline change state from READY to PAUSED, this happends when moov header got, and decodebin's out pad added (bvw/on_pad_added for decodebin
-
-when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), this will block at push_loop on gst_pad_push()......in gst_bt_demux_push_loop()
-
-      */
-
-
+      src_name = gst_object_get_name(GST_OBJECT_CAST(message->src));
 
                   printf("(bvw_bus_message_cb) %s changed state from %s to %s\n", 
                       src_name,
                       gst_element_state_get_name (old_state),
                       gst_element_state_get_name (new_state)
-                      );
+                  );
 
       // GST_DEBUG ("%s changed state from %s to %s", src_name,
       //     gst_element_state_get_name (old_state),
@@ -2098,7 +2084,8 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
 
 
       /* now do stuffs */
-      if (new_state <= GST_STATE_PAUSED) 
+      //GST_STATE_PAUSED, GST_STATE_READY, GST_STATE_NULL
+      if(new_state <= GST_STATE_PAUSED) 
       {
           //under these circumstances we will disable updating slider and time label
           //We Press Pause button or During a seek operation when async_done not happened
@@ -2109,7 +2096,9 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
         query_timeout();
         //disable updating slider&time label every period of time
         reconfigure_tick_timeout(0);
-      } else if (new_state > GST_STATE_PAUSED) 
+      } 
+      //GST_STATE_PLAYING
+      else if(new_state > GST_STATE_PAUSED) 
       {
 
               printf ("(bvw_bus_message_cb) resume updating slider and time label\n");
@@ -2119,7 +2108,7 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
       }
 
       //state changed from READY to PAUSED, maybe it is start playing
-      if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) 
+      if(old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) 
       {
                     
                     //// GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (pipeline_),
@@ -2127,7 +2116,7 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
                     ////     "totem-prerolled");
 
         /*gint64 stream_length = */
-                update_and_get_stream_length ();
+                update_and_get_stream_length();
 
                   /*printf("(bvw_bus_message_cb) In GST_MESSAGE_STATE_CHANGED: stream len = %ld\n", stream_length);*/
 
@@ -2149,16 +2138,27 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
 
                 printf ("(bvw_bus_message_cb) pipeline state changed from PAUSED back to READY, clear related tags cache \n");
 
-        media_has_video_ = FALSE;
-        media_has_audio_ = FALSE;
-	      media_has_unsupported_video_ = FALSE;
+        media_has_video_ = false;
+        media_has_audio_ = false;
+	      media_has_unsupported_video_ = false;
 
         /* clean metadata cache */
-        g_clear_pointer (&tagcache_,  gst_tag_list_unref);
-        gst_tag_list_unref(property_our_audio_tags_.get_value());
-        property_our_audio_tags_.set_value(NULL);
-        gst_tag_list_unref(property_our_video_tags_.get_value());
-        property_our_video_tags_.set_value(NULL);
+        if(tagcache_ != nullptr)
+          g_clear_pointer (&tagcache_,  gst_tag_list_unref);
+        
+        GstTagList* audio_tags_temp = property_our_audio_tags_.get_value();
+        GstTagList* video_tags_temp = property_our_video_tags_.get_value();
+        if(audio_tags_temp)
+        {
+          gst_tag_list_unref(audio_tags_temp);
+          property_our_audio_tags_.set_value(NULL);
+        }
+        if(video_tags_temp)
+        {
+          gst_tag_list_unref(video_tags_temp);
+          property_our_video_tags_.set_value(NULL);
+        }
+
 
         video_width_ = 0;
         video_height_ = 0;
@@ -2193,8 +2193,9 @@ when bvw-pipeline changed state from PLAYING to PAUSED(press Pause Button ), thi
         // GST_DEBUG ("Have an old seek to schedule, doing it now");
         seek_time_no_lock(_time, GST_SEEK_FLAG_NONE, NULL);
       } 
-      //we do not press "Pause" button before seek, 
-      //so resume playing then seek success, cuz we Pause the pipeline in bacon_video_widget_seek_time_no_lock()
+      //case 1:we do not press "Pause" button before seek, 
+      //so resume playing when seek success, cuz we Pause the pipeline in bacon_video_widget_seek_time_no_lock()
+      //case 2:when we start playing at intial time
       else if(target_state_ == GST_STATE_PLAYING) {
 
               printf("(bvw_bus_message_cb) In GST_MESSAGE_ASYNC_DONE case: Maybe starting deferred playback after seek\n");
@@ -2378,6 +2379,7 @@ void BaconVideoWidget::Impl::got_time_tick(GstElement * element, gint64 time_nan
 }
 
 
+
 /*Handling Three-Piece-Area Buffering msg from btdemux*/
 void BaconVideoWidget::Impl::handle_buffering_message(GstMessage * message)
 {
@@ -2502,7 +2504,7 @@ void BaconVideoWidget::Impl::parse_stream_info()
 }
 
 //get video deocder (who is outpad of gstdecodebin2) caps, so we can know metadata such as framerate, and video width/height...
-void BaconVideoWidget::Impl::caps_set_function (GObject * obj, GParamSpec * pspec, gpointer user_data)
+void BaconVideoWidget::Impl::caps_set_function(GObject * obj, GParamSpec * pspec, gpointer user_data)
 {
 
   BaconVideoWidget::Impl* self = static_cast<BaconVideoWidget::Impl*>(user_data);
@@ -2510,7 +2512,7 @@ void BaconVideoWidget::Impl::caps_set_function (GObject * obj, GParamSpec * pspe
 
 }
 
-void BaconVideoWidget::Impl::caps_set_method (GObject * obj)
+void BaconVideoWidget::Impl::caps_set_method(GObject * obj)
 {
 
   GstPad *pad = GST_PAD (obj);
@@ -2956,17 +2958,23 @@ GstCaps* BaconVideoWidget::Impl::get_caps_of_current_stream(StreamType type)
 void BaconVideoWidget::Impl::update_tags(GstTagList *tag_list, StreamType type)
 {
   GstTagList **cache = NULL;
-  GstTagList *result;
+  GstTagList *result = NULL;
   GstTagList* tags_target = NULL;
   /* all tags (replace previous tags, title/artist/etc. might change
    * in the middle of a stream, e.g. with radio streams) */
   // Returns: (transfer full) (nullable): the new list
-  result = gst_tag_list_merge (tagcache_, tag_list,
+  if(tagcache_!=NULL || tag_list!=NULL)
+  {
+    result = gst_tag_list_merge (tagcache_, tag_list,
                                    GST_TAG_MERGE_REPLACE);
-
+  }
+  else
+  {
+    return;
+  }
 
   //new tags equals to old ones, nothing interesting  just return
-  if (tagcache_ && result 
+  if (tagcache_!=NULL && result!=NULL 
       && gst_tag_list_is_equal (result/*new-tags*/, tagcache_/*old-tags*/)) 
   {
       gst_tag_list_unref (result);
@@ -3178,8 +3186,15 @@ void BaconVideoWidget::Impl::get_metadata_string(BvwMetadataType type, Glib::Val
         res = gst_tag_list_get_string (tagcache_,
             GST_TAG_VIDEO_CODEC, &string);
       }
+
+  //     if(string == NULL)
+  // std::cout << "trying to get video-codec ,EMPTY" << std::endl;
+  //     else
+  // std::cout << "trying to get video-codec " << string << std::endl;
+
       break;
     }
+
     case BVW_INFO_AUDIO_CODEC: {
       GstTagList *tags;
 
@@ -3194,6 +3209,12 @@ void BaconVideoWidget::Impl::get_metadata_string(BvwMetadataType type, Glib::Val
         res = gst_tag_list_get_string (tagcache_,
             GST_TAG_AUDIO_CODEC, &string);
       }
+
+  //     if(string == NULL)
+  // std::cout << "trying to get aideo-codec ,EMPTY" << std::endl;
+  //     else
+  // std::cout << "trying to get audio-codec " << string << std::endl;
+
       break;
     }
     case BVW_INFO_AUDIO_CHANNELS: {
@@ -3250,11 +3271,11 @@ void BaconVideoWidget::Impl::get_metadata_string(BvwMetadataType type, Glib::Val
     string = g_strstrip (string);
 
   if (res && string && *string != '\0' && g_utf8_validate (string, -1, NULL)) {
-    // g_value_take_string (value, string);
 
     Glib::Value<Glib::ustring> string_val;  // Temporary typed value
     string_val.init(Glib::Value<Glib::ustring>::value_type()); 
-    Glib::ustring ustr = string;      
+    Glib::ustring ustr = string;  
+    
     string_val.set(ustr);
     value = string_val;  //copy assignment, previous holding will destructs
     g_free (string);
@@ -3470,6 +3491,8 @@ void BaconVideoWidget::Impl::get_metadata(BvwMetadataType type, Glib::ValueBase&
     case BVW_INFO_FPS:
     {
 	      float fps = 0.0;
+
+        value.init( Glib::Value<float>::value_type());
 
         if (video_fps_d_ > 0)
             fps = (float) video_fps_n_ / (float) video_fps_d_;
@@ -3751,7 +3774,6 @@ void BaconVideoWidget::Impl::set_audio_output_type(BvwAudioOutputType type)
 
 
 //seek
-
 bool BaconVideoWidget::update_and_get_seekable()
 {
   return impl_->update_and_get_seekable();
@@ -3761,11 +3783,11 @@ bool BaconVideoWidget::Impl::update_and_get_seekable()
   gboolean res;
   gint old_seekable;
 
-  g_return_val_if_fail(GST_IS_ELEMENT(pipeline_), FALSE);
+  g_return_val_if_fail(GST_IS_ELEMENT(pipeline_), false);
 
   if (cur_video_fileidx_within_tor_ == -1)
   {
-    return FALSE;
+    return false;
   }
 
   //[Old] Caching old value
@@ -4077,13 +4099,38 @@ bool BaconVideoWidget::Impl::set_playback_direction(bool forward)
 
 
 
+/*this method just a HACK, avoid push_loop when pipeline state is NULL which will be problematic*/
+void BaconVideoWidget::initialize_state()
+{
+  impl_->initialize_state();
+}
+void BaconVideoWidget::Impl::initialize_state()
+{
+    //Inital case
+      
+  
+                printf("(bacon_video_widget_open) initial case: fileidx is -1 ,progressively SET bvw->pipeline state to READY and then PAUSED\n");
+  
+        target_state_ = GST_STATE_READY;
+        //propagates the state change to all the elements inside the pipeline
+        gst_element_set_state (pipeline_, GST_STATE_READY);
+  
+        target_state_ = GST_STATE_PAUSED;
+        gst_element_set_state (pipeline_, GST_STATE_PAUSED);
+  
+        return;
+}
+
+
+
+
 void BaconVideoWidget::open(int fileidx)
 {
   impl_->open(fileidx);
 }
 void BaconVideoWidget::Impl::open(int fileidx)
 {
-  g_return_if_fail (pipeline_ != NULL);
+  g_return_if_fail (pipeline_ != nullptr);
   
   /* So we aren't closed yet... */
   if(cur_video_fileidx_within_tor_ >= 0) 
@@ -4336,11 +4383,21 @@ void BaconVideoWidget::Impl::close()
   }
 
 
-  g_clear_pointer (&tagcache_,  gst_tag_list_unref);
-  gst_tag_list_unref(property_our_audio_tags_.get_value());
-  property_our_audio_tags_.set_value(NULL);
-  gst_tag_list_unref(property_our_video_tags_.get_value());
-  property_our_video_tags_.set_value(NULL);
+  if(tagcache_)
+    g_clear_pointer (&tagcache_,  gst_tag_list_unref);
+
+  GstTagList* audio_tags_temp = property_our_audio_tags_.get_value();
+  GstTagList* video_tags_temp = property_our_video_tags_.get_value();
+  if(audio_tags_temp != nullptr)
+  {
+    gst_tag_list_unref(audio_tags_temp);
+    property_our_audio_tags_.set_value(NULL);
+  }
+  if(video_tags_temp != nullptr)
+  {
+    gst_tag_list_unref(video_tags_temp);
+    property_our_video_tags_.set_value(NULL);
+  }
 
 
   //notify seekable has changed
@@ -4378,7 +4435,6 @@ void BaconVideoWidget::Impl::volume_readback()
   Glib::signal_idle().connect(sigc::mem_fun(*this, &Impl::volume_readback_cb));
 }
 
-
 bool BaconVideoWidget::can_set_volume()
 {
   return impl_->can_set_volume();
@@ -4392,8 +4448,6 @@ bool BaconVideoWidget::Impl::can_set_volume()
 
   return TRUE;
 }
-
-
 
 
 void BaconVideoWidget::set_volume(double volume)
@@ -4416,8 +4470,6 @@ void BaconVideoWidget::Impl::set_volume(double volume)
     volume_readback();
   }
 }
-
-
 
 double BaconVideoWidget::get_volume()
 {
@@ -4527,6 +4579,8 @@ bool BaconVideoWidget::Impl::set_rate (float new_rate)
 
   if(float_equal(new_rate, rate_))
   {
+    printf ("(bacon_video_widget_set_rate) rate already set at %lf \n", rate_);
+
     return TRUE;
   }
 
@@ -4564,6 +4618,7 @@ bool BaconVideoWidget::Impl::set_rate (float new_rate)
   } 
   else 
   {
+    
           printf ("(bacon_video_widget_set_rate) failed to query position\n");
     
     // GST_DEBUG ("failed to query position");

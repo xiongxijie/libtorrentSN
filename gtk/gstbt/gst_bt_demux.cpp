@@ -182,6 +182,69 @@ G_DEFINE_TYPE (GstBtDemuxStream, gst_bt_demux_stream, GST_TYPE_PAD);
 
 
 
+
+
+
+//a little helper for 'gst_bt_demux_stream_push_loop()'
+static void 
+is_gsttypefind_have_type_emitted(GstBtDemuxStream *thiz, gboolean* result)
+{
+    if(result == NULL)
+    {
+      return;
+    }
+    
+    // the peer pad of our btdemux src pad is 
+    // gstdecodebin2's static sink pad which is ghost pad to gsttypefindelement
+    GstPad* peerpad = gst_pad_get_peer (GST_PAD (thiz));
+    if(peerpad && GST_IS_GHOST_PAD (peerpad))
+    {
+        GstPad* internal_pad = gst_ghost_pad_get_target (GST_GHOST_PAD (peerpad));
+        if (!internal_pad) 
+        {
+          printf ("(is_gsttypefind_have_type_emitted) decodebin ghost sink pad Has no target yet, return\n");
+          return;
+        } 
+        else 
+        {
+            // printf ("(is_gsttypefind_have_type_emitted) decodebin ghost sink pad is ok to have target\n");
+            GstObject* parent = gst_pad_get_parent (internal_pad);
+            if (parent) 
+            {
+              g_object_get (G_OBJECT (parent), "have-type-emitted", result, NULL);
+              if (FALSE == *result) 
+              {
+                printf ("(is_gsttypefind_have_type_emitted) have_type not emitted yet\n");
+              } 
+              else 
+              {
+                printf ("(is_gsttypefind_have_type_emitted) have_type emitted, proceeding \n");
+              }
+              gst_object_unref (parent);
+            } 
+            else 
+            {
+              printf ("(is_gsttypefind_have_type_emitted) parent is NULL \n");
+            } 
+            gst_object_unref (internal_pad);
+        }
+        gst_object_unref (peerpad);
+    } 
+    else if(peerpad && !GST_IS_GHOST_PAD (peerpad)) 
+    {
+      printf ("(is_gsttypefind_have_type_emitted) peer pad is not Ghost pad\n");
+      gst_object_unref (peerpad);
+    }
+}
+
+
+
+
+
+
+
+
+
 static void
 gst_bt_demux_stream_push_loop (gpointer user_data)
 {
@@ -243,6 +306,10 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
 
           gboolean have_type_emitted = FALSE;
           gboolean need_re_push = FALSE;
+
+          is_gsttypefind_have_type_emitted(thiz, &have_type_emitted);
+
+          /* ~~~ NOT USED, USE is_gsttypefind_have_type_emitted INSTEAD ~~~
           // the peer pad of our btdemux src pad is 
           // gstdecodebin2's static sink pad which is ghost pad to gsttypefindelement
           GstPad* peerpad = gst_pad_get_peer (GST_PAD (thiz));
@@ -277,6 +344,9 @@ gst_bt_demux_stream_push_loop (gpointer user_data)
             printf ("(bt_demux_stream_push_loop) peer pad is not Ghost pad\n");
             gst_object_unref (peerpad);
           }
+          */
+
+
 
 
   //----Pushed in read_piece_alert handling code, pop up here
@@ -550,7 +620,7 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
       {
                                       printf ("(bt_demux_stream_push_loop) When got moov header after mdat , call send_buffering\n");
 
-        gst_bt_demux_send_buffering (demux, h);
+        gst_bt_demux_send_buffering(demux, h);
       } 
       else
       {
@@ -558,12 +628,14 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
                                       thiz->start_piece);
 
         //**fire the read on start_piece, the rest will follow automatically, like a chain reaction, or domino effect
-        h.read_piece (thiz->start_piece);
+        h.read_piece(thiz->start_piece);
       }
       thiz->moov_after_mdat = FALSE;
   }
 
-  
+
+
+
 
   //-----------TRY ADD MORE ADJENCENT PIECES---------
   /* read the next piece, make sure not exceeds `end_piece` */
@@ -585,9 +657,10 @@ printf("(bt_demux_stream_push_loop) recovery lock (%d)\n", thiz->current_piece);
           //     ipc_data->piece + 1, thiz->current_piece);
 
           if (send_eos ==FALSE) {
-                          printf ("(bt_demux_stream_push_loop) Luckily we have next piece %d, call read_piece() on it, current:%d\n", ipc_data->piece+1, thiz->current_piece);
-            //**fire the read on start_piece, the rest will follow automatically, like a chain reaction, or domino effect
-            h.read_piece (next);
+              printf ("(bt_demux_stream_push_loop) Luckily we have next piece %d, call read_piece() on it, current:%d\n", ipc_data->piece+1, thiz->current_piece);
+              //**fire the read on start_piece, the rest will follow automatically, like a chain reaction, or domino effect
+              h.read_piece (next);
+            
           } else {
                           //generally, it is reached when EOS occured
                           printf ("(bt_demux_stream_push_loop) due to EOS or internal Error, suspend call read_piece() on next piece %d, current:%d, end/last:%d \n", ipc_data->piece + 1, thiz->current_piece, thiz->last_piece);
@@ -895,7 +968,7 @@ printf("(bt_demux_stream_activate) Modifying thiz->current_piece to %d (start_pi
   thiz->buffering_count = 0;
   if (thiz->buffering != FALSE) 
   {
-    thiz->buffering = FALSE;
+    thiz->buffering = FALSE;//clear buffering here is ok ?? if it is buffering, and when moov-after-mdat case,
   }
 
 
@@ -1271,8 +1344,8 @@ printf ("(bt_demux_stream_seek) fileidx(%d) start_byte_global = %d\n",
 
 
 
-  /* activate stream */
-  update_buffering = gst_bt_demux_stream_activate (thiz, h,
+  /* re-activate stream */
+  update_buffering = gst_bt_demux_stream_activate(thiz, h,
       demux->buffer_pieces);
 
 
@@ -1319,6 +1392,12 @@ printf ("(bt_demux_stream_seek) fileidx(%d) start_byte_global = %d\n",
                                                             thiz->current_piece);
 
             gst_bt_demux_stream_update_buffering (thiz, h, demux->buffer_pieces);
+
+            //If buffering is cleared, we need to set it,to avoid that when piece_finished_alerts received, we cannot updating buffering level
+            if(thiz->buffering == FALSE)
+            {
+              thiz->buffering = TRUE;
+            } 
   }
 
   if(thiz->moov_after_mdat)
@@ -1529,7 +1608,7 @@ gst_bt_demux_stream_dispose (GObject * object)
 
   // GST_DEBUG_OBJECT (thiz, "Disposing");
 
-          printf("~~~~Disposing \n");
+          printf("~~~~Disposing in gst_bt_demux_stream_dispose \n");
 
   G_OBJECT_CLASS (gst_bt_demux_stream_parent_class)->dispose (object);
 }
@@ -1977,88 +2056,6 @@ gst_bt_demux_switch_streams (GstBtDemux * thiz, gint desired_file_idx)
 
 
 
-// static void
-// gst_bt_demux_task_resume (GstBtDemux * thiz)
-// {
-
-//                           printf("(gst_bt_demux_task_resume) \n");
-
-//   using namespace libtorrent;
-//   GSList *walk;
-
-//   /* pause every task */
-//   g_mutex_lock (thiz->streams_lock);
-//   for (walk = thiz->streams; walk; walk = g_slist_next (walk)) {
-//     GstBtDemuxStream *stream = GST_BT_DEMUX_STREAM (walk->data);
- 
-//     if(stream->requested == FALSE)
-//       continue;
-
-
-//     // GstBtDemuxBufferData *ipc_data;
-//     // /* send a empty buffer, avoid g_async_queue block on empty state*/
-//     // ipc_data = g_new0 (GstBtDemuxBufferData, 1);
-//     // g_async_queue_push (stream->ipc, ipc_data);
-
-//     GstTaskState tstate = gst_pad_get_task_state (GST_PAD (stream));
-//     if(tstate == GST_TASK_PAUSED)
-//     {
-//       printf("(gst_bt_demux_task_pause) unset need_paused \n");
-
-//       stream->need_paused = FALSE;
-//     }
-//   }
-//   g_mutex_unlock (thiz->streams_lock);
-
-//   printf("(gst_bt_demux_task_resume) END\n");
-
-// }
-
-
-
-
-
-
-
-
-
-// static void
-// gst_bt_demux_task_pause (GstBtDemux * thiz)
-// {
-
-//                           printf("(gst_bt_demux_task_pause) \n");
-
-//   using namespace libtorrent;
-//   GSList *walk;
-
-//   /* pause task */
-//   g_mutex_lock (thiz->streams_lock);
-//   for (walk = thiz->streams; walk; walk = g_slist_next (walk)) {
-//     GstBtDemuxStream *stream = GST_BT_DEMUX_STREAM (walk->data);
-
-//     if(stream->requested == FALSE)
-//       continue;
-
-//     GstBtDemuxBufferData *ipc_data;
-//     /* send a empty buffer, avoid g_async_queue block on empty state */
-//     ipc_data = g_new0 (GstBtDemuxBufferData, 1);
-//     g_async_queue_push (stream->ipc, ipc_data);
-
-//     GstTaskState tstate = gst_pad_get_task_state (GST_PAD (stream));
-//     if(tstate == GST_TASK_STARTED)
-//     {
-//       printf("(gst_bt_demux_task_pause) perform gst_pad_pause_task \n");
-
-//       gst_pad_pause_task (GST_PAD (stream));
-
-//       // stream->need_paused = TRUE;
-//     }
-//   }
-//   g_mutex_unlock (thiz->streams_lock);
-
-//                             printf("(gst_bt_demux_task_pause) END\n");
-
-// }
 
 
 
@@ -2102,7 +2099,7 @@ gst_bt_demux_cleanup (GstBtDemux * thiz)
   if (thiz->streams) 
   {
 
-  //cleaup up list of stream(src pad)
+    //cleaup up list of stream(src pad)
     g_slist_free_full (thiz->streams, gst_object_unref);
     thiz->streams = NULL;
   }
@@ -2127,7 +2124,6 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
     {
 
       case GST_STATE_CHANGE_READY_TO_PAUSED:
-
                 
         //if already STARTED, dont do it again
         // if(tstate != GST_TASK_STARTED) {
@@ -2137,15 +2133,13 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
         break;
       //such as eos,but we do not close bt_demux_task ,should stop push_loop
       case GST_STATE_CHANGE_PAUSED_TO_READY:
-        printf("(gst_bt_demux_change_state) PAUSED_TO_READY \n");
-        gst_bt_demux_task_cleanup (thiz);
+                  printf("(gst_bt_demux_change_state) PAUSED_TO_READY \n");
+        // gst_bt_demux_task_cleanup (thiz);
         break;
 
       case GST_STATE_CHANGE_PAUSED_TO_PLAYING:
-        printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PAUSED_TO_PLAYING \n");
-        // gst_bt_demux_task_resume (thiz);
+                  printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PAUSED_TO_PLAYING \n");
         break;
-
 
       default:
         break;
@@ -2157,23 +2151,24 @@ gst_bt_demux_change_state (GstElement * element, GstStateChange transition)
     {
       //user press Play/Pause Button to Pause, so for sure push_loop should be paused! but feed_read_piece_alert need be paused ?
       case GST_STATE_CHANGE_PLAYING_TO_PAUSED:
-        printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PLAYING_TO_PAUSED \n");
-        // gst_bt_demux_task_pause (thiz);
+                  printf("(gst_bt_demux_change_state) GST_STATE_CHANGE_PLAYING_TO_PAUSED \n");
         break;
 
-
+      //such as switch to next item in playlist, dont cleanup 
       case GST_STATE_CHANGE_PAUSED_TO_READY:
 
                   printf("(gst_bt_demux_change_state) PAUSED_TO_READY 2 \n");
 
-        gst_bt_demux_cleanup (thiz);
+        // gst_bt_demux_cleanup (thiz);
         break;
 
+      //happens when close Totem
       case GST_STATE_CHANGE_READY_TO_NULL:
 
                   printf("(gst_bt_demux_change_state) READY_TO_NULL \n");
 
         gst_bt_demux_task_cleanup (thiz);
+        gst_bt_demux_cleanup (thiz);
         break;
 
       default:
@@ -2580,6 +2575,9 @@ printf ("[connect to btdemux...](btdemux_feed_playlist)\n");
         stream->cur_buffering_flags = g_array_new (FALSE, FALSE, sizeof(gboolean));
       }
 
+
+
+
       /* set the path */
       fe = ti->file_at (i);
       stream->path = g_strdup (fe.path.c_str ());
@@ -2618,6 +2616,11 @@ printf ("[connect to btdemux...](btdemux_feed_playlist)\n");
       demux->streams = g_slist_append (demux->streams, stream);
   }
 
+
+
+
+
+  // adjust piece prority 
   /* mark all pieces (across all files within torrent) to `low_priority` */
   //as soon as we open Totem for the chosen torrent, we set its proprity all to low_priority for streaming purpose 
   for (i = 0; i <ti->end_piece (); i++) 
@@ -2630,6 +2633,7 @@ printf ("[connect to btdemux...](btdemux_feed_playlist)\n");
 
   /* make sure to download sequentially */
   h.set_sequential_download (true);
+
 
 }
 
@@ -2894,8 +2898,6 @@ void btdemux_feed_piece_finished_alert(GObject* gobj, libtorrent::alert* a)
   if (ptr_h != NULL)
     h = *ptr_h;
   ptr_h = NULL;
-
-  printf ("(btdemux_feed_piece_finished_alert) \n");
 
 
   switch (a->type()) 

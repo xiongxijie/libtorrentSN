@@ -62,6 +62,22 @@ public:
     // Glib::PropertyProxy<int> property_player_menu_model();
 
 
+protected:
+
+        void get_preferred_width_vfunc(int& minimum_width, int& natural_width) const override
+        {
+            minimum_width = 600;
+            natural_width = 600;
+        }
+
+        void get_preferred_height_vfunc(int& minimum_height, int& natural_height) const override
+        {
+            minimum_height = 600 / 16 * 9 / 4; // maybe header bar is thinner?
+            natural_height = 600 / 16 * 9 / 4;
+        }
+
+
+
 private:
 
     class Impl;

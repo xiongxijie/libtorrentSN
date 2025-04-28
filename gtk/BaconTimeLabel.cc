@@ -137,7 +137,7 @@ class BaconTimeLabel::Impl
         std::int64_t length_;
 
 	    bool remaining_;
-	    bool show_msecs_;
+	    bool show_msecs_ = false;
 };
 
 
@@ -232,11 +232,20 @@ time_label_(Gtk::make_managed<Gtk::Label>())
 
     /*set font style of label*/
     // no niclude pangomm headers , gtkmm already knows them
-    Pango::AttrList attrs;
-    Pango::Attribute attr = Pango::Attribute::create_attr_font_features("tnum=1");
-    attrs.insert(attr);
-    // attrs.insert(Pango::Attribute::create_attr_font_features("tnum=1"));
-    time_label_->set_attributes(attrs);
+    Pango::AttrList attrs = {};
+    if(attrs)
+    {
+        // std::cout << " Pango::AttrList is valid" << std::endl;
+        Pango::Attribute attr = Pango::Attribute::create_attr_font_features("tnum=1");
+        attrs.insert(attr);
+        time_label_->set_attributes(attrs);
+    }
+    else
+    {
+        std::cout << " Pango::AttrList is NOT valid" << std::endl;
+
+    }
+    
 
     time_ = 0;
 	length_ = -1;

@@ -22,7 +22,7 @@ set(plugins_incs
 
 
 #Add each plugin's dir entry
-# add_subdirectory(open-directory)
-# add_subdirectory(properties)
+add_subdirectory(open-directory)
+add_subdirectory(properties)
 add_subdirectory(rotation)
-# add_subdirectory(variable-rate)
+add_subdirectory(variable-rate)

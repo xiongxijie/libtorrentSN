@@ -4707,7 +4707,7 @@ bvw_decodebin_audio_outpad_event (GstPad * pad, GstObject * parent, GstEvent * e
 
   if (GST_EVENT_TYPE (event) == GST_EVENT_TAG)
   {
-      GstTagList *tags;
+      GstTagList *tags = NULL;
       //@taglist: (out) (optional) (transfer none):
       gst_event_parse_tag (event, &tags);
       if (tags)

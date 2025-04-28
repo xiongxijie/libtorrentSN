@@ -20,7 +20,9 @@ set(destination_metadata_file "${CMAKE_BINARY_DIR}/gtk/totem-plugins/${plugin_na
 
 
 # Add the shared library
-add_library(${plugin_name} SHARED "totem-${plugin_name}-plugin.cc")
+add_library(${plugin_name} SHARED 
+                            totem-${plugin_name}-plugin.cc
+                            )
 
 
 # Specify include directories, dependencies, etc.

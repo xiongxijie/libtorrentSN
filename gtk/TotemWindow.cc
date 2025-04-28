@@ -182,7 +182,7 @@ private:
 	void volume_button_value_changed_cb(double value);
 	bool volume_button_scroll_event_cb(GdkEventScroll *event);
 	void set_volume_relative(double off_pct);
-	
+	void volume_button_menu_shown_cb();
 
 	void seek (double pos);
 	void seek_time_rel(std::int64_t _time, bool relative, bool accurate);
@@ -230,13 +230,13 @@ private:
     //flap_ is HdyFlap specified in totem.ui
     MyHdyFlap *flap_ = nullptr;//Hdyflap
 
-    //player_header_ is a binding template who has its own template .ui , used in totem.ui
-	TotemPlayerHeader *player_header_ = nullptr;//loaded from TotemPlayerHeader which has its own .ui template
+
     
     /****************************Backend*************************************/
     BaconVideoWidget *bvw_ = nullptr; 
     /************************************************************************/
         
+
 	BitfieldScale *bitfield_scale_ = nullptr;
 
 	Gtk::Box *toolbox_ = nullptr;
@@ -248,6 +248,10 @@ private:
     BaconTimeLabel  *time_label_ = nullptr;//BaconTimeLabel
 
     BaconTimeLabel  *time_rem_label_ = nullptr;//BaconTimeLabel
+
+	//player_header_ is a binding template who has its own template .ui , used in totem.ui
+	TotemPlayerHeader *player_header_ = nullptr;//loaded from TotemPlayerHeader which has its own .ui template
+
 
     Glib::RefPtr<Gtk::Adjustment> scale_adj_;
 
@@ -358,7 +362,6 @@ MyHdyApplicationWindow::Impl::Impl(
     uniq_id_(uniq_id),
 	action_group_(Gio::SimpleActionGroup::create()),
 	flap_(gtr_get_widget_derived<MyHdyFlap>(builder, "flap")),
-	player_header_(gtr_get_widget_derived<TotemPlayerHeader>(builder, "player_header")),
     bvw_(gtr_get_widget_derived<BaconVideoWidget>(builder, "bvw")),
 	bitfield_scale_(gtr_get_widget_derived<BitfieldScale>(builder, "bitfield_progress_bar")),
 	toolbox_(gtr_get_widget<Gtk::Box>(builder, "toolbar")),
@@ -366,31 +369,13 @@ MyHdyApplicationWindow::Impl::Impl(
 	volume_(gtr_get_widget<Gtk::VolumeButton>(builder, "volume_button")),
 	time_label_(gtr_get_widget_derived<BaconTimeLabel>(builder, "time_label", false)), 
 	time_rem_label_(gtr_get_widget_derived<BaconTimeLabel>(builder, "time_rem_label", true)),
+	player_header_(gtr_get_widget_derived<TotemPlayerHeader>(builder, "player_header")),
 	scale_adj_(bitfield_scale_->get_adjustment()),
 	play_button_(gtr_get_widget<Gtk::Button>(builder, "play_button")),
 	prefs_(TotemPrefsDialog::create()),
 	settings_(Gio::Settings::create(TOTEM_GSETTINGS_SCHEMA)),
 	busy_popup_ht_(g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL))
 {
-
-	//btdemux lifetime
-    GObject* btdemux_gobj =  bvw_->fetch_btdemux();
-    if(btdemux_gobj != nullptr)
-    {
-        core_->retrieve_btdemux_gobj(btdemux_gobj);
-    }
-    else
-    {
-        std::cerr << "In TotemWindow.cc : fetch_btdemux is empty " << std::endl;
-		// return;
-    }
-
-
-	bitfield_scale_->set_num_pieces(core_->totem_get_total_num_pieces());
-    //periodically update bitfield
-	piece_bitfield_timer_ = Glib::signal_timeout().connect_seconds(
-        sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::piece_bitfield_refresh), 2);
-	piece_bitfield_refresh();
 
     prefs_->set_transient_for(parent_);
     //we are preferences window's parent ,we die, it also die
@@ -408,14 +393,12 @@ MyHdyApplicationWindow::Impl::Impl(
 
 	
 	actions_setup();
-	action_set_sensitive("play", FALSE);
-	action_set_sensitive("next-chapter", FALSE);
-	action_set_sensitive("previous-chapter", FALSE);
+	action_set_sensitive("play", false);
+	action_set_sensitive("next-chapter", false);
+	action_set_sensitive("previous-chapter", false);
 
 	signals_connect();
-
 	setup_window_size();
-
 	check_video_widget_created();
 
 	bool can_set_vol = bvw_->can_set_volume();
@@ -426,24 +409,48 @@ MyHdyApplicationWindow::Impl::Impl(
 	play_pause_set_label(STATE_PLAYING);
 
 
-	Glib::RefPtr<Glib::Object> rot_obj = builder->get_object("rotation-placeholder");
-	if(rot_obj)
-	{
-		if(!rotation_placeholder_)
-		{
-			std::cout << "before rotation_placeholder_ is empty " << std::endl;
-		}
-		rotation_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_dynamic(rot_obj);
-	}
+	// Glib::RefPtr<Glib::Object> rot_obj = builder->get_object("rotation-placeholder");
+	// if(rot_obj)
+	// {
+	// 	if(!rotation_placeholder_)
+	// 	{
+	// 		std::cout << "before rotation_placeholder_ is empty " << std::endl;
+	// 	}
+	// 	rotation_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_dynamic(rot_obj);
+	// }
 
-	printf ("This is %p\n", static_cast<void*>(this));
+
 	rotation_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("rotation-placeholder"));
-	// opendir_placeholder_(Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("opendirectory-placeholder"))),
-	// prop_placeholder_(Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("properties-placeholder"))),
-	// variable_rate_placeholder_(Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("variable-rate-placeholder")))
+	opendir_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("opendirectory-placeholder"));
+	prop_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("properties-placeholder"));
+	variable_rate_placeholder_ = Glib::RefPtr<Gio::Menu>::cast_static(builder->get_object("variable-rate-placeholder"));
 
 	/*Plugins shoud initalized later by caller,do it after we fully Constructed, 
 		so Don't put them in the constructor to avoid SIGSEGV */
+
+
+	//set pipeline_ state from NULL to READY, and to PAUSED 
+	bvw_->initialize_state();
+
+
+	//btdemux lifetime
+    GObject* btdemux_gobj =  bvw_->fetch_btdemux();
+    if(btdemux_gobj != nullptr)
+    {
+        core_->retrieve_btdemux_gobj(btdemux_gobj);
+    }
+    else
+    {
+        std::cerr << "Error:In TotemWindow.cc : fetch_btdemux is empty " << std::endl;
+		// return;
+    }
+
+
+	bitfield_scale_->set_num_pieces(core_->totem_get_total_num_pieces());
+    //periodically update bitfield
+	piece_bitfield_timer_ = Glib::signal_timeout().connect_seconds(
+        sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::piece_bitfield_refresh), 2);
+	piece_bitfield_refresh();
 
 
 
@@ -454,9 +461,10 @@ MyHdyApplicationWindow::Impl::Impl(
 		return false;
 	});
 
-	std::cout << "MyHdyApplicationWindow::Impl constructor finished. " << std::endl;
+	std::cout << "MyHdyApplicationWindow::Impl constructor finished " << std::endl;
 
 }
+
 
 
 
@@ -480,7 +488,7 @@ void MyHdyApplicationWindow::Impl::init_plugins_system()
 
 	if(wrapper_!=nullptr)
 	{
-		std::cout << "[init_plugins_system] TotemWrapper intialized success " << std::endl;
+		std::cout << "[init_plugins_system] TotemWrapper initialized success " << std::endl;
 		engine_ = totem_plugins_engine_get_default(wrapper_);
 	}
 	else
@@ -571,18 +579,29 @@ void MyHdyApplicationWindow::Impl::signals_connect()
 {
 	/*connect to mainwindow's signal*/
 	parent_.signal_window_state_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::window_state_event_cb));
-	parent_.signal_motion_notify_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::on_bvw_motion_notify));
-	parent_.signal_button_press_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::on_video_button_press_event));
+
+
+	if(bvw_)
+	{
+		bvw_->signal_motion_notify_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::on_bvw_motion_notify));
+		bvw_->signal_button_press_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::on_video_button_press_event));
+	}
 
 	if(bitfield_scale_)
 	{
+		bitfield_scale_->add_events(
+			Gdk::EventMask::BUTTON_PRESS_MASK |
+			Gdk::EventMask::BUTTON_RELEASE_MASK);
+
 		bitfield_scale_->signal_button_press_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::seek_slider_pressed_cb));
 		bitfield_scale_->signal_button_release_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::seek_slider_released_cb));
+
+		if(scale_adj_)
+		{
+			scale_adj_->signal_value_changed().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::seek_slider_changed_cb));
+		}
 	}
-	if(scale_adj_)
-	{
-		scale_adj_->signal_value_changed().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::seek_slider_changed_cb));
-	}
+
 
 	if(bvw_ != nullptr)
 	{
@@ -597,11 +616,24 @@ void MyHdyApplicationWindow::Impl::signals_connect()
 		bvw_->property_seekable().signal_changed().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::property_notify_cb_seekable));
 	}
 
-	go_button_->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::popup_menu_shown_cb), go_button_));
 
+	/*go Button*/
+	go_button_->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::popup_menu_shown_cb), go_button_));
+	Gtk::Popover* go_btn_popover = go_button_->get_popover();
+	if(go_btn_popover)
+		go_btn_popover->set_size_request(175, -1);
+	
+
+	/*Volume*/
+	volume_->add_events(
+		Gdk::EventMask::SCROLL_MASK
+	);
 	volume_changed_tag_ = volume_->signal_value_changed().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::volume_button_value_changed_cb));
 	volume_->signal_scroll_event().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::volume_button_scroll_event_cb));
+	Gtk::Widget* volume_popup = volume_->get_popup();
+	volume_popup->property_visible().signal_changed().connect(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::volume_button_menu_shown_cb));
 
+	/*Playerheader Menubutton*/
 	Gtk::MenuButton* menuBtn = player_header_->get_player_button();
 	menuBtn->signal_toggled().connect(sigc::bind(sigc::mem_fun(*this, &MyHdyApplicationWindow::Impl::popup_menu_shown_cb), menuBtn));
 
@@ -641,12 +673,18 @@ void MyHdyApplicationWindow::Impl::actions_setup()
         action_group_->add_action(action);
     }
 
-	auto const fscreen_action = Gio::SimpleAction::create_bool("fullscreen", FALSE);//toggle fullscreen
+	auto const fscreen_action = Gio::SimpleAction::create_bool("fullscreen", false);//toggle fullscreen
 	fscreen_action->signal_activate().connect([this, &action = *fscreen_action](auto const& /*value*/) { on_toggle_fullscreen(action); });
 	action_group_->add_action(fscreen_action);
 
 
-	auto const repeat_action = Gio::SimpleAction::create_bool("repeat", FALSE);
+	if(playlist_.get_repeat())
+	{
+		std::cout << "playlist said repeat is ON" << std::endl;
+	}else{
+		std::cout << "playlist said repeat is OFF" << std::endl;
+	}
+	auto const repeat_action = Gio::SimpleAction::create_bool("repeat", playlist_.get_repeat()/*init loading*/);
 	repeat_action->signal_activate().connect([this, &action = *repeat_action](auto const& /*value*/) { on_toggle_playlist_repeat(action); });
 	action_group_->add_action(repeat_action);
 
@@ -656,6 +694,10 @@ void MyHdyApplicationWindow::Impl::actions_setup()
 	{ 
 		int radio_val = Glib::VariantBase::cast_dynamic<Glib::Variant<int>>(value).get();
 		on_aspect_tatio_toggle(radio_val); 
+
+		//Also update UI
+		auto action_temp = Glib::RefPtr<Gio::SimpleAction>::cast_dynamic(action_group_->lookup_action("aspect-ratio"));
+		action_temp->set_state(value);
 	});
 	action_group_->add_action(aspect_ratio_action);
 
@@ -715,11 +757,13 @@ void MyHdyApplicationWindow::Impl::on_open_prefs_dlg()
 
 void MyHdyApplicationWindow::Impl::next_chapter_action_cb()
 {
+	printf ("(totem_object_seek_next) Press Next Chapter \n");
 	seek_next();
 }
 
 void MyHdyApplicationWindow::Impl::previous_chapter_action_cb()
 {
+	printf ("(totem_object_seek_next) Press Prev Chapter \n");
 	seek_previous();
 }
 
@@ -769,7 +813,7 @@ void MyHdyApplicationWindow::Impl::fill_totem_playlist()
             std::string video_file_name_str = fs.file_path(i);
             tor_save_path += '/';
             std::string video_full_path_str = tor_save_path + video_file_name_str;
-std::cout << "fill_totem_playst " << video_file_name_str << std::endl;
+std::cout << "fill_totem_playlist " << video_file_name_str << std::endl;
             //add one row in playlist
             playlist_.add_one_row(i, video_file_name_str.c_str(), video_full_path_str.c_str());
         }
@@ -831,14 +875,14 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 		play_pause_set_label(STATE_PAUSED);
 	
 		/* Play/Pause */
-		action_set_sensitive("play", FALSE);
+		action_set_sensitive("play", false);
 
 		/* Volume */
 		bitfield_scale_->set_sensitive(bvw_->can_set_volume());
 	
 		/* Control popup */
-		action_set_sensitive("next-chapter", FALSE);
-		action_set_sensitive("previous-chapter", FALSE);
+		action_set_sensitive("next-chapter", false);
+		action_set_sensitive("previous-chapter", false);
 
 		/* Set the label */
 		update_player_header_title(NULL);
@@ -848,16 +892,16 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 	{
 		bool can_vol_seek;	
 		#if 2
-		if (is_stream_length_set_ == TRUE) 
+		if (is_stream_length_set_ == true) 
 		{
 								printf ("(totem_object_set_fileidx) clear is_stream_length_set_\n");
-								is_stream_length_set_ = FALSE;
+								is_stream_length_set_ = false;
 		}
 		#endif 
 
 							printf("(totem_object_set_fileidx), file_idx=%d gonna call bacon_video_widget_open\n", file_index);
-							
-		bvw_->open(file_index);
+						
+		bvw_->open(file_index); 
 		mark_popup_busy("opening file");//----------Mark as busy, unmark it when play_starting_cb
 
 		/**************SET FILEIDX***********/
@@ -871,7 +915,7 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 		can_vol_seek = bvw_->can_set_volume();
 		volume_->set_sensitive(can_vol_seek);
 	
-		/* Set the playlist */
+		/*Play Pause Button icon*/
 		play_pause_set_label (STATE_PAUSED);
 
 		const char *fpath = NULL;
@@ -879,6 +923,7 @@ void MyHdyApplicationWindow::Impl::set_fileidx(int file_index)
 		//update the totem-movie-properties if it opened
 		emit_file_opened(fpath);
 
+		/*set TotemPlayerHeader title*/
 		const char* title_cur = playlist_.get_current_filename();
 		update_player_header_title(title_cur);
 	}
@@ -903,7 +948,7 @@ void MyHdyApplicationWindow::Impl::play()
 
 					printf("(totem_object_play) \n");
 
-	if (bvw_->is_playing() != FALSE)
+	if (bvw_->is_playing() != false)
 	{
 		return;
 	}
@@ -911,9 +956,9 @@ void MyHdyApplicationWindow::Impl::play()
 	retval = bvw_->play(&err);
 
 	//update Play/Pause icon
-	play_pause_set_label (retval ? STATE_PLAYING : STATE_STOPPED);
+	play_pause_set_label(retval ? STATE_PLAYING : STATE_STOPPED);
 
-	if (retval != FALSE) 
+	if (retval != false) 
 	{
 		unmark_popup_busy("paused");
 		return;
@@ -934,12 +979,12 @@ void MyHdyApplicationWindow::Impl::play_pause()
 	//only after we received the videos_info from btdemux, which will be used to update playlist, can we call this function
 	if (streaming_file_idx_ == -1) 
 	{
-		play_pause_set_label (STATE_STOPPED);
+		play_pause_set_label(STATE_STOPPED);
 		//bail out early
 		return;
 	}
 
-	if (bvw_->is_playing() == FALSE) 
+	if (bvw_->is_playing() == false) 
 	{
 		bvw_->play(NULL);
 		play_pause_set_label(STATE_PLAYING);
@@ -958,7 +1003,7 @@ void MyHdyApplicationWindow::Impl::play_pause()
 
 void MyHdyApplicationWindow::Impl::pause()
 {
-	if (bvw_->is_playing() != FALSE) {
+	if (bvw_->is_playing() != false) {
 
 					printf("(totem_object_pause) next line to call bacon_video_widget_pause\n");
 					
@@ -1023,7 +1068,7 @@ void MyHdyApplicationWindow::Impl::update_player_header_title(const char *name)
 
 		totem_prop_stream_length_notify(wrapper_);
 	}
-
+std::cout << "set_title of player_header_" << std::endl;
 	//set totem's player header title
 	player_header_->set_title(name);
 }
@@ -1050,18 +1095,16 @@ void MyHdyApplicationWindow::Impl::seek_previous()
 
 
 
-bool MyHdyApplicationWindow::Impl::can_seek_next ()
+bool MyHdyApplicationWindow::Impl::can_seek_next()
 {
 	return 
 		(playlist_.have_next_item() || playlist_.get_repeat());
 }
-void MyHdyApplicationWindow::Impl::seek_next ()
+void MyHdyApplicationWindow::Impl::seek_next()
 {
-				printf ("(totem_object_seek_next) Press Next Chapter \n");
+				
 	playlist_direction(TOTEM_PLAYLIST_DIRECTION_NEXT);
 }
-
-
 
 
 //avoid switch too frequently
@@ -1074,12 +1117,10 @@ bool MyHdyApplicationWindow::Impl::time_within_seconds()
 	return (_time < REWIND_OR_PREVIOUS);
 }
 
-
-
 void MyHdyApplicationWindow::Impl::playlist_direction(TotemPlaylistDirection dir)
 {
-	if (playlist_.has_direction(dir) == FALSE &&
-	    playlist_.get_repeat() == FALSE)
+	if (playlist_.has_direction(dir) == false &&
+	    playlist_.get_repeat() == false)
 	{
 		//if playlist repeat-mode is OFF, and this is last movie in playlist, just do nothing
 				printf ("(playlist_direction) repeat-mode is OFF, do nothing \n");
@@ -1088,12 +1129,13 @@ void MyHdyApplicationWindow::Impl::playlist_direction(TotemPlaylistDirection dir
 
 
 	if (dir == TOTEM_PLAYLIST_DIRECTION_NEXT ||
-	    bvw_->update_and_get_seekable() == FALSE ||
-	    time_within_seconds() != FALSE) 
+	    bvw_->update_and_get_seekable() == false ||
+	    time_within_seconds() != false) 
 	{
+
 				printf ("(playlist_direction) switch to next item in playlist \n");
 
-		// set playlist "cursor" to next for previous item 	
+		// move playlist "cursor" to next for previous item 	
 		playlist_.set_direction(dir);
 		// perform switch to next movie in playlist
 		set_current_fileidx_and_play();
@@ -1107,7 +1149,7 @@ void MyHdyApplicationWindow::Impl::playlist_direction(TotemPlaylistDirection dir
 
 
 
-void MyHdyApplicationWindow::Impl::seek (double pos)
+void MyHdyApplicationWindow::Impl::seek(double pos)
 {
 	g_autoptr(GError) err = NULL;
 	int retval;
@@ -1117,7 +1159,7 @@ void MyHdyApplicationWindow::Impl::seek (double pos)
 		return;
 	}
 	
-	if(bvw_->update_and_get_seekable() == FALSE)
+	if(bvw_->update_and_get_seekable() == false)
 	{
 		printf ("(totem_object_seek) Not seekable, skip this seek\n");
 		return;
@@ -1127,7 +1169,7 @@ void MyHdyApplicationWindow::Impl::seek (double pos)
 
 	retval = bvw_->seek(pos, &err);
 
-	if (retval == FALSE)
+	if (retval == false)
 	{
 					printf("(totem_object_seek)Videos could not play  \n");
 		reset_seek_status();
@@ -1151,12 +1193,12 @@ void MyHdyApplicationWindow::Impl::seek_time_rel(std::int64_t _time, bool relati
 	{
 		return;
 	}
-	if (bvw_->update_and_get_seekable() == FALSE)
+	if (bvw_->update_and_get_seekable() == false)
 	{
 		return;
 	}
 
-	if (relative != FALSE) 
+	if (relative != false) 
 	{
 		std::int64_t oldmsec;
 		oldmsec = bvw_->get_current_time();
@@ -1177,7 +1219,7 @@ void MyHdyApplicationWindow::Impl::seek_time_rel(std::int64_t _time, bool relati
 		msg = g_strdup_printf("Videos could not play.");
 
 		bvw_->stop();
-		play_pause_set_label (STATE_STOPPED);
+		play_pause_set_label(STATE_STOPPED);
 		totem_error_dialog(parent_, msg, err->message);
 	}
 }
@@ -1186,9 +1228,9 @@ void MyHdyApplicationWindow::Impl::seek_time_rel(std::int64_t _time, bool relati
 bool MyHdyApplicationWindow::Impl::is_bvw_seekable()
 {
 	if (bvw_ == NULL)
-		return FALSE;
+		return false;
 
-	return bvw_->update_and_get_seekable() != FALSE;
+	return bvw_->update_and_get_seekable() != false;
 }
 
 
@@ -1197,17 +1239,18 @@ void MyHdyApplicationWindow::Impl::reset_seek_status()
 {
 	/* Release the lock and reset everything so that we
 	 * avoid being "stuck" seeking on errors */
-	if (seek_lock_ != FALSE) 
+	if (seek_lock_ != false) 
 	{
-					printf ("(totem/reset_seek_status) Release lock\n");
-		//release seek_lock_
-		seek_lock_ = FALSE;
+					// printf ("(totem/reset_seek_status) Unset seek_lock_\n");
+					std::cout << "(totem/reset_seek_status) Unset seek_lock_" << std::endl;
+		seek_lock_ = false;
 		unmark_popup_busy("seek started");
 		bvw_->seek(0, NULL);
 		bvw_->stop();
 		play_pause_set_label(STATE_STOPPED);
 	}else{
-		printf ("(totem/reset_seek_status) Lock already unlocked\n");
+		// printf ("(totem/reset_seek_status) Lock already unlocked\n");
+		std::cout << "(totem/reset_seek_status) seek_lock_ already unset" << std::endl;
 	}
 }
 
@@ -1325,16 +1368,17 @@ void MyHdyApplicationWindow::Impl::on_eos_event()
 	reset_seek_status();
 	//***For current stream is Last item in playlist and repeat mode is OFF
 	if (
-		//if it's last item of playlist, `totem_playlist_have_next_item` return FALSE
-		playlist_.have_next_item() == FALSE &&
+		//if it's last item of playlist, `totem_playlist_have_next_item` return false
+		playlist_.have_next_item() == false &&
 	    //playlist repeat mode is OFF
-	    playlist_.get_repeat() == FALSE &&
+	    playlist_.get_repeat() == false &&
 		//There is more than one item in playlist OR current stream is NOT seekable
 	    (playlist_.get_last() != 0 ||
-		is_bvw_seekable() == FALSE)
+		is_bvw_seekable() == false)
 	)
 	{
-								printf("(totem-object/on_eos_event) FIRST\n");
+
+								printf("(totem-object/on_eos_event) FIRST case\n");
 
 		//go back to start of playlist end pause
 		playlist_.set_at_start();
@@ -1356,16 +1400,16 @@ void MyHdyApplicationWindow::Impl::on_eos_event()
 	// no pause and play next no matter the current stream is in last or not
 	else 
 	{
-								printf("(totem-object/on_eos_event) SECOND\n");
+								printf("(totem-object/on_eos_event) SECOND case\n");
 		//***For playlist has only single item Case
 		if (playlist_.get_last() == 0 &&
 		    is_bvw_seekable()) 
 		{
-			if (playlist_.get_repeat() != FALSE) 
+			if (playlist_.get_repeat() != false) 
 			{
 						printf ("(totem-object/on_eos_event) single item in playlist, Repeat-mode is ON \n");
 				//play from start
-				seek_time(0, FALSE);
+				seek_time(0, false);
 				play();
 			} 
 			else 
@@ -1373,7 +1417,7 @@ void MyHdyApplicationWindow::Impl::on_eos_event()
 						printf ("(totem-object/on_eos_event) single item in playlist, Repeat-mode is OFF \n");
 				//pause at start
 				pause();
-				seek_time(0, FALSE);
+				seek_time(0, false);
 			}
 		} 
 		//***For playlist has multiple items Case
@@ -1387,14 +1431,14 @@ void MyHdyApplicationWindow::Impl::on_eos_event()
 
 
 
-void MyHdyApplicationWindow::Impl::on_error_event (const char *message, bool playback_stopped)
+void MyHdyApplicationWindow::Impl::on_error_event(const char *message, bool playback_stopped)
 {
 
 									printf("(totem-object/on_error_event) \n");
 
 	if (playback_stopped)
 	{
-		play_pause_set_label (STATE_STOPPED);
+		play_pause_set_label(STATE_STOPPED);
 	}
 
 	totem_error_dialog (parent_, "An error occurred", message);
@@ -1434,8 +1478,11 @@ void MyHdyApplicationWindow::Impl::update_current_time(std::int64_t current_time
 
 	update_slider_visibility(stream_length);
 
-	if (seek_lock_ == FALSE) 
+	if (seek_lock_ == false) 
 	{
+
+		// std::cout << "update_current_time, seek_lock_ is unset, ok to set scale_adj_ value " << std::endl;
+
 		//update position of progress bar
 		scale_adj_->set_value(current_position * 65535);
 
@@ -1444,6 +1491,10 @@ void MyHdyApplicationWindow::Impl::update_current_time(std::int64_t current_time
 		// and stream_length is unknown, not set yet
 		if (stream_length == 0 && streaming_file_idx_ != -1) 
 		{
+
+			// std::cout << "update_current_time, stream_length not known, set Unknow on timelable " << std::endl;
+
+
 			// current time label shown as "--:--"
 			time_label_->set_time (current_time, -1);
 		
@@ -1454,6 +1505,9 @@ void MyHdyApplicationWindow::Impl::update_current_time(std::int64_t current_time
 		//stream_length is received and is valid (a positive number)
 		else 
 		{
+			// std::cout << "update_current_time, OK to set timelabel " << std::endl;
+
+
 			// current time label shown eg: "0:03"
 			time_label_->set_time (current_time, stream_length);
 
@@ -1468,7 +1522,7 @@ void MyHdyApplicationWindow::Impl::update_current_time(std::int64_t current_time
 
 					#if 2
 					if (!is_stream_length_set_ && stream_length >0 && stream_length_==0) {
-						is_stream_length_set_ = TRUE;
+						is_stream_length_set_ = true;
 						printf ("(update_current_time) From now on, We get the stream_length, which is %ld \n", stream_length);
 					}
 					#endif
@@ -1507,22 +1561,6 @@ void MyHdyApplicationWindow::Impl::on_got_metadata()
 }
 
 
-void MyHdyApplicationWindow::Impl::update_volume_sliders()
-{
-	double volume;
-	volume = bvw_->get_volume();
-	volume_changed_tag_.block();
-	volume_->set_value(volume);
-	volume_changed_tag_.unblock();
-}
-
-
-
-void MyHdyApplicationWindow::Impl::property_notify_cb_volume()
-{
-	update_volume_sliders();
-}
-
 
 
 
@@ -1546,8 +1584,24 @@ void MyHdyApplicationWindow::Impl::property_notify_cb_seekable()
 }
 
 
-bool MyHdyApplicationWindow::Impl::seek_slider_pressed_cb (GdkEventButton *event)
+
+
+
+/*
+Three kind of seek:
+Case 1.Drag exactly over slider to seek (you button press the slider, hold it with motion, any value change of adjustment will not handled until release button)
+
+Case 2.Button single-press seek (no holding the slider, just button press desired point of progress bar)
+
+Case 3.Hold Button press with motion but cursor not over slider(button press the scale area, and drag whether inside or outside the scale, 
+motion will also change the slider potiiton)
+*/
+//seek_slider_changed_cb may called multiple times before seek_slider_pressed_cb, ignore them
+bool MyHdyApplicationWindow::Impl::seek_slider_pressed_cb(GdkEventButton *event)
 {
+
+	std::cout << "(seek_slider_pressed_cb) Set seek_lock_" << std::endl;
+
 	/* HACK: we want the behaviour you get with the left button, so we
 	 * mangle the event.  clicking with other buttons moves the slider in
 	 * step increments, clicking with the left button moves the slider to
@@ -1558,7 +1612,6 @@ bool MyHdyApplicationWindow::Impl::seek_slider_pressed_cb (GdkEventButton *event
 	auto settings = bitfield_scale_->get_settings();
     settings->property_gtk_primary_button_warps_slider() = true;
 
-
 	//acquire seek_lock
 	seek_lock_ = true;
 
@@ -1567,25 +1620,37 @@ bool MyHdyApplicationWindow::Impl::seek_slider_pressed_cb (GdkEventButton *event
 	return false;
 }
 
-
-bool MyHdyApplicationWindow::Impl::seek_slider_released_cb (GdkEventButton *event)
+bool MyHdyApplicationWindow::Impl::seek_slider_released_cb(GdkEventButton *event)
 {
+	Glib::RefPtr<Gtk::Adjustment> adj;
 	double val;
+
+	std::cout << "(seek_slider_released_cb) Unset seek_lock_" << std::endl;
 
 	/* HACK: see seek_slider_pressed_cb */
 	event->button = GDK_BUTTON_PRIMARY;
 
-	/* set to FALSE here to avoid triggering a final seek when
+	/* set to false here to avoid triggering a final seek when
 	 * syncing the adjustments while being in direct seek mode */
 	seek_lock_ = false;
 	unmark_popup_busy("seek started");
 
 	/* sync both adjustments */
-	val = scale_adj_->get_value();
+	adj = bitfield_scale_->get_adjustment();
+	val = adj->get_value();
 	
-	if (bvw_->can_direct_seek() == FALSE){
+	/*
+	HACK:when button-single-press seek, seek_slider_released_cb who unset seek_lock_ called 
+	right after seek_slider_pressed_cb who set seek_lock_
+	so seek_slider_changed_cb() will be return early, got no chance to call seek
+	*/
+	//For Case 2
+	//update time label later in update_current_time()
+	if(bvw_->can_direct_seek())
+	{
 
-			printf("(totem-object/seek_slider_released_cb) \n");
+			// printf("(totem-object/seek_slider_released_cb) seek\n");
+			std::cout << "(seek_slider_released_cb) button-single-press seek" << std::endl;
 
 		seek(val / 65535.0);
 	}
@@ -1593,46 +1658,76 @@ bool MyHdyApplicationWindow::Impl::seek_slider_released_cb (GdkEventButton *even
 	return false;
 }
 
-
 void MyHdyApplicationWindow::Impl::seek_slider_changed_cb()
 {
+	// std::cout << "(seek_slider_changed_cb) enter both" << std::endl;
+
 	double pos;
 	std::int64_t _time;
-	if (seek_lock_ == FALSE)
+
+	/*ignore until button-press-event triggered*/
+	if(seek_lock_ == false)
 	{
+		// std::cout << "(seek_slider_changed_cb) seek_lock is unset, return now " << std::endl;
 		return;
 	}
 
+	/******For Case 1 and 3*******/
 	//get the pos in percent you point the seek bar to
 	pos = scale_adj_->get_value() / 65535;
-	// in milliseconds
-	_time = bvw_->update_and_get_stream_length();
-	time_label_->set_time (pos*_time, _time);
-	time_rem_label_->set_time (pos*_time, _time);
 
-	if (bvw_->can_direct_seek() != FALSE) 
+	//update time label
+	_time = bvw_->update_and_get_stream_length();//in milliseconds
+	time_label_->set_time(pos*_time, _time);
+	time_rem_label_->set_time(pos*_time, _time);
+
+
+	if (bvw_->can_direct_seek()) 
 	{
+									std::cout << "(seek_slider_changed_cb seek_lock) drag-seek pos is " << pos << std::endl;
 									// printf eg. "seek_slider_changed_cb, pos is 0.759259"
-									printf("(totem-object/seek_slider_changed_cb), pos is %lf \n", pos);
 		seek(pos);
 	}
 }
 
 
 
+
+
+
+void MyHdyApplicationWindow::Impl::update_volume_sliders()
+{
+	
+	double volume;
+	volume = bvw_->get_volume();
+
+							std::cout << "update_volume_sliders: " << volume << std::endl;
+	
+	volume_changed_tag_.block();/*****************************/
+	//volume_changed_tag_ is blocked, so this set_volume will not trigger signal_value_changed, so volume_button_value_changed_cb not called 
+	volume_->set_value(volume);
+	volume_changed_tag_.unblock();/***************************/
+}
+
+void MyHdyApplicationWindow::Impl::property_notify_cb_volume()
+{
+						std::cout << "property_notify_cb_volume" << std::endl;
+	update_volume_sliders();
+}
+
 void MyHdyApplicationWindow::Impl::volume_button_value_changed_cb(double value)
 {
 
-						printf("volume_button_value_changed_cb: %lf\n", value);
-
-	bvw_->set_volume(value);
+						// printf("volume_button_value_changed_cb: %lf\n", value);
+						std::cout << "volume_button_value_changed_cb: " << value << std::endl;
+	bvw_->set_volume(value);//this will trigger signal_value_changed
 }
-
-
 
 bool MyHdyApplicationWindow::Impl::volume_button_scroll_event_cb(GdkEventScroll *event)
 {
-						printf("Mouse Wheel volume_button_scroll_event_cb: \n");
+
+						// printf("Mouse Wheel volume_button_scroll_event_cb: \n");
+						std::cout << "volume_button_scroll_event_cb: " <<  std::endl;
 
 	bool increase;
 
@@ -1645,7 +1740,7 @@ bool MyHdyApplicationWindow::Impl::volume_button_scroll_event_cb(GdkEventScroll 
 
 		increase = delta_y < 0.0;
 	} else if (event->direction == GDK_SCROLL_UP) {
-		increase = TRUE;
+		increase = true;
 	} else if (event->direction == GDK_SCROLL_DOWN) {
 		increase = SEEK_BACKWARD_OFFSET * 1000;
 	} else {
@@ -1656,14 +1751,14 @@ bool MyHdyApplicationWindow::Impl::volume_button_scroll_event_cb(GdkEventScroll 
 	return GDK_EVENT_STOP;
 }
 
-
 void MyHdyApplicationWindow::Impl::set_volume_relative(double off_pct)
 {
 	volume_changed_tag_.block();
 
-						printf("totem_object_set_volume_relative: %lf\n", off_pct);
+						// printf("totem_object_set_volume_relative: %lf\n", off_pct);
+						std::cout << "(totem_object_set_volume_relative): " << off_pct << std::endl;
 	double vol;
-	if (bvw_->can_set_volume() == FALSE)
+	if (bvw_->can_set_volume() == false)
 		return;
 	vol = bvw_->get_volume();
 	if(vol >= 100)
@@ -1676,13 +1771,27 @@ void MyHdyApplicationWindow::Impl::set_volume_relative(double off_pct)
 }
 
 
+void MyHdyApplicationWindow::Impl::volume_button_menu_shown_cb()
+{
+	Gtk::Widget* volume_popup = volume_->get_popup();
+
+	if(volume_popup->property_visible().get_value() == true)
+		mark_popup_busy("volume menu visible");
+	else
+		unmark_popup_busy("volume menu visible");
+}
+
+
+
+
+
+
 
 void MyHdyApplicationWindow::Impl::unschedule_hiding_popup()
 {
 	if (transition_timer_.connected())
 		transition_timer_.disconnect();
 }
-
 
 //when no mouse motion for a few seconds , the button toolbar will hide, when mouse reach within the player area, it will pop up again
 bool MyHdyApplicationWindow::Impl::hide_popup_timeout_cb()
@@ -1699,9 +1808,6 @@ void MyHdyApplicationWindow::Impl::schedule_hiding_popup()
 	transition_timer_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, 
 				&MyHdyApplicationWindow::Impl::hide_popup_timeout_cb), POPUP_HIDING_TIMEOUT);
 }
-
-
-
 
 /****MenuButton popup menu manage******/
 //these two methods and the GHashTable is for: when popup-menu(toolbox go-menu and player header menu) is shown,or during bacon open, or during seek
@@ -1737,7 +1843,6 @@ void MyHdyApplicationWindow::Impl::unmark_popup_busy(const char *reason)
 	}
 }
 
-
 void MyHdyApplicationWindow::Impl::set_controls_visibility(bool visible, bool animate)
 {	
 	toolbox_->set_visible(visible);
@@ -1754,7 +1859,6 @@ void MyHdyApplicationWindow::Impl::set_controls_visibility(bool visible, bool an
 	reveal_controls_ = visible;
 }
 
-
 /*when mouse hovering on player area, it will pop up the buttom toolbar of player */
 bool MyHdyApplicationWindow::Impl::on_bvw_motion_notify(GdkEventMotion* motion_event)
 {
@@ -1763,11 +1867,6 @@ bool MyHdyApplicationWindow::Impl::on_bvw_motion_notify(GdkEventMotion* motion_e
 
 	return GDK_EVENT_PROPAGATE;
 }
-
-
-
-
-
 
 
 
@@ -1815,12 +1914,10 @@ bool MyHdyApplicationWindow::Impl::window_state_event_cb (GdkEventWindowState *e
 }
 
 
-
 bool MyHdyApplicationWindow::Impl::window_is_fullscreen ()
 {
 	return (controls_visibility_ == TOTEM_CONTROLS_FULLSCREEN);
 }
-
 
 
 //double-click on video frame to set fullscreen
@@ -1829,14 +1926,14 @@ bool MyHdyApplicationWindow::Impl::on_video_button_press_event (GdkEventButton *
 	if (event->type == GDK_BUTTON_PRESS && event->button == 1) 
 	{
 		bvw_->grab_focus();
-		return TRUE;
+		return true;
 	} 
 	else if (event->type == GDK_2BUTTON_PRESS &&
 		   event->button == 1 &&
-		   event_is_touch (event) == FALSE) 
+		   event_is_touch (event) == false)
 	{
 
-		if (window_is_fullscreen() != FALSE)
+		if (window_is_fullscreen() != false)
 		{
 			parent_.unfullscreen();
 		}
@@ -1845,18 +1942,16 @@ bool MyHdyApplicationWindow::Impl::on_video_button_press_event (GdkEventButton *
 			parent_.fullscreen();
 		}
 
-		return TRUE;
+		return true;
 	} 
 	else if (event->type == GDK_BUTTON_PRESS && event->button == 2) 
 	{
 		play_pause();
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
-
-
 
 void MyHdyApplicationWindow::Impl::popup_menu_shown_cb(Gtk::MenuButton* button)
 {
@@ -1866,6 +1961,8 @@ void MyHdyApplicationWindow::Impl::popup_menu_shown_cb(Gtk::MenuButton* button)
 	else
 		unmark_popup_busy("toolbar/go menu visible");
 }
+
+
 
 
 
@@ -1909,7 +2006,7 @@ void MyHdyApplicationWindow::Impl::check_video_widget_created()
 		//   GdkEventAny event;
 		//   event.type = GDK_DELETE;
 		//   event.window = gtk_widget_get_window(GTK_WIDGET(parent_.gobj()));
-		//   event.send_event = TRUE;
+		//   event.send_event = true;
 
 	}
 	
@@ -1931,15 +2028,12 @@ void MyHdyApplicationWindow::Impl::window_save_size()
 	if (bvw_ == nullptr)
 		return;
 
-	if (window_is_fullscreen() != FALSE)
+	if (window_is_fullscreen() != false)
 		return;
 
 	/* Save the size of the video widget */
 	parent_.get_size(window_w_/*pass by ref*/, window_h_/*pass by ref*/);
 }
-
-
-
 
 //save totem player  window width/height, is maximised.. serialized in state.ini file
 void MyHdyApplicationWindow::Impl::save_window_state ()
@@ -1966,9 +2060,6 @@ void MyHdyApplicationWindow::Impl::save_window_state ()
 	g_file_set_contents (filename, contents, -1, NULL);
 }
 
-
-
-
 //load size from state.ini file
 void MyHdyApplicationWindow::Impl::setup_window_size()
 {
@@ -1982,11 +2073,11 @@ void MyHdyApplicationWindow::Impl::setup_window_size()
 	filename = g_build_filename(totem_dot_config_dir(), "state.ini", NULL);
 	// filename is /home/pal/config/totem/state.ini 	
 	keyfile = g_key_file_new ();
-	if (g_key_file_load_from_file (keyfile, filename, G_KEY_FILE_NONE, NULL) == FALSE) 
+	if (g_key_file_load_from_file (keyfile, filename, G_KEY_FILE_NONE, NULL) == false) 
 	{
 		w = DEFAULT_WINDOW_W;
 		h = DEFAULT_WINDOW_H;
-		maximised_ = TRUE;
+		maximised_ = true;
 	} 
 	else 
 	{
@@ -2006,13 +2097,13 @@ void MyHdyApplicationWindow::Impl::setup_window_size()
 		maximised_ = g_key_file_get_boolean (keyfile, "State",
 				"maximised", NULL);
 	}
-	if (w > 0 && h > 0 && maximised_ == FALSE) 
+	if (w > 0 && h > 0 && maximised_ == false)
 	{
 		parent_.set_default_size(w, h);
 		window_w_ = w;
 		window_h_ = h;
 	} 
-	else if (maximised_ != FALSE) 
+	else if (maximised_ != false) 
 	{
 		parent_.maximize();
 	}
@@ -2030,8 +2121,9 @@ void MyHdyApplicationWindow::Impl::setup_window_size()
 /*************** PUBLIC EXPOSED METHODS (impement ITotemWindow interface, used by those plugins who needs access TotemWindow) *******************/
 void MyHdyApplicationWindow::someMethod()
 {
-    std::cout << "someMethod " << std::endl;
+    std::cout << "someMethod called" << std::endl;
 }
+
 
 BvwRotation MyHdyApplicationWindow::get_bvw_rotation()
 {
@@ -2053,7 +2145,6 @@ void MyHdyApplicationWindow::Impl::set_bvw_rotation(BvwRotation rotation)
 }
 
 
-
 bool MyHdyApplicationWindow::set_bvw_rate(float rate)
 {
 	return impl_->set_bvw_rate(rate);
@@ -2062,8 +2153,6 @@ bool MyHdyApplicationWindow::Impl::set_bvw_rate(float rate)
 {
 	return bvw_->set_rate(rate);
 }
-
-
 
 
 Glib::RefPtr<Gio::Menu> MyHdyApplicationWindow::get_plugin_menu_placeholder(MenuPlaceHolderType type) 
@@ -2150,8 +2239,6 @@ void MyHdyApplicationWindow::Impl::empty_plugin_menu_placeholder (MenuPlaceHolde
 }
 
 
-
-
 void MyHdyApplicationWindow::add_plugin_action_to_group(const Glib::RefPtr<Gio::Action>& action)
 {
 	impl_->add_plugin_action_to_group(action);
@@ -2160,6 +2247,7 @@ void MyHdyApplicationWindow::Impl::add_plugin_action_to_group(const Glib::RefPtr
 {
 	action_group_->add_action(action);
 }
+
 
 const char* MyHdyApplicationWindow::get_current_fullpath()
 {
@@ -2173,12 +2261,10 @@ const char* MyHdyApplicationWindow::Impl::get_current_fullpath()
 }
 
 
-
 GtkWindow* MyHdyApplicationWindow::get_main_window_gobj() 
 {
     return this->gobj();  
 }
-
 
 
 gint64 MyHdyApplicationWindow::get_bvw_stream_length()
@@ -2192,8 +2278,6 @@ gint64 MyHdyApplicationWindow::Impl::get_bvw_stream_length()
 }
 
 
-
-
 void MyHdyApplicationWindow::get_bvw_metadata(BvwMetadataType type, Glib::ValueBase& value)
 {
 	impl_->get_bvw_metadata(type, value);
@@ -2203,4 +2287,34 @@ void MyHdyApplicationWindow::Impl::get_bvw_metadata(BvwMetadataType type, Glib::
 {
 	bvw_->get_metadata(type, value);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -23,7 +23,18 @@
 
 #include <string>
 
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "totem-plugin.h"
+#ifdef __cplusplus
+}
+#endif
+
+
+
 #include "BaconVideoWidget.h"
 #include "TotemWrapper.h"
 #include "totem-plugins-engine.h"
@@ -290,10 +301,10 @@ impl_activate (PeasActivatable *plugin)
 
 
 	item = Gio::MenuItem::create("Rotate ↷", "app.rotate-right");
-	menu->append_item (item);
+	menu->append_item(item);
 
 	item = Gio::MenuItem::create("Rotate ↶", "app.rotate-left");
-	menu->append_item (item);
+	menu->append_item(item);
 
 }
 

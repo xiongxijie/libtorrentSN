@@ -52,14 +52,12 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 #define UPDATE_FROM_STRING(type, name) \
 	do { \
 		Glib::ValueBase value; \
-		const char *temp; \
 		totem_wrapper_get_bvw_metadata (totem, \
 						 type, value); \
-		Glib::ustring ustr = static_cast<const Glib::Value<Glib::ustring>&>(value).get(); \
-		if (ustr.empty()) { \
-		temp = ustr.c_str(); \
+		if (value.gobj() && G_VALUE_HOLDS_STRING(value.gobj())) { \
+			const char* temp = static_cast<const Glib::Value<Glib::ustring>&>(value).get().c_str(); \
 			g_object_set (G_OBJECT (pi->props), name, \
-								 temp, NULL); \
+								temp, NULL); \
 		} \
 	} while (0)
 
@@ -93,10 +91,10 @@ TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_MOVIE_PROPERTIES_PLUGIN,
 		char *temp; \
 		totem_wrapper_get_bvw_metadata (totem, \
 						 type1, value1); \ 
-		x =  static_cast<const Glib::Value<int>&>(value).get();  \
+		x =  static_cast<const Glib::Value<int>&>(value1).get();  \
 		totem_wrapper_get_bvw_metadata (totem, \
 							type2, value2); \
-		y = static_cast<const Glib::Value<int>&>(value).get();  \
+		y = static_cast<const Glib::Value<int>&>(value2).get();  \
 		temp = g_strdup_printf (format, x, y); \
 		g_object_set (G_OBJECT (pi->props), name, temp, NULL); \
 		g_free (temp); \
@@ -167,7 +165,7 @@ update_properties_from_bvw (TotemMoviePropertiesPlugin *pi)
 		{
 			Glib::ValueBase value; 
 			totem_wrapper_get_bvw_metadata (totem, BVW_INFO_FPS, value);
-			int framerate = static_cast<const Glib::Value<int>&>(value).get();
+			float framerate = static_cast<const Glib::Value<float>&>(value).get();
 			bacon_video_widget_properties_set_framerate (BACON_VIDEO_WIDGET_PROPERTIES(pi->props), framerate);
 		}
 	}
@@ -326,8 +324,21 @@ impl_activate (PeasActivatable *plugin)
 
 	/* Install the menu */
 	menu = totem_wrapper_get_menu_section (totem, MenuPlaceHolderType::PROPETIES_PLACEHOLDER);
+
+	if(menu)
+	{
+		printf("totem movie-properties, get menu placeholder success \n");
+	}else{
+		printf("totem movie-properties, get menu placeholder failed \n");
+		
+	}
+
+
 	item = Gio::MenuItem::create("Properties", "app.properties");
-	menu->append_item (item);
+	menu->append_item(item);
+
+
+
 
 
 	g_signal_connect (G_OBJECT (totem),

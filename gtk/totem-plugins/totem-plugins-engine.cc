@@ -173,9 +173,13 @@ totem_plugins_engine_get_default (TotemWrapper *totem)
 	g_object_freeze_notify (G_OBJECT (engine));
 	for (l = plugin_infos; l != NULL; l = l->next) {
 
-		printf("IN totem_plugins_engine_get_default , load one plugin\n");
-
+		
+		
 		PeasPluginInfo *plugin_info = PEAS_PLUGIN_INFO (l->data);
+		
+		const char* plugin_name = peas_plugin_info_get_name (plugin_info);
+		
+		printf("IN totem_plugins_engine_get_default , load one plugin %s\n", plugin_name);
 
 		//A builtin plugin is a plugin which cannot be enabled or disabled by the user
 		if (peas_plugin_info_is_builtin (plugin_info)) {

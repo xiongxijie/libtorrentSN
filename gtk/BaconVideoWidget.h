@@ -26,7 +26,7 @@
 #define BVW_MAX_RATE 3.0
 #define BVW_MIN_RATE 0.5
 
-
+#define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
 
 #define BVW_ERROR bacon_video_widget_error_quark ()
 
@@ -119,6 +119,7 @@ public:
 
 	bool is_playing();
 
+	void initialize_state();
 	void open(int fileidx);
 	bool play(GError ** error);
 	void pause();
@@ -138,6 +139,21 @@ public:
 	bool seek(double position, GError **error);
 
 	void set_show_cursor(bool show_cursor);
+
+	
+protected:
+	// Override the vfuncs
+	void get_preferred_width_vfunc(int& minimum_width, int& natural_width) const override 
+	{
+	  minimum_width = DEFAULT_CONTROLS_WIDTH;  
+	  natural_width = DEFAULT_CONTROLS_WIDTH;  
+	}
+  
+	void get_preferred_height_vfunc(int& minimum_height, int& natural_height) const override 
+	{
+	  minimum_height = DEFAULT_CONTROLS_WIDTH / 16 * 9;
+	  natural_height = DEFAULT_CONTROLS_WIDTH / 16 * 9;
+	}
 
 
 private:

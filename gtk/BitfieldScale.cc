@@ -105,7 +105,16 @@ BitfieldScale::Impl::~Impl()
 
 
 
+bool BitfieldScale::on_button_press_event(GdkEventButton* event) 
+{ 
+    std::cout << "BitfieldScale::on_button_press_event" << std::endl;
 
+    this->Gtk::Scale::on_button_press_event(event);
+
+    //arbitrary return false to propogate this event, so in TotemWindow, 
+    // we use signal_button_press_event connected callback can be called
+    return false;
+}
 
 
 

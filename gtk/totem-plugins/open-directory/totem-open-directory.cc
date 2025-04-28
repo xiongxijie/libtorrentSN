@@ -15,7 +15,16 @@
 #include <libpeas/peas-activatable.h>
 #include <libportal-gtk3/portal-gtk3.h>
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "totem-plugin.h"
+#ifdef __cplusplus
+}
+#endif
+
+
 #include "TotemWrapper.h"
 #include "totem-plugins-engine.h"
 #include "TotemPluginFoo.h" // just for MenuPlaceHolderType
